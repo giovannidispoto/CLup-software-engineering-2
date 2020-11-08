@@ -1,0 +1,419 @@
+\documentclass[a4paper, 10pt, oneside]{article}
+
+\usepackage[square, numbers, comma, sort&compress]{natbib}  % Use the "Natbib" style for the references in the Bibliography
+\usepackage{verbatim} 
+\usepackage[english]{babel}
+\usepackage[utf8x]{inputenc}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{amsmath}
+\usepackage{amssymb}
+%\usepackage{cite}
+\usepackage{booktabs}
+\usepackage{epstopdf}
+\usepackage{helvet} 
+\renewcommand{\familydefault}{\sfdefault}
+\usepackage{setspace}
+\singlespacing % interlinea singola
+\linespread{0.97}
+\usepackage{color}
+\usepackage[margin=2.5cm]{geometry}
+\setlength{\parindent}{0pt}
+% pacchetti aggiunti
+\usepackage{comment}
+\usepackage[export]{adjustbox}
+\usepackage{subcaption}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{amsfonts}
+
+
+\usepackage{titling}
+\renewcommand\maketitlehooka{\null\mbox{}\vfill}
+\renewcommand\maketitlehookd{\vfill\null}
+
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage[dvipsnames]{xcolor}
+\newcommand*{\lorenzo}[1]{\textcolor{BurntOrange}{#1}}
+\newcommand{\yasmin}[1]{\textcolor{Red}{#1}}
+\newcommand{\giovanni}[1]{\textcolor{Blue}{#1}}
+
+
+\title{RASD}
+\author{Yasmin Awad, Lorenzo Carpaneto, Giovanni Dispoto}
+\date{October 2020}
+
+\begin{document}
+
+\begin{titlepage}
+\vspace*{\fill}
+\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.5]{img/logopoli.png}
+\end{figure}
+\vspace{0.7em}
+\begin{center}
+	\Large \textbf{REQUIREMENTS ANALYSIS AND SPECIFICATION DOCUMENT}
+\end{center}
+\begin{center}
+	\large Version 0.1
+\end{center}
+\begin{center}
+	\large Version Date
+\end{center}
+\vspace{0.4em}
+\begin{center}
+	\Large \textbf{CLup – Customers Line-up } 
+\end{center}
+\vspace{-0.6em}
+\begin{center}
+	\normalsize Yasmin Awad, Lorenzo Carpaneto, Giovanni Dispoto
+\end{center}
+\vspace*{\fill}
+\end{titlepage}
+
+\normalsize
+
+
+\newpage
+\tableofcontents
+\newpage
+
+\section{Introduction}
+\label{introduction}
+%During the first part of Covid-19 pandemic was figured out the problem of manage people at grocery store. Outside these buildings roads were tons of people enquequed waiting for their turn to buy food, waiting time that could be spent in other activities.\textbf{CLup} allows to manage customers in order to minimize the time spent enqueued and also avoiding crowd inside the building, suggesting to people the right route in order to buy everything that they need, minimizing the flow inside ward departement. With CLup user can get a ticket and know at what time he should be at grocery store. The system is able to estimate time needed to user to get to grocery store and decide if he has to denqueued because doesn't have enough time for reach the position. Users can also book a slot of time to do their shopping. Using this option he need to provide to the system categories of items that he need or better the shopping list. This information is useful due to trace a correct path inside the building and also to load balancing areas. 
+%\yasmin{ho provato a riscriverlo usando delle tue parti ma cambiando qualcosa}
+The aim of the following documentation is to provide an overview of the project \textit{CLup - Customes Line-up}: an application whose goal is to allow customers to shop safely. During the Covid-19 pandemic a new problem arose in people's lives. In a world where social distance is no longer a choice but a necessity, it must be found a way to ensure the safety of people in their daily lives, even in places open to the public, such as grocery stores. Having to comply with health and hygiene regulations, grocery stores were not allowed to enter more than a certain number of people, with the result of the formation of very long queues outside the buildings. \textbf{CLup} allows to manage customers in order to minimize their time spent enqueued and avoiding crowd inside the building. With CLup the customer can line from home getting a ticket for the grocery store or book a specific time-slot for their needs. This documentation will illustrate a description of the system in terms of its functional and non-functional requirements. We are going to show goals, constraints, limits and principal use cases of the software. In practice, this document will provide a baseline for the project planning and estimation. The document is addressed to the developers, that will implement the requirements, and to the stakeholders, that will supervise the development process.
+
+\subsection{Purpose}
+\label{intro:purpose}
+
+Customer Line-up is an application that
+ 
+
+{\large \textbf{1.1.1 Goals}}
+
+\begin{enumerate}[label={G.\arabic{*}}]
+    % \item \label{goal:account} Allow Users to create an account inserting the required personal data. \lorenzo{cancella}
+    % \begin{enumerate}[label={\ref{goal:account}.\arabic{*}}]
+    %    \item \label{goal:account:types} The User can register either as a Manager or as a Customer.
+    % \end{enumerate}
+    \item \label{goal:influx} Allow Managers to regulate the influx of people in their Grocery Stores, to avoid the formation of queues.
+    \item Provide an effective queueing mechanism to enter the Store.
+    % \begin{enumerate}[label={\ref{goal:influx}.\arabic{*}}]
+    %    \item \label{goal:influx:qr} Monitor entrances generating a unique identifier (i.e. QR codes) for each Customer.
+    % \end{enumerate}
+    \item \label{goal:enqueue} Allow Customers to virtually line up for Grocery Stores requesting a Ticket from different locations and devices.
+    \begin{enumerate}[label={\ref{goal:enqueue}.\arabic{*}}]
+        \item \label{goal:enque:time} Provide Customers with a reasonably precise estimation of the waiting time.
+        \item \label{goal:enque:alert} Alert Customers \lorenzo{dire ai clienti di partire a una determinata ora, per fare in modo che riescano ad arrivare in tempo} % to take into account the time they need to get to the shop from the place they currently are. 
+        \item \label{goal:enque:fallback} Guarantee a paper ticketing service as a fallback option for people who do not have access to the required technology.
+    \end{enumerate}
+    \item \label{goal:visit} Allow Customers to book precise time-slots for a Visit to the Store from different locations and devices.
+    \begin{enumerate}[label={\ref{goal:visit}.\arabic{*}}]
+    %    \item \label{goal:visit:categories} categories e time secondo me già integrati
+        \item \label{goal:visit:path} Suggest to the Customer an optimal shopping path in order to buy everything they need and minimize the flow of people in the Grocery Store.
+        % \item Store and analyse information about the Customer's habits in order to be able to recommend time-slots duration and availability for specific Stores, taking into account their preferences.
+        \item Store and analyse information about the Customer's habits in order to be able to recommend the duration of the Visit and suitable Stores for the Visit.
+        \item Notify customers of available slots in a day/time range inferring information from their previous Visits.
+    \item \lorenzo{Penso che dovremmo mettere anche un paio di goal per l'applicazione dal punto di vista del manager: es. deve poter scannerizzare i ticket, deve poter fornire il servizio di fallback con macchinetta. Forse accennerei anche al fatto che i manager possano aggiungere negozi all'applicazione. Senza andare troppo nel dettaglio, ma mi sembrano punti essenziali}
+    \end{enumerate}
+\end{enumerate}
+
+\pagebreak
+
+{\large \textbf{1.2 Scope}}
+\lorenzo{Maybe the shared are too specific. I just do not really understand the difference that should be from scopes "shared" and requirements}
+
+\begin{flushleft}
+Following the definition originally proposed by M. Jackson and P. Zave in 1995,
+we will distinguish world phenomena that are event occurring in real world from machine
+that is the software to be.
+World and Machine comunicate with Shared Phenomena, they could be events controlled by the world and observed by the machine or events controller by machine and observed by the world.
+\end{flushleft}
+
+\begin{itemize}
+    \item {\large \textbf{World}}
+    \begin{enumerate}[label={S.W.\arabic{*}}]
+        \item \textbf{People going into Stores}: people going to stores to buy grocery and other products.
+        \item \textbf{Queue formation}: the creation of long lines outside the stores.
+        \item \textbf{People moving inside Store}: people moving into store in order to find grocery
+        \yasmin{
+        \item \textbf{Need to buy}: circumstance in which someone needs to enter a Store in order to buy some groceries.
+        \item \textbf{Social Distancing}: circumstance in which the society imposes certain hygienic, sanitary and social distancing rules.
+        }
+    \end{enumerate}
+    \item {\large \textbf{Shared}}
+    \begin{enumerate}[label={S.S.\arabic{*}}]
+        \item A Customer can register and sign up to the Service
+        %\item \textbf{Registration \& Login}: a user can sign-up or login if already registered to the application.
+       % \item \textbf{Choosing user type}: a user can register to the app as a manager or a customer (\lorenzo{QR scanner?}). \lorenzo{Maybe delete this points} \giovanni{quote for deleting this} \yasmin{quoto}
+       % \item \textbf{QR code}: each user has a unique QR code, generated from the app as soon as they register. \lorenzo{Maybe delete this points} \giovanni{quote Lorenzo} \yasmin{forse chiamarlo QR code association ?? o generation}
+        % Ticket part
+        \item A logged Customer can get a ticket to virtual line
+       % \item \textbf{Get ticket}: a Customer can take a ticket to form a virtual line for a specific store. \yasmin{change in ".. can get a ticket to line up for a specific Store" ??}
+        \item A Customer can take a ticket at the store 
+        %\item \textbf{Get paper ticket}: a Customer get a paper ticker at the store 
+        \item Scan the QR code of the customer before entering into the Store
+       % \item \textbf{Scan ticket}: scan the QR code of each customers before entering into the Stores. \lorenzo{Maybe delete this points} \giovanni{For me is right}
+        
+        
+        % book part
+        \item A Customer can book a visit to the store specifying categories of items
+        %\item \textbf{Book a Visit}: allow Customers to book a visit to the store.
+        %\item \textbf{Specify grocery categories}: specify categories of items that Customer want to buy
+        \item Send notification to a Customer to remind time for the visit
+        %\item \textbf{Alert customer}: remind the customer that he booked a Visit, in time to let him be in time for it. \lorenzo{Maybe delete this points} \giovanni{For me is right}
+        \item Show map to the user with a built path for the visit
+     %   \item \textbf{Show Map}: Guide customers through the store with a map during a Visit. \lorenzo{Maybe delete this points} \giovanni{for me is right}
+        
+        % manager part
+        \item A Manager can upload a Store map
+       % \item \textbf{Upload Map}: allow Managers to upload maps of their stores.
+        \item The System built a path suggested for a Customer visit
+       % \item \textbf{Build Path}: build a suggested path for the Customer, in order to minimize useless movements inside the store 
+        
+        \item Compute information and statistics about a Customer in order to suggest him 
+        
+        %\item \textbf{Build statistics}: compute the average time spent by the user into the store, and suggest it to them during the ticketing process. 
+        
+        %\item \textbf{Suggest time-slots}: compute suitable time-slots in which would be suitable for the customer to book a Visit to the store. 
+        
+        %\item \textbf{Suggest other Stores}: suggest other stores to user, with available time-slot preferred by Customer
+        
+        \item
+    \end{enumerate}
+    \item {\large \textbf{Machine}}
+    \begin{enumerate}[label={S.M.\arabic{*}}]
+        \item \textbf{Role differentiation}:  to grant different services to different type of user.
+        \item \textbf{Time calculation}: compute the time at which each customer should be in the store when taking the ticket.
+        \item \textbf{DBMS Queries}: Queries to the DBMS to retrieve data.
+        
+        
+    \end{enumerate}
+\end{itemize}
+
+
+{\large \textbf{1.3 Definitions, Acronyms, Abbreviations}}
+\newline \newline
+\textbf{1.3.1 Definitions}
+
+\begin{enumerate}[label={D.\arabic{*}}]
+\item \label{def:store} Store: synonym of Grocery Store.
+\item \label{def:manager} Manager: manager of a \textit{Store}. % TODO explain what role has in the app?
+\item \label{def:customer} Customer: client of a \textit{Store}. % TODO explain what role has in the app?
+\item \label{def:visit} Visit: ... % TODO
+\item \label{def:securepass} Secure Password: \lorenzo{passwordformat} \giovanni{magari cercare nome policy da utilizzare.}
+\item Categories of Grocery:
+\item Type of Users: the type of users can be either Manager or Customer.
+\item Department: macro area of the store. It can contain multiple categories of Grocery.
+\item Owner: a manager who owns a specific store.
+\end{enumerate}
+
+\textbf{1.3.2 Acronyms}
+\begin{enumerate}[label={A.\arabic{*}}]
+\item \label{def:API} API: Application Programming Interface
+\end{enumerate}
+\textbf{1.3.3 Abbreviations}
+\begin{enumerate}[label={AB.\arabic{*}}]
+\item \label{def:UML} UML: Uniform Modeling language
+\end{enumerate}
+
+{\large \textbf{1.4 Reference Documents}}
+\begin{itemize}
+    \item Specification document: R\&DD Assignment AY 2020-2021
+    \item IEEE 830-1993: IEEE Recommended Practice for Software Requirements Specifications
+    \item Alloy documentation /link/to/doc
+    \item UML documentation /link/to/doc
+\end{itemize}
+{\large \textbf{1.5 Revision History}}
+\begin{center}
+ \begin{tabular}{||c c c||}
+ \hline
+ Date & Version & Comments \\ [0.5ex] 
+ \hline\hline
+ date & 1.0 & first relase \\ 
+ \hline
+ \hline
+\end{tabular}
+\end{center}
+{\large \textbf{1.6 Document structure}} \newline
+\newline
+According to IEEE standard, the RASD is structured into 5 sections
+\begin{itemize}
+    \item \textbf{Introduction} contains informal presentation of the project, introducing the main goals of the S2B. Also contains the Scope with main shared phenomenas.
+    \item \textbf{Overall Description} contains a description of the System, including constrains and assumptions
+    \item \textbf{Specific Requirements} \giovanni{brief description of the section}
+    \item \textbf{Formal Analysis using Alloy} contains a formal modelliing of the project, in order to proof consistency of the core functionality 
+    \item \textbf{Effort Spent} show the effort spent in developing the RASD
+\end{itemize}
+
+\section{Overall Description}
+\label{overallDescription}
+{\large \textbf{2.1 Product perspective}}
+\newline\newline
+In this section we are analyzing all the shared phenomena listed before
+\begin{enumerate}
+\item \textbf{Customer register to Service}: If a Customer wants to register to the service he have to provide information such as Name, Surname etc.. \lorenzo{??? wasnt just email and password?}\giovanni{Name and surname i think that are the basis}
+When the process is completed, the System generate an unique QR code associated to him, used when he goes to stores.
+
+\item \textbf{Manager register to Service}: If a Manager wants to register...
+
+\item \textbf{Customer get a ticket}: When the customer wants to go to a Store, he needs to login in into the application, search for a Store near him and enqueuing. In this instant the System provide a time 
+
+\item \textbf{Scan QR Code}: Before entering and exit employees scan Customers QR code in order to validate the ticket and collect information used for profiling.
+
+\item \textbf{Customer books a visit}: When a customer books a visit he have to specify where he wants to go and choosing a time-slot available and insert the categories of items that he have to buy. 
+
+\item \textbf{Alert Customer}: The System alert the Customer in order to remind the him that he booked a Visit or for the ticket, in time to let him be in time for it.
+For doing this he have to specify what type of means of transport he use.
+
+\item \textbf{Showing Map during the Shopping}: In order to minimize the time spent inside the Store
+and for avoid too much interaction with other user, the application suggest a path to the customer using information of categories of item he wants to buy.
+
+\item \textbf{Computing statistics of the Customer}: In order to improve the user experience, the application compute statistics of Stores visited, time spent and in general their habits. These information are used for suggest stores and time-slots \giovanni{Se invece il cliente non inserisce il tempo di visita per il ticket, c'è bisogno di prevderlo}
+\end{enumerate}
+
+\subsection{Product functions}
+Detailed description of the product functions
+
+\subsection{User Characteristics}
+
+\section{Specific Requirements}
+\label{specificRequirements}
+
+\lorenzo{Metto una prima draft dei requirements qui, per non fare confusione.}
+\begin{enumerate}[align=left]
+    \item[\textbf{LOGIN \& REGISTER SERVICE}]
+    \item The User must be able to register or to log in if already registered.
+    \item \label{credentials} Check if the User credentials are valid:
+    \begin{enumerate}[label={-}]
+        \item \giovanni{Allow the User to insert Name and Surname}
+        \item Check that the email is in the right format.
+        \item Check that the email that the user is providing has not been used for previous registrations.
+        \item Check that the password is a Secure Password.
+    \end{enumerate}
+    \item If the credentials are valid, the System sends a confirmation email, to let the user activate their account. \lorenzo{nome specifico per questa procedura}
+    \item Allow to log in using personal credentials:
+    \begin{enumerate}[label={-}]
+        \item Check if credentials are valid.
+        \item In case the username and password inserted are correct, allow the user to access all the functionalities available for the Type of User they are.
+        \item If the username and/or password inserted are wrong, the system must deny the access.
+        \item If the username and/or password inserted are wrong, the system must notify the user.
+    \end{enumerate}
+    \item Allow to change email only if the new email is in a correct format, 
+    \item Allow to change password if the new password is a Secure Password and it is different from the previous one.
+    \item Allow to change password if it has been forgotten, through the personal email.
+    \item Provide to each Customer a unique QR code \lorenzo{right after the registration process}.
+    \begin{enumerate}[label={-}]
+        \item \lorenzo{The QR code will be the identifier of the user within the System. It enables the Customer to get tickets and book Visits.}
+    \end{enumerate}
+    
+    \item[\textbf{TICKETING SERVICE}]
+    \item \lorenzo{meccanismo efficiente di coda da spiegare? Probabilmente meglio mettere meccanismo efficiente, come suggerito da yas e lasciare i dettagli per Design (oppure rimandarli a un'implementazione che non faremo)}
+    \item The Customer must be allowed to request a Ticket, specifying:
+     \begin{enumerate}[label={-}]
+        \item The Store where he/she wants to shop.
+        \item The duration of his/her shopping.
+        \item The means of transport to get to the Store.
+    \end{enumerate}
+    \item For Customers who are requesting a Ticket, the System should:
+    \begin{enumerate}[label={-}]
+        \item Verify that their time distance from the Store is such that they can arrive in time for their turn.
+        \item Insert the Customer Ticket request in the queue in order to let the Customer arrive in time for his/her shopping.
+        \item Provide to the Customer the estimated waiting time before their turn.
+        \item Notify Customers when they should depart from home in order to arrive in time for their turn.
+        \item \lorenzo{If the Customer will no show up in time [specify what in time means], its ticket will be considered invalid.}
+    \end{enumerate}
+    
+    \item[\textbf{BOOKING SERVICE}]
+    \item The Customer must be allowed to request a Visit, specifying:
+    \begin{enumerate}[label={-}]
+        \item The Store where he/she wants to take a Visit.
+        \item The day of the Visit. \lorenzo{Vogliamo specificare constraint per il giorno della visita?}
+        \item The duration of his/her Visit.
+        \item The time slot for the Visit.
+        \item The Categories of Grocery he/her is going to buy.
+    \end{enumerate}
+    \item For long time Customers, while booking a Visit, the System should infer, analyzing previous Visits of that Customer, the expected duration of the Visit.
+    \item The System should provide to the Customer a map of the Store. \lorenzo{The map should be provided by the manager [reference to successive requirement]}
+    \begin{enumerate}[label={-}]
+        \item For Customers who have booked a Visit, the system should suggest to the Customer an optimal shopping path in order to buy everything they need and to minimize possible contacts between people inside the store.
+    \end{enumerate}
+    \item Allow Customers to consult their pending requests.
+    \item The Customer must be allowed to delete a Visit or a Ticket from his/her pending requests.
+    \item Use third party services to enable the localization of Customers and Stores. 
+    \item \lorenzo{Notify Customers when they should depart from home in order to arrive in time for their Visit.}
+    \item Notify customers of available slots in a day-time range inferring information from their previous Visits.
+    
+    \item Every notification will be temporarily stored in the DBMS and it will be accessible by the Customer it for a limited amount of time. \lorenzo{CHECK THIS}
+    
+    \item[\textbf{STORE MANAGEMENT SERVICE}]
+    \item Allow Managers to create Stores, becoming the Owner of the Store.
+    \begin{enumerate}[label={-}]
+        \item Verify the Store creation, acquiring specific credentials that can be used to verify the validity of the Store and of the Manager. \lorenzo{(During the creation of a Store ask for an associated PEC)}
+        \item Allow Owner to add other Managers to their Store(s).
+        \item Allow Owner to remove Managers from their Store(s).
+        \item Allow Owner to delete their Stores.
+        \item Allow Owner to hand over the ownership of the Store to one of its Managers. 
+    \end{enumerate}
+    
+    \item Allow Managers to specify rules for their Stores:
+    \begin{enumerate}[label={-}]
+        \item Allow Managers to specify maximum number of people who can enter the Store.
+        \item Allow Managers to specify maximum number of people for each Department of the Store.
+        \item Allow Managers to specify Store opening hours.
+    \end{enumerate}
+    
+    \item Allow Managers to upload a map of their Stores:
+    \begin{enumerate}[label={-}]
+        \item Provide a GUI to specify the structure of the Store to the System (walls, Departments, category of grocery for each Department)
+        \item Allow the Managers to specify Categories of groceries for each Department.
+        \item Allow Managers to specify groceries and brands for each Department. \lorenzo{!!! let's talk about the difference between department and categories of grocery.}
+    \end{enumerate}
+    
+    \item Provide a specific \textbf{Scanner App} to scan the QR codes of the Customers and to interact with the queuing mechanism.
+    \begin{enumerate}[label={-}]
+        \item The managers of a Store can create a unique identifier lined to the Store to input it to the Scanner app to enable its functions.
+    \end{enumerate}
+    
+    \item Provide a specific \textbf{Paper Tickets App} to generate paper tickets in the store and to interact with the queuing mechanism.
+    \begin{enumerate}[label={-}]
+        \item The Paper Ticket app will allow every person to get a paper ticket directly from the store.
+        \item In the Paper Tickets there will be specified the same information provided with the online ticket and it will work the same way. The associated QR code will be automatically generated by the Paper Ticket app.
+        \item The managers of a Store can create a unique identifier linked to the store to input it to the Paper Ticket app to enable its functions.
+    \end{enumerate}
+    
+    \item All the information about the store can be updated by their managers at anytime. The changes will be effective within 24 hours from the update. \lorenzo{CHECK THIS}
+    
+    \item[\textbf{JUST THE MACHINE}] \lorenzo{Controlliamo se questi vadano effettivamente messi.}
+    \item Suggestions for Customers have to be periodically computed - at least once per day.
+    \item Provide protection of data using encryption. \lorenzo{Davvero vogliamo criptare i dati?} \giovanni {Penso sia un po' esagerato, considerando che non abbiamo informazioni particolari. Direi che basta salvare le password salate utilizzando una buona funzione di hashing}
+    \item Suggestions are computed by means of an artificial intelligence system. \lorenzo{mmm, secondo me questo punto puo' essere messo o nel design o in implementazione} \giovanni{Ho scoperto recentemente l'esistenza dei Recommender Systems che si occupano proprio di fornire suggerimenti, magari userei questo al posto di AI systems}
+    \item Suggestions are based on the habits of the Customers, inferred by the System. In a first period will be suggested Stores which are available and geographically close to the Customer (within 1 km).
+    
+    \item Customers who have booked  the Visit will be inserted in the same queue of the Customer who have got a ticket, but will have a higher priority.
+    
+    
+    \item \lorenzo{Segnalazioni?}
+\end{enumerate}
+
+
+\section{Formal Analysis Using Alloy}
+\label{analysisAndAlloy}
+sample formal analysis using alloy
+
+\section{Effort Spent}
+\label{effort}
+sample effort spent
+
+\section{REFERENCES}
+\label{references}
+\renewcommand{\refname}{}
+\vspace{-2.6em}
+\nocite{*}
+\bibliography{biblio} 
+\bibliographystyle{unsrtnat}
+
+\end{document}
