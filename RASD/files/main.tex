@@ -88,10 +88,18 @@ The aim of the following documentation is to provide an overview of the project 
 
 \subsection{Purpose}
 \label{intro:purpose}
-
-Customer Line-up is an application that
- 
-
+Customer Line-up (CL-up) is an application that aims to provide users with the tools to obtain access to Stores in a safe way, i.e. in order to avoid as much as possible the presence of external people (queues to enter) and to allow a number of internal people (number of people entered in the Store) lower than the allowed limit of each Store. All of this is made in order to comply as much as possible with any social distancing rules required by the competent authorities. To pursue this goal, the application provides a service both to the owners of the Stores (or whoever takes their place), that is the Managers, and to the buyers, that is the Customers. The application allows Users to create a different type of profile based on their identity, intended precisely as a Manager or Customer. Tools are provided to allow Customers to book for entry to the Stores remotely, that is for example from their own home, allowing a greater and more efficient social distancing.\\
+\\
+There are 2 ways offered by CLup to enter the Stores. The first concerns the collection of a Ticket that will put the Customer in a virtual queue to enter the Store on the same day. The application has also the role of alert the Customer in order to let him/her arrive in time for his/her turn, checking and keeping track of the state of the virtual queue. The second allows the Customer to book a Visit, that is an entrance to the Store on a specific day, for a specific shopping time-range. To book a Visit the Customer must also specify the category of groceries he/her is intended to buy, in order to assign him/her a map of the Store and an optimal route for his/her Visit. Furthermore, the application to be as efficient and simple as possible for users, will not only advise them a time of stay in the Store based on the user's data (that on his old time stays), but will also recommend which Stores are available or closest, always based on the user's habits.\\
+\\
+Regarding Managers, the application gives them the possibility to create a specialized profile in which they can request 'the creation of a Store', i.e. a virtual space that will be identified as their own Store, and through which Customers will be able to book Tickets or Visits to enter the shop itself. The Managers have in fact the task of inserting and helping the application in the creation and definition of the Store and it's rules. All this information may vary over time and must be kept up to date in order to guarantee a better service of the application.\\
+\\
+To guarantee entry only for Customers authorized to enter at that moment, whether they have requested a Ticket or a Visit, a QR code is checked. In practice, each Customer is associated with a QR code that will appear in his profile. At the entrance, this QR code must be scanned to verify that the Customer has actually booked the Visit for that moment or that it is his turn to enter via Ticket. Moreover, to allow the virtual queue to slide adequately, each QR code must be scanned also at the exit.\\
+\\
+Finally, to allow entry to those who do not have the adequate technology to use the application, a secondary option must be put in place, i.e. a fallback option. To allow anyone to collect a Ticket, we have opted for adding Totems at the entrance that have the ability to print Tickets.
+\newline
+\newline
+\newline
 {\large \textbf{1.1.1 Goals}}
 
 \begin{enumerate}[label={G.\arabic{*}}]
