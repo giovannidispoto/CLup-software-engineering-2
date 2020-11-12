@@ -108,7 +108,7 @@ Finally, to allow entry to those who do not have the adequate technology to use 
     %    \item \label{goal:account:types} The User can register either as a Manager or as a Customer.
     % \end{enumerate}
     \item \label{goal:influx} Allow Managers to regulate the influx of people in their Grocery Stores, to avoid the formation of queues.
-    \item Provide an effective queueing mechanism to enter the Store.
+    \item \label{goal:effectiveQueue} Provide an effective queueing mechanism to enter the Store.
     % \begin{enumerate}[label={\ref{goal:influx}.\arabic{*}}]
     %    \item \label{goal:influx:qr} Monitor entrances generating a unique identifier (i.e. QR codes) for each Customer.
     % \end{enumerate}
@@ -123,8 +123,8 @@ Finally, to allow entry to those who do not have the adequate technology to use 
     %    \item \label{goal:visit:categories} categories e time secondo me già integrati
         \item \label{goal:visit:path} Suggest to the Customer an optimal shopping path in order to buy everything they need and minimize the flow of people in the Grocery Store.
         % \item Store and analyse information about the Customer's habits in order to be able to recommend time-slots duration and availability for specific Stores, taking into account their preferences.
-        \item Store and analyse information about the Customer's habits in order to be able to recommend the duration of the Visit and suitable Stores for the Visit.
-        \item Notify customers of available slots in a day/time range inferring information from their previous Visits.
+        \item \label{goal:visit:infoForSuggestion} Store and analyse information about the Customer's habits in order to be able to recommend the duration of the Visit and suitable Stores for the Visit.
+        \item \label{goal:visit:personalNotifications} Notify customers of available slots in a day/time range inferring information from their previous Visits.
     \item \lorenzo{Penso che dovremmo mettere anche un paio di goal per l'applicazione dal punto di vista del manager: es. deve poter scannerizzare i ticket, deve poter fornire il servizio di fallback con macchinetta. Forse accennerei anche al fatto che i manager possano aggiungere negozi all'applicazione. Senza andare troppo nel dettaglio, ma mi sembrano punti essenziali}
     \end{enumerate}
 \end{enumerate}
@@ -213,10 +213,10 @@ World and Machine comunicate with Shared Phenomena, they could be events control
 \item \label{def:customer} Customer: client of a \textit{Store}. % TODO explain what role has in the app?
 \item \label{def:visit} Visit: ... % TODO
 \item \label{def:securepass} Secure Password: \lorenzo{passwordformat} \giovanni{magari cercare nome policy da utilizzare.}
-\item Categories of Grocery:
-\item Type of Users: the type of users can be either Manager or Customer.
-\item Department: macro area of the store. It can contain multiple categories of Grocery.
-\item Owner: a manager who owns a specific store.
+\item \label{def:categoriesOfGroceries} Categories of Grocery:
+\item \label{def:TypeOfUser}Type of Users: the type of users can be either Manager or Customer.
+\item \label{def:department}Department: macro area of the store. It can contain multiple categories of Grocery.
+\item \label{def:owner}Owner: a manager who owns a specific store.
 \end{enumerate}
 
 \textbf{1.3.2 Acronyms}
@@ -241,7 +241,7 @@ World and Machine comunicate with Shared Phenomena, they could be events control
  \hline
  Date & Version & Comments \\ [0.5ex] 
  \hline\hline
- date & 1.0 & first relase \\ 
+ date & 1.0 & first release \\ 
  \hline
  \hline
 \end{tabular}
@@ -250,10 +250,10 @@ World and Machine comunicate with Shared Phenomena, they could be events control
 \newline
 According to IEEE standard, the RASD is structured into 5 sections
 \begin{itemize}
-    \item \textbf{Introduction} contains informal presentation of the project, introducing the main goals of the S2B. Also contains the Scope with main shared phenomenas.
+    \item \textbf{Introduction} contains informal presentation of the project, introducing the main goals of the S2B. Also contains the Scope with main shared phenomena.
     \item \textbf{Overall Description} contains a description of the System, including constrains and assumptions
     \item \textbf{Specific Requirements} \giovanni{brief description of the section}
-    \item \textbf{Formal Analysis using Alloy} contains a formal modelliing of the project, in order to proof consistency of the core functionality 
+    \item \textbf{Formal Analysis using Alloy} contains a formal modelling of the project, in order to proof consistency of the core functionality 
     \item \textbf{Effort Spent} show the effort spent in developing the RASD
 \end{itemize}
 
@@ -263,7 +263,7 @@ According to IEEE standard, the RASD is structured into 5 sections
 \newline\newline
 In this section we are analyzing all the shared phenomena listed before
 \begin{enumerate}
-\item \textbf{Customer register to Service}: If a Customer wants to register to the service he have to provide information such as Name, Surname etc.. \lorenzo{??? wasnt just email and password?}\giovanni{Name and surname i think that are the basis}
+\item \textbf{Customer register to Service}: If a Customer wants to register to the service he have to provide information such as Name, Surname etc.. \lorenzo{??? wasnt just email and password?}\giovanni{Name and surname i think that are the basics}
 When the process is completed, the System generate an unique QR code associated to him, used when he goes to stores.
 
 \item \textbf{Manager register to Service}: If a Manager wants to register...
@@ -291,120 +291,135 @@ Detailed description of the product functions
 \section{Specific Requirements}
 \label{specificRequirements}
 
-\lorenzo{Metto una prima draft dei requirements qui, per non fare confusione.}
 \begin{enumerate}[align=left]
     \item[\textbf{LOGIN \& REGISTER SERVICE}]
     \item The User must be able to register or to log in if already registered.
-    \item \label{credentials} Check if the User credentials are valid:
+    \item \label{req:credentialsCheck} Check if the User credentials are valid:
     \begin{enumerate}[label={-}]
-        \item \giovanni{Allow the User to insert Name and Surname}
-        \item Check that the email is in the right format.
-        \item Check that the email that the user is providing has not been used for previous registrations.
-        \item Check that the password is a Secure Password.
+        \item \giovanni{Allow the User to insert Name and Surname} \lorenzo{TO DELETE} \yasmin{TO DELETE} %\label{req:credentialsCheck:insert} 
+        \item \label{req:credentialsCheck:email} Check that the email is in the right format.
+        \item \label{req:credentialsCheck:uniqueness} Check that the email that the user is providing has not been used for previous registrations.
+        \item \label{req:credentialsCheck:password}Check that the password is a Secure Password.
     \end{enumerate}
-    \item If the credentials are valid, the System sends a confirmation email, to let the user activate their account. \lorenzo{nome specifico per questa procedura}
-    \item Allow to log in using personal credentials:
+    \item \label{req:confirmRegistration}If the credentials are valid, the System sends a confirmation email, to let the user activate their account. \lorenzo{nome specifico per questa procedura}
+    \item \label{req:login} Allow to log in using personal credentials:
     \begin{enumerate}[label={-}]
-        \item Check if credentials are valid.
-        \item In case the username and password inserted are correct, allow the user to access all the functionalities available for the Type of User they are.
-        \item If the username and/or password inserted are wrong, the system must deny the access.
-        \item If the username and/or password inserted are wrong, the system must notify the user.
+        \item \label{req:login:checkCred}Check if credentials are valid.
+        \item \label{req:login:validCred} In case the email and password inserted are correct, allow the user to access all the functionalities available for the Type of User they are.
+        \item \item \label{req:login:invalidCred} If the email and/or password inserted are wrong, the system must deny the access.
+        \item If the username and/or password inserted are wrong, the system must notify the user. \lorenzo{Secondo me questo é da cancellare}
     \end{enumerate}
-    \item Allow to change email only if the new email is in a correct format, 
+    \item \label{req:changeMail} Allow to change email only if the new email is in a correct format.
     \item Allow to change password if the new password is a Secure Password and it is different from the previous one.
-    \item Allow to change password if it has been forgotten, through the personal email.
-    \item Provide to each Customer a unique QR code \lorenzo{right after the registration process}.
+    \item \label{req:changePass}Allow to change password if it has been forgotten, through the personal email.
+    \item \label{req:provideQR} Provide to each Customer a unique QR code \lorenzo{right after the registration process}.
     \begin{enumerate}[label={-}]
-        \item \lorenzo{The QR code will be the identifier of the user within the System. It enables the Customer to get tickets and book Visits.}
+        \item \label{req:provideQR:uniqueID} \lorenzo{The QR code will be the identifier of the user within the System. It enables the Customer to get tickets and book Visits.} \yasmin{just the first phrase (till It enables...)}
     \end{enumerate}
     
     \item[\textbf{TICKETING SERVICE}]
-    \item \lorenzo{meccanismo efficiente di coda da spiegare? Probabilmente meglio mettere meccanismo efficiente, come suggerito da yas e lasciare i dettagli per Design (oppure rimandarli a un'implementazione che non faremo)}
-    \item The Customer must be allowed to request a Ticket, specifying:
+    \item \label{req:requestTicket} The Customer must be allowed to request a Ticket, specifying:
      \begin{enumerate}[label={-}]
-        \item The Store where he/she wants to shop.
-        \item The duration of his/her shopping.
-        \item The means of transport to get to the Store.
+        \item \label{req:requestTicket:store} The Store where he/she wants to shop.
+        \item \label{req:requestTicket:duration}The duration of his/her shopping.
+        \item \label{req:requestTicket:transport}The means of transport to get to the Store.
     \end{enumerate}
-    \item For Customers who are requesting a Ticket, the System should:
+    \item \label{req:systemTicket}For Customers who are requesting a Ticket, the System should:
     \begin{enumerate}[label={-}]
-        \item Verify that their time distance from the Store is such that they can arrive in time for their turn.
-        \item Insert the Customer Ticket request in the queue in order to let the Customer arrive in time for his/her shopping.
-        \item Provide to the Customer the estimated waiting time before their turn.
-        \item Notify Customers when they should depart from home in order to arrive in time for their turn.
-        \item \lorenzo{If the Customer will no show up in time [specify what in time means], its ticket will be considered invalid.}
+        \item \label{req:systemTicket:verifyDist} Verify that their time distance from the Store is such that they can arrive in time for their turn.
+        \item \label{req:systemTicket:addInQueue}Insert the Customer Ticket request in the queue in order to let the Customer arrive in time for his/her shopping.
+        \item \label{req:systemTicket:waitingTime} Provide to the Customer the estimated waiting time before their turn.
+        \item \label{req:systemTicket:notifForDepart} Notify Customers when they should depart from home in order to arrive in time for their turn.
     \end{enumerate}
     
     \item[\textbf{BOOKING SERVICE}]
-    \item The Customer must be allowed to request a Visit, specifying:
+    \item \label{req:requestVisit}The Customer must be allowed to request a Visit, specifying:
     \begin{enumerate}[label={-}]
-        \item The Store where he/she wants to take a Visit.
-        \item The day of the Visit. \lorenzo{Vogliamo specificare constraint per il giorno della visita?}
-        \item The duration of his/her Visit.
-        \item The time slot for the Visit.
-        \item The Categories of Grocery he/her is going to buy.
+        \item \label{req:requestVisit:location}The Store where he/she wants to take a Visit.
+        \item \label{req:requestVisit:date}The day of the Visit.
+        \item \label{req:requestVisit:duration}The duration of his/her Visit.
+        \item \label{req:requestVisit:timeslot}The time slot for the Visit.
+        \item \label{req:requestVisit:categoriesToBuy}The Categories of Grocery he/her is going to buy.
     \end{enumerate}
-    \item For long time Customers, while booking a Visit, the System should infer, analyzing previous Visits of that Customer, the expected duration of the Visit.
-    \item The System should provide to the Customer a map of the Store. \lorenzo{The map should be provided by the manager [reference to successive requirement]}
+    \item \label{req:statisticForDuration}For long time Customers, while booking a Visit, the System should infer, analyzing previous Visits of that Customer, the expected duration of the Visit.
+    \item \label{req:sysProvideMap}The System should provide to the Customer a map of the Store. \lorenzo{The map should be provided by the manager [reference to successive requirement]}
     \begin{enumerate}[label={-}]
-        \item For Customers who have booked a Visit, the system should suggest to the Customer an optimal shopping path in order to buy everything they need and to minimize possible contacts between people inside the store.
+        \item \label{req:sysProvideMap:suggestPath}For Customers who have booked a Visit, the system should suggest to the Customer an optimal shopping path in order to buy everything they need and to minimize possible contacts between people inside the store.
     \end{enumerate}
-    \item Allow Customers to consult their pending requests.
-    \item The Customer must be allowed to delete a Visit or a Ticket from his/her pending requests.
-    \item Use third party services to enable the localization of Customers and Stores. 
-    \item \lorenzo{Notify Customers when they should depart from home in order to arrive in time for their Visit.}
-    \item Notify customers of available slots in a day-time range inferring information from their previous Visits.
+    \item \label{req:seeRequests}Allow Customers to consult their pending requests.
+    \item \label{req:deleteTickOrVis}The Customer must be allowed to delete a Visit or a Ticket from his/her pending requests.
+    \item \label{req:thirdPartyGPS}Use third party services to enable the localization of Customers and Stores. 
+    \item \lorenzo{Notify Customers when they should depart from home in order to arrive in time for their Visit.} \yasmin{TO DELETE} \giovanni{LASCIALO} \lorenzo{dont know} %\label{req:notifyCustomerToDepart}
+    \item \label{req:notifyCustomerOpenSlots}Notify customers of available slots in a day-time range inferring information from their previous Visits.
     
-    \item Every notification will be temporarily stored in the DBMS and it will be accessible by the Customer it for a limited amount of time. \lorenzo{CHECK THIS}
+    \item Every notification will be temporarily stored in the DBMS and it will be accessible by the Customer for a limited amount of time. \lorenzo{CHECK THIS} \yasmin{IMPRECISE}%\label{req:notificationDB}
     
     \item[\textbf{STORE MANAGEMENT SERVICE}]
-    \item Allow Managers to create Stores, becoming the Owner of the Store.
+    \item \label{req:man:createStore}Allow Managers to create Stores, becoming the Owner of the Store.
     \begin{enumerate}[label={-}]
-        \item Verify the Store creation, acquiring specific credentials that can be used to verify the validity of the Store and of the Manager. \lorenzo{(During the creation of a Store ask for an associated PEC)}
-        \item Allow Owner to add other Managers to their Store(s).
-        \item Allow Owner to remove Managers from their Store(s).
-        \item Allow Owner to delete their Stores.
-        \item Allow Owner to hand over the ownership of the Store to one of its Managers. 
+        \item \label{req:man:createStore:nameAndLoc}Allow to specify name of the Store and his address
+         \item \label{req:man:createStore:maxPeople}Allow Managers to specify maximum number of people who can enter the Store.
+        \item \label{req:man:createStore:maxPeoplePerDep}Allow Managers to specify maximum number of people for each Department of the Store.
+        \item \label{req:man:createStore:openingHours}Allow Managers to specify Store opening hours.
+        \item \label{req:man:createStore:daysToBook}Allow managers to specify how many days in advance a Visit can be booked
+    \end{enumerate}
+    \item \label{req:man:deleteStore}Allow Owner to delete their Stores.
+    \item \label{req:man:verifyOwnerCred}Verify the Store creation, acquiring specific credentials that can be used to verify the validity of the Store and of the Manager. \lorenzo{(During the creation of a Store ask for an associated PEC)}
+    \item \label{req:man:updateStoreInfo}Allow the Owner and Managers to edit the store:
+    \begin{enumerate}[label={-}]
+         \item \label{req:man:updateStoreInfo:maxPeople}Allow Managers to edit maximum number of people who can enter the Store.
+        \item \label{req:man:updateStoreInfo:maxPeoplePerDep}Allow Managers to edit maximum number of people for each Department of the Store.
+        \item \label{req:man:updateStoreInfo:openingHours}Allow Managers to edit Store opening hours.
+         \item \label{req:man:updateStoreInfo:addMan}Allow Owner to add other Managers to their Store(s).
+        \item \label{req:man:updateStoreInfo:removeMan}Allow Owner to remove Managers from their Store(s).
+        \item \label{req:man:updateStoreInfo:handOwnership}Allow Owner to hand over the ownership of the Store to one of its Managers.
+        \item \label{req:man:updateStoreInfo:daysToBook}Allow managers to edit how many days in advance a Visit can be booked.
     \end{enumerate}
     
-    \item Allow Managers to specify rules for their Stores:
+        \item \label{req:man:whenToUpdate}All the information about the Store can be updated by their Managers at anytime
     \begin{enumerate}[label={-}]
-        \item Allow Managers to specify maximum number of people who can enter the Store.
-        \item Allow Managers to specify maximum number of people for each Department of the Store.
-        \item Allow Managers to specify Store opening hours.
+        \item \label{req:man:whenToUpdate:whenEffective}If the updates change opening hours or the maximum number of people in the store or how many days in advance a Visit can be booked, the Manager will have two options: make the updates effective within 24 hours, losing booked Visits which are not valid anymore, or make the updates effective within the current amount of how many days in advance a Visit can be booked without taking a chance on losing booked Visits.
     \end{enumerate}
     
-    \item Allow Managers to upload a map of their Stores:
+    \item \label{req:man:uploadMap}Allow Managers to upload a map of their Stores:
     \begin{enumerate}[label={-}]
-        \item Provide a GUI to specify the structure of the Store to the System (walls, Departments, category of grocery for each Department)
-        \item Allow the Managers to specify Categories of groceries for each Department.
-        \item Allow Managers to specify groceries and brands for each Department. \lorenzo{!!! let's talk about the difference between department and categories of grocery.}
+        \item \label{req:man:uploadMap:GUI}Provide a GUI to specify the structure of the Store to the System (walls, Departments, category of grocery for each Department)
+        \item \label{req:man:uploadMap:specCategories}Allow the Managers to specify Categories of groceries for each Department.
+        \item \label{req:man:uploadMap:specInCategories}Allow Managers to specify groceries and brands for each Department. \lorenzo{!!! let's talk about the difference between department and categories of grocery.}
     \end{enumerate}
     
-    \item Provide a specific \textbf{Scanner App} to scan the QR codes of the Customers and to interact with the queuing mechanism.
+    \item \label{req:scannerApp}Provide a specific \textbf{Scanner App} to scan the QR codes of the Customers and to interact with the queuing mechanism.
     \begin{enumerate}[label={-}]
-        \item The managers of a Store can create a unique identifier lined to the Store to input it to the Scanner app to enable its functions.
+        \item \label{req:scannerApp:createCode}The managers of a Store can create a unique identifier linked to the Store to input it into the Scanner app to enable its functions.
     \end{enumerate}
     
-    \item Provide a specific \textbf{Paper Tickets App} to generate paper tickets in the store and to interact with the queuing mechanism.
+    \item \label{req:paperTicketApp}Provide a specific \textbf{Paper Tickets App} to generate paper tickets in the store and to interact with the queuing mechanism.
     \begin{enumerate}[label={-}]
-        \item The Paper Ticket app will allow every person to get a paper ticket directly from the store.
-        \item In the Paper Tickets there will be specified the same information provided with the online ticket and it will work the same way. The associated QR code will be automatically generated by the Paper Ticket app.
-        \item The managers of a Store can create a unique identifier linked to the store to input it to the Paper Ticket app to enable its functions.
+        \item \label{req:paperTicketApp:func}The Paper Ticket app will allow every person to get a Paper Ticket directly from the Store.
+        \item \label{req:paperTicketApp:funcPaperTick}In the Paper Tickets there will be specified the same information provided with the online Ticket and it will work the same way. The associated QR code will be automatically generated by the Paper Ticket app, and it will be different from the QR codes of each Customer (i.e. User registered in the main app).
+        \item \label{req:paperTicketApp:createCode}The Managers of a Store can create a unique identifier linked to the store to input it to the Paper Ticket app to enable its functions.
     \end{enumerate}
     
-    \item All the information about the store can be updated by their managers at anytime. The changes will be effective within 24 hours from the update. \lorenzo{CHECK THIS}
+    
+    \item \label{req:codeUnique}Each Store has one and only one queue \yasmin{LOOK AT IT AGAIN WHILE WRITING QUEUE}
+    \begin{enumerate}[label={-}]
+        \item \label{req:codeUnique:visitsAndQueue}Customers who have booked the Visit will be inserted in the same queue of the ones who have got a (paper or online) Ticket, but they will have higher priority.
+        \item \label{req:codeUnique:ticketInfo}Every person on a Ticket can view the time in which they should enter the Store and the duration of their shopping.
+        \item Just Customers with a Ticket or a Visit will have the entering time updated in real time.
+        \item \label{req:codeUnique:invalidateLate}If the Consumer will not show up in time \lorenzo{[specify what in time means]}, their ticket/visit will be considered invalid and it will be cancelled.
+        \item \label{req:codeUnique:exeedDuration}A Consumer which does not go out of the shop within the duration declared will activate the Queue Scaling process and the duration of his/her visit will be extended.  \lorenzo{AGGIUNGERE DI QUANTO}
+        
+        \item \lorenzo{DA METTERE NELLE DEFINIZIONI O SPECIFICHE}Queue Scaling: the system checks if the number of people is less than or equal of the capacity of the store in each period of time (this will be chosen during the implementation process). If not, the system will change the entrance time of some customers to validate the aforementioned constraint. The order of the people with online tickets and booked visits in the queue will be preserved . The time of entrance can be only delayed. The time of entrance of people with paper ticket is frozen (cannot be changed).
+    \end{enumerate}
     
     \item[\textbf{JUST THE MACHINE}] \lorenzo{Controlliamo se questi vadano effettivamente messi.}
-    \item Suggestions for Customers have to be periodically computed - at least once per day.
-    \item Provide protection of data using encryption. \lorenzo{Davvero vogliamo criptare i dati?} \giovanni {Penso sia un po' esagerato, considerando che non abbiamo informazioni particolari. Direi che basta salvare le password salate utilizzando una buona funzione di hashing}
-    \item Suggestions are computed by means of an artificial intelligence system. \lorenzo{mmm, secondo me questo punto puo' essere messo o nel design o in implementazione} \giovanni{Ho scoperto recentemente l'esistenza dei Recommender Systems che si occupano proprio di fornire suggerimenti, magari userei questo al posto di AI systems}
-    \item Suggestions are based on the habits of the Customers, inferred by the System. In a first period will be suggested Stores which are available and geographically close to the Customer (within 1 km).
-    
-    \item Customers who have booked  the Visit will be inserted in the same queue of the Customer who have got a ticket, but will have a higher priority.
+    \item \label{req:periodicallyComputeSuggestion}Suggestions for Customers have to be periodically computed - at least once per day.
+    \item Provide protection of data using encryption. \lorenzo{TO DELETE} \giovanni {Penso sia un po' esagerato, considerando che non abbiamo informazioni particolari. Direi che basta salvare le password salate utilizzando una buona funzione di hashing}  %label{req:encryption}
+    \item Suggestions are computed by means of an artificial intelligence system. \lorenzo{TO DELETE}  \giovanni{Ho scoperto recentemente l'esistenza dei Recommender Systems che si occupano proprio di fornire suggerimenti, magari userei questo al posto di AI systems}  %label{req:MLforSuggestion}
+    \item \label{req:inferringSuggestions}Suggestions are based on the habits of the Customers, inferred by the System. In a first period will be suggested Stores which are available and geographically close to the Customer (within 1 km). 
     
     
-    \item \lorenzo{Segnalazioni?}
+    \item \lorenzo{Segnalazioni?} \lorenzo{Abbiamo deciso che i clienti non fanno segnalazioni: TO DELETE}
 \end{enumerate}
 
 
