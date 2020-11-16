@@ -49,26 +49,26 @@
 \begin{titlepage}
 \vspace*{\fill}
 \begin{figure}[h!]
-	\centering
-	\includegraphics[scale=0.5]{img/logopoli.png}
+    \centering
+    \includegraphics[scale=0.5]{img/logopoli.png}
 \end{figure}
 \vspace{0.7em}
 \begin{center}
-	\Large \textbf{REQUIREMENTS ANALYSIS AND SPECIFICATION DOCUMENT}
+    \Large \textbf{REQUIREMENTS ANALYSIS AND SPECIFICATION DOCUMENT}
 \end{center}
 \begin{center}
-	\large Version 0.1
+    \large Version 0.1
 \end{center}
 \begin{center}
-	\large Version Date
+    \large Version Date
 \end{center}
 \vspace{0.4em}
 \begin{center}
-	\Large \textbf{CLup – Customers Line-up } 
+    \Large \textbf{CLup – Customers Line-up } 
 \end{center}
 \vspace{-0.6em}
 \begin{center}
-	\normalsize Yasmin Awad, Lorenzo Carpaneto, Giovanni Dispoto
+    \normalsize Yasmin Awad, Lorenzo Carpaneto, Giovanni Dispoto
 \end{center}
 \vspace*{\fill}
 \end{titlepage}
@@ -259,14 +259,14 @@ According to IEEE standard, the RASD is structured into 5 sections
 
 \section{Overall Description}
 \label{overallDescription}
-{\large \textbf{2.1 Product perspective}}
-\newline\newline
+
+\subsection{Product perspective}
 In this section we are analyzing all the shared phenomena listed before
 \begin{enumerate}
-\item \textbf{Customer register to Service}: If a Customer wants to register to the service he have to provide information such as Name, Surname etc.. \lorenzo{??? wasnt just email and password?}\giovanni{Name and surname i think that are the basics}
+\item \textbf{Customer register to Service}: If a Customer wants to register to the service he have to provide email and password.
 When the process is completed, the System generate an unique QR code associated to him, used when he goes to stores.
 
-\item \textbf{Manager register to Service}: If a Manager wants to register...
+\item \textbf{Manager register to Service}: If a Manager wants to register has to provide his/her email and password. 
 
 \item \textbf{Customer get a ticket}: When the customer wants to go to a Store, he needs to login in into the application, search for a Store near him and enqueuing. In this instant the System provide a time 
 
@@ -280,11 +280,60 @@ For doing this he have to specify what type of means of transport he use.
 \item \textbf{Showing Map during the Shopping}: In order to minimize the time spent inside the Store
 and for avoid too much interaction with other user, the application suggest a path to the customer using information of categories of item he wants to buy.
 
-\item \textbf{Computing statistics of the Customer}: In order to improve the user experience, the application compute statistics of Stores visited, time spent and in general their habits. These information are used for suggest stores and time-slots \giovanni{Se invece il cliente non inserisce il tempo di visita per il ticket, c'è bisogno di prevderlo}
+\item \textbf{Computing statistics of the Customer}: In order to improve the user experience, the application compute statistics of Stores visited, time spent and in general their habits. These information are used for suggest stores, time-slots and the shopping time. %\giovanni{Se invece il cliente non inserisce il tempo di visita per il ticket, c'è bisogno di prevderlo} \yasmin{se non lo inserisce non può ordinarlo, no?} \giovanni{Era relativo al problema che ci eravamo posti su far inserire il tempo di permanenza nel momento in cui si prende un ticket}
 \end{enumerate}
 
 \subsection{Product functions}
 Detailed description of the product functions
+
+\begin{enumerate}
+    \item \textbf{Get a Ticket}
+    \begin{flushleft}
+        A Customer correctly logged in, can see all the near store. After selecting one, he/she can get a ticket. In order to get a ticket he/she have to specify the duration of the shopping and the means of transport that he/she want to use to get to store. For long term Customer the time of the shopping is inferred and suggested using historical information.
+        After providing this information, the System checks that there are no ovelapped reservation.
+        Before confirm, the Customer can see how much time he/she have to wait before entering in. During this phase, the System check that the user can satisfy time constrain. If not, reject the request.
+        After enquequing, the System continue to keep track of the user, in order to alert him/her to depart from home.
+    \end{flushleft} 
+        \begin{minipage}{\linewidth}
+            \centering
+           \includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/Get_Ticket_diagram.png}
+            \captionof{figure}{Getting ticket phase}
+        \end{minipage}
+    
+    \item \textbf{Book a Visit}
+    \begin{flushleft}
+       A Customer correctly logged in, can see all the near store. After selecting one, he/she can book a visit. After selecting a store he/she have to specify the duration of the visit, select a time slot available and specify the categories of grocery that he/she want to buy in order to allow the System to calculate the best path in order to maximize social distancing. The time spent inside the grocery store is inferred and suggested using historical information.
+       During the visit, the Customer can open the app and see the path suggested from the System.
+    \end{flushleft}
+    \begin{minipage}{\linewidth}
+            \centering
+          \includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/Booking_diagram.png}
+            \captionof{figure}{Booking a visit}
+        \end{minipage}
+        
+    \item \textbf{Add a Store}
+    \begin{flushleft}
+        A Manager correctly logged in can add a new  Store.
+        In order to create a Store a Manager should specify the name of the store, the address, the maximum number of people that can enter inside the store according to health directives, maximum number of people for each department of the store and opening hours. During this phase the Manager could specify other Managers of the store. After creation, he/she have to specify also credentials used by the System to verify that the store exists. At the end of this phase, a Manager upload a map of the stores, reporting information of the store such as walls, departments and category of grocery for each department.
+    \end{flushleft}
+    \item \textbf{Manage a Store}
+    \begin{flushleft}
+        A Manager correctly logged in can edit information of all his stores. He/she can edit the maximum number of people according to new health directives, modify the maximum number of people inside each department, map of the stores. He/she can also modify the managers, transfer ownership or delete a store from the System.
+    \end{flushleft}
+    \item \textbf{Perform a visit with ticket on App}
+    \begin{flushleft}
+        When is the turn of a Customer enqueque, before entering, he/she have to show his/her qr code to scanner machine in order to register the visit. \giovanni{Cosa accade durante la spesa se il tempo sfora quello richiesto?}.
+        Once the Customer finish his shopping, during the payment, he/she scan one more time the qr code, in order to register the exit
+    \end{flushleft}
+    \item \textbf{Perform a visit with paper ticket}
+     \begin{flushleft}
+        When the Customer arrives to the grocery stores, get a ticket from the ticket machine. On the ticket is printed the entering time. Before entering the Customer have to show the qr code to scanner machine. Once the Customer finish his shopping, during the payment, he/she scan one more time the qr code, in order to register the exit
+    \end{flushleft}
+    \item \textbf{Perform a booked visit}
+    \begin{flushleft}
+        Before entering, the Customer scan his/her qr code. When he/she is inside, he can open the app and see the calculated path to follow in order to buy everything that he/she needs. Once the Customer finish his shopping, during the payment, he/she scan one more time the qr code, in order to register the exit
+    \end{flushleft}
+\end{enumerate}
 
 \subsection{User Characteristics}
 
