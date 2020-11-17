@@ -22,11 +22,17 @@
 % pacchetti aggiunti
 \usepackage{comment}
 \usepackage[export]{adjustbox}
-\usepackage{subcaption}
+\usepackage{subfigure}
+%\usepackage{subcaption}
 \usepackage{algorithm}
 \usepackage{algorithmic}
 \usepackage{amsfonts}
+\usepackage{tabularx}
+\usepackage{ltablex}
+\usepackage{caption}
 
+
+\usepackage{comment}
 
 \usepackage{titling}
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}
@@ -49,26 +55,26 @@
 \begin{titlepage}
 \vspace*{\fill}
 \begin{figure}[h!]
-    \centering
-    \includegraphics[scale=0.5]{img/logopoli.png}
+	\centering
+	\includegraphics[scale=0.5]{img/logopoli.png}
 \end{figure}
 \vspace{0.7em}
 \begin{center}
-    \Large \textbf{REQUIREMENTS ANALYSIS AND SPECIFICATION DOCUMENT}
+	\Large \textbf{REQUIREMENTS ANALYSIS AND SPECIFICATION DOCUMENT}
 \end{center}
 \begin{center}
-    \large Version 0.1
+	\large Version 0.1
 \end{center}
 \begin{center}
-    \large Version Date
+	\large Version Date
 \end{center}
 \vspace{0.4em}
 \begin{center}
-    \Large \textbf{CLup – Customers Line-up } 
+	\Large \textbf{CLup – Customers Line-up } 
 \end{center}
 \vspace{-0.6em}
 \begin{center}
-    \normalsize Yasmin Awad, Lorenzo Carpaneto, Giovanni Dispoto
+	\normalsize Yasmin Awad, Lorenzo Carpaneto, Giovanni Dispoto
 \end{center}
 \vspace*{\fill}
 \end{titlepage}
@@ -100,38 +106,26 @@ Finally, to allow entry to those who do not have the adequate technology to use 
 \newline
 \newline
 \newline
-{\large \textbf{1.1.1 Goals}}
+\subsubsection{Goals}
 
 \begin{enumerate}[label={G.\arabic{*}}]
-    % \item \label{goal:account} Allow Users to create an account inserting the required personal data. \lorenzo{cancella}
-    % \begin{enumerate}[label={\ref{goal:account}.\arabic{*}}]
-    %    \item \label{goal:account:types} The User can register either as a Manager or as a Customer.
-    % \end{enumerate}
-    \item \label{goal:influx} Allow Managers to regulate the influx of people in their Grocery Stores, to avoid the formation of queues.
-    \item \label{goal:effectiveQueue} Provide an effective queueing mechanism to enter the Store.
-    % \begin{enumerate}[label={\ref{goal:influx}.\arabic{*}}]
-    %    \item \label{goal:influx:qr} Monitor entrances generating a unique identifier (i.e. QR codes) for each Customer.
-    % \end{enumerate}
-    \item \label{goal:enqueue} Allow Customers to virtually line up for Grocery Stores requesting a Ticket from different locations and devices.
+    \item \label{goal:influx} Regulate the influx of people inside the Stores.
+    \item \label{goal:effectiveQueue} Line up Consumers in an effective way, to avoid overcrowding and long waiting time.
+    \item \label{goal:enqueue} Allow Customers to virtually line up for Stores requesting a Ticket from different locations and devices.
     \begin{enumerate}[label={\ref{goal:enqueue}.\arabic{*}}]
-        \item \label{goal:enque:time} Provide Customers with a reasonably precise estimation of the waiting time.
-        \item \label{goal:enque:alert} Alert Customers \lorenzo{dire ai clienti di partire a una determinata ora, per fare in modo che riescano ad arrivare in tempo} % to take into account the time they need to get to the shop from the place they currently are. 
-        \item \label{goal:enque:fallback} Guarantee a paper ticketing service as a fallback option for people who do not have access to the required technology.
+        \item \label{goal:enqueue:time} Alert Customers when to depart to arrive in time for their shopping.
+        \item \label{goal:enqueue:fallback} Guarantee a paper ticketing service as a fallback option for people who do not have access to the required technology.
     \end{enumerate}
-    \item \label{goal:visit} Allow Customers to book precise time-slots for a Visit to the Store from different locations and devices.
+    \item \label{goal:visit} Allow Customers to virtually line up for Stores booking Visits to the Store in different days from different locations and devices.
     \begin{enumerate}[label={\ref{goal:visit}.\arabic{*}}]
-    %    \item \label{goal:visit:categories} categories e time secondo me già integrati
-        \item \label{goal:visit:path} Suggest to the Customer an optimal shopping path in order to buy everything they need and minimize the flow of people in the Grocery Store.
-        % \item Store and analyse information about the Customer's habits in order to be able to recommend time-slots duration and availability for specific Stores, taking into account their preferences.
-        \item \label{goal:visit:infoForSuggestion} Store and analyse information about the Customer's habits in order to be able to recommend the duration of the Visit and suitable Stores for the Visit.
-        \item \label{goal:visit:personalNotifications} Notify customers of available slots in a day/time range inferring information from their previous Visits.
-    \item \lorenzo{Penso che dovremmo mettere anche un paio di goal per l'applicazione dal punto di vista del manager: es. deve poter scannerizzare i ticket, deve poter fornire il servizio di fallback con macchinetta. Forse accennerei anche al fatto che i manager possano aggiungere negozi all'applicazione. Senza andare troppo nel dettaglio, ma mi sembrano punti essenziali}
+        \item \label{goal:visit:path} Guide Customers inside the Store with a map, to shorten the time of their Visit.
+        \item \label{goal:visit:notifications} Notify the Customer in day-time range, if possible Visits which might interest them are available.
     \end{enumerate}
 \end{enumerate}
 
 \pagebreak
 
-{\large \textbf{1.2 Scope}}
+\subsection{Scope}
 \lorenzo{Maybe the shared are too specific. I just do not really understand the difference that should be from scopes "shared" and requirements}
 
 \begin{flushleft}
@@ -294,7 +288,7 @@ Detailed description of the product functions
         Before confirm, the Customer can see how much time he/she have to wait before entering in. During this phase, the System check that the user can satisfy time constrain. If not, reject the request.
         After enquequing, the System continue to keep track of the user, in order to alert him/her to depart from home.
     \end{flushleft} 
-        \begin{minipage}{\linewidth}
+       	\begin{minipage}{\linewidth}
             \centering
            \includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/Get_Ticket_diagram.png}
             \captionof{figure}{Getting ticket phase}
@@ -337,15 +331,24 @@ Detailed description of the product functions
 
 \subsection{User Characteristics}
 
+\subsection{Assumptions, Dependencies and Constraints}
+\subsubsection{Assumptions}
+\begin{enumerate}[label={DA.\arabic{*}}]
+    \item \label{dom:fewPaperTickets} 
+We assume that Paper Tickets will be few as in a situation of health emergency and social distancing people are invited to stay indoors.\lorenzo{FORSE NON TROPPO CHIARO}
+    \item \label{dom:machineScanning}Each Store provides at least a Machine for Scanning.
+    \item \label{dom:machinePaperTicket}Each Store provides at least as Machine for generating Paper Tickets.
+    \item \label{dom:consumerAccessStore}The Consumers who enter a Store use a ticket, a paper ticket or a Visit and the vast majority of them scan their QR both at the entrance and at the exit.
+\end{enumerate}
 \section{Specific Requirements}
 \label{specificRequirements}
 
 \begin{enumerate}[align=left]
     \item[\textbf{LOGIN \& REGISTER SERVICE}]
-    \item The User must be able to register or to log in if already registered.
+    \item \label{req:logOrReg} The User must be able to register or to log in if already registered.
     \item \label{req:credentialsCheck} Check if the User credentials are valid:
     \begin{enumerate}[label={-}]
-        \item \giovanni{Allow the User to insert Name and Surname} \lorenzo{TO DELETE} \yasmin{TO DELETE} %\label{req:credentialsCheck:insert} 
+        %\label{req:credentialsCheck:insert} 
         \item \label{req:credentialsCheck:email} Check that the email is in the right format.
         \item \label{req:credentialsCheck:uniqueness} Check that the email that the user is providing has not been used for previous registrations.
         \item \label{req:credentialsCheck:password}Check that the password is a Secure Password.
@@ -358,10 +361,9 @@ Detailed description of the product functions
         \item \item \label{req:login:invalidCred} If the email and/or password inserted are wrong, the system must deny the access.
         \item If the username and/or password inserted are wrong, the system must notify the user. \lorenzo{Secondo me questo é da cancellare}
     \end{enumerate}
-    \item \label{req:changeMail} Allow to change email only if the new email is in a correct format.
-    \item Allow to change password if the new password is a Secure Password and it is different from the previous one.
-    \item \label{req:changePass}Allow to change password if it has been forgotten, through the personal email.
-    \item \label{req:provideQR} Provide to each Customer a unique QR code \lorenzo{right after the registration process}.
+    \item \label{req:changeCredentials} Allow to change credentials, if the new credentials are in the right format.
+    \item \label{req:changePassWithMail}Allow to change password if it has been forgotten, through the personal email.
+    \item \label{req:provideQR} Provide to each Customer a unique QR code \lorenzo{which will be used as identifier in the enqueuing process}.
     \begin{enumerate}[label={-}]
         \item \label{req:provideQR:uniqueID} \lorenzo{The QR code will be the identifier of the user within the System. It enables the Customer to get tickets and book Visits.} \yasmin{just the first phrase (till It enables...)}
     \end{enumerate}
@@ -380,6 +382,7 @@ Detailed description of the product functions
         \item \label{req:systemTicket:waitingTime} Provide to the Customer the estimated waiting time before their turn.
         \item \label{req:systemTicket:notifForDepart} Notify Customers when they should depart from home in order to arrive in time for their turn.
     \end{enumerate}
+    \item \label{req:numberTicketPerCust} Each Customer can request only one ticket. When they delete a request or they finish shopping in a Store and check out with the ticket or when the ticket expires, the Customer will be able to request another ticket.
     
     \item[\textbf{BOOKING SERVICE}]
     \item \label{req:requestVisit}The Customer must be allowed to request a Visit, specifying:
@@ -393,15 +396,18 @@ Detailed description of the product functions
     \item \label{req:statisticForDuration}For long time Customers, while booking a Visit, the System should infer, analyzing previous Visits of that Customer, the expected duration of the Visit.
     \item \label{req:sysProvideMap}The System should provide to the Customer a map of the Store. \lorenzo{The map should be provided by the manager [reference to successive requirement]}
     \begin{enumerate}[label={-}]
-        \item \label{req:sysProvideMap:suggestPath}For Customers who have booked a Visit, the system should suggest to the Customer an optimal shopping path in order to buy everything they need and to minimize possible contacts between people inside the store.
+        \item \label{req:sysProvideMap:suggestPath}For Customers who have booked a Visit, the system should suggest to the Customer an optimal shopping path in order to buy everything they need, to minimize possible contacts between people inside the store and to shorten the time of the visit.
     \end{enumerate}
     \item \label{req:seeRequests}Allow Customers to consult their pending requests.
     \item \label{req:deleteTickOrVis}The Customer must be allowed to delete a Visit or a Ticket from his/her pending requests.
     \item \label{req:thirdPartyGPS}Use third party services to enable the localization of Customers and Stores. 
-    \item \lorenzo{Notify Customers when they should depart from home in order to arrive in time for their Visit.} \yasmin{TO DELETE} \giovanni{LASCIALO} \lorenzo{dont know} %\label{req:notifyCustomerToDepart}
+    \item \lorenzo{Notify Customers when they should depart from home in order to arrive in time for their Visit.} \yasmin{TO DELETE} \giovanni{LASCIALO} \lorenzo{TO DELETE} %\label{req:notifyCustomerToDepart}
     \item \label{req:notifyCustomerOpenSlots}Notify customers of available slots in a day-time range inferring information from their previous Visits.
+    \item \label{req:visitPerDay} Each Customer can book up to three Visits in a single day.
     
-    \item Every notification will be temporarily stored in the DBMS and it will be accessible by the Customer for a limited amount of time. \lorenzo{CHECK THIS} \yasmin{IMPRECISE}%\label{req:notificationDB}
+    \item \label{req:expiredTickOrVis} If a Visit/ticket is expired, or it has served its purpose, or it has been deleted, it will be removed and will not be visible to the Customer anymore 
+
+    \item \label{req:accessNotification} Every personal notification will be accessible by the Customer for a limited amount of time \lorenzo{CHECK THIS}
     
     \item[\textbf{STORE MANAGEMENT SERVICE}]
     \item \label{req:man:createStore}Allow Managers to create Stores, becoming the Owner of the Store.
@@ -411,6 +417,7 @@ Detailed description of the product functions
         \item \label{req:man:createStore:maxPeoplePerDep}Allow Managers to specify maximum number of people for each Department of the Store.
         \item \label{req:man:createStore:openingHours}Allow Managers to specify Store opening hours.
         \item \label{req:man:createStore:daysToBook}Allow managers to specify how many days in advance a Visit can be booked
+        \item \label{req:man:createStore:percentageTicket} Allow Managers to specify the percentage of Capacity of the Store reserved exclusively for Ticket's reservations.
     \end{enumerate}
     \item \label{req:man:deleteStore}Allow Owner to delete their Stores.
     \item \label{req:man:verifyOwnerCred}Verify the Store creation, acquiring specific credentials that can be used to verify the validity of the Store and of the Manager. \lorenzo{(During the creation of a Store ask for an associated PEC)}
@@ -428,6 +435,7 @@ Detailed description of the product functions
         \item \label{req:man:whenToUpdate}All the information about the Store can be updated by their Managers at anytime
     \begin{enumerate}[label={-}]
         \item \label{req:man:whenToUpdate:whenEffective}If the updates change opening hours or the maximum number of people in the store or how many days in advance a Visit can be booked, the Manager will have two options: make the updates effective within 24 hours, losing booked Visits which are not valid anymore, or make the updates effective within the current amount of how many days in advance a Visit can be booked without taking a chance on losing booked Visits.
+        \item \label{req:man:whenToUpdate:lostVisits} If some Visits are cancelled, the System notify the Customers involved.
     \end{enumerate}
     
     \item \label{req:man:uploadMap}Allow Managers to upload a map of their Stores:
@@ -437,9 +445,9 @@ Detailed description of the product functions
         \item \label{req:man:uploadMap:specInCategories}Allow Managers to specify groceries and brands for each Department. \lorenzo{!!! let's talk about the difference between department and categories of grocery.}
     \end{enumerate}
     
-    \item \label{req:scannerApp}Provide a specific \textbf{Scanner App} to scan the QR codes of the Customers and to interact with the queuing mechanism.
+    \item \label{req:scannerApp}Provide a specific \textbf{Scanner App} to scan the QR codes of the Consumers and to interact with the queuing mechanism.
     \begin{enumerate}[label={-}]
-        \item \label{req:scannerApp:createCode}The managers of a Store can create a unique identifier linked to the Store to input it into the Scanner app to enable its functions.
+        \item \label{req:scannerApp:response} Once a Scanner scan a QR code it can visualize one of this messages if the Consumer of that QR code can enter the Store, or if he is still in the queue (it's not his turn yet), or if his reservation has been deleted (because of Queue Scaling Process or because he never reserved anything).
     \end{enumerate}
     
     \item \label{req:paperTicketApp}Provide a specific \textbf{Paper Tickets App} to generate paper tickets in the store and to interact with the queuing mechanism.
@@ -450,27 +458,666 @@ Detailed description of the product functions
     \end{enumerate}
     
     
-    \item \label{req:codeUnique}Each Store has one and only one queue \yasmin{LOOK AT IT AGAIN WHILE WRITING QUEUE}
+    \item \label{req:queueUnique}Each Store has one and only one queue.
     \begin{enumerate}[label={-}]
-        \item \label{req:codeUnique:visitsAndQueue}Customers who have booked the Visit will be inserted in the same queue of the ones who have got a (paper or online) Ticket, but they will have higher priority.
-        \item \label{req:codeUnique:ticketInfo}Every person on a Ticket can view the time in which they should enter the Store and the duration of their shopping.
-        \item Just Customers with a Ticket or a Visit will have the entering time updated in real time.
-        \item \label{req:codeUnique:invalidateLate}If the Consumer will not show up in time \lorenzo{[specify what in time means]}, their ticket/visit will be considered invalid and it will be cancelled.
-        \item \label{req:codeUnique:exeedDuration}A Consumer which does not go out of the shop within the duration declared will activate the Queue Scaling process and the duration of his/her visit will be extended.  \lorenzo{AGGIUNGERE DI QUANTO}
+        \item \label{req:codeUnique:queueVector} The queue is a vector as long as the number of minutes the Store is open divided by 5, ie a Temporal Quantum.
+        \item \label{req:codeUnique:vectorOfVectors} Every element of the vector of the queue contains a vector long as the capacity of the Store. 
+        \item \label{req:codeUnique:queueReservations} Every time a Consumer makes a Reservation, as many spaces as the Duration of Shopping divided by 5 are occupied, if and only if the System can find sequential empty spaces (ie an empty space in different subsequent vectors of the queue vector) for each of them within the queue. The spaces occupied in each vector will be the first available in that vector.
+        \item \label{req:codeUnique:visitsAndQueue} Consumers who have booked a Visit will be inserted in the same queue of the ones who have got a (paper or virtual) Ticket, but they will have higher priority.
+        \item \label{req:codeUnique:ticketsAndQueue} Consumers with a Paper Ticket have a higher priority than the ones with Virtual Tickets.
+        %\item \label{req:codeUnique:ticketInfo}Every person on a Ticket can view the time in which they should enter the Store and the indicated duration of their shopping. __ !!!!! per me questo non va dentro alla coda!!!! forse anche questo dopo:
+        \item Only the Customers will have the entering time updated in real time. %The time of the Visits must be updated as a last resort.
+        \item \label{req:codeUnique:invalidateLate} If the Consumer will not show up in time, that is if the store Scanner does not receive the scan of the QR Code relating to the Consumer before the ending of the first quantum of their Reservation, their Reservation will be considered invalid and it will be cancelled.
+        \item \label{req:codeUnique:exeedDuration} A Consumer which does not go out of the shop within the duration declared will activate the Queue Scaling Process and the duration of his/her visit will be extended (for clarifications on the Queue Scaling Process, go to chapter ...)
+        \item \label{req:codeUnique:scalingExceed} During the Queue Scaling Process, any scaling that causes a Reservation to exceed the closing date will lead to the cancellation of the Reservation.
+        \item \label{req:codeUnique:queueNotifications} Every time a Reservation is cancelled, the Customer must be notified.
+        \item \label{req:codeUnique:queueLast30} The last 30 minutes in which a Store is open cannot be booked by any type of Reservation, so that they can be exploited within the Queue Scaling Process, in order to eventually have to eliminate a smaller number of Reservations.
+        \item \label{req:codeUnique:queueReset} When the Store closes (each day) the queue resets it states, keeping only the booked Visits for the next days.
         
-        \item \lorenzo{DA METTERE NELLE DEFINIZIONI O SPECIFICHE}Queue Scaling: the system checks if the number of people is less than or equal of the capacity of the store in each period of time (this will be chosen during the implementation process). If not, the system will change the entrance time of some customers to validate the aforementioned constraint. The order of the people with online tickets and booked visits in the queue will be preserved . The time of entrance can be only delayed. The time of entrance of people with paper ticket is frozen (cannot be changed).
+        %\item \lorenzo{DA METTERE NELLE DEFINIZIONI O SPECIFICHE}Queue Scaling: the system checks if the number of people in the Store is less than or equal of the capacity of the store in each period of time (this will be chosen during the implementation process). If not, the system will change the entrance time of some customers to validate the aforementioned constraint. The order of the people with online tickets and booked visits in the queue will be preserved . The time of entrance can be only delayed. The time of entrance of people with paper ticket is frozen (cannot be changed).
     \end{enumerate}
-    
-    \item[\textbf{JUST THE MACHINE}] \lorenzo{Controlliamo se questi vadano effettivamente messi.}
-    \item \label{req:periodicallyComputeSuggestion}Suggestions for Customers have to be periodically computed - at least once per day.
-    \item Provide protection of data using encryption. \lorenzo{TO DELETE} \giovanni {Penso sia un po' esagerato, considerando che non abbiamo informazioni particolari. Direi che basta salvare le password salate utilizzando una buona funzione di hashing}  %label{req:encryption}
-    \item Suggestions are computed by means of an artificial intelligence system. \lorenzo{TO DELETE}  \giovanni{Ho scoperto recentemente l'esistenza dei Recommender Systems che si occupano proprio di fornire suggerimenti, magari userei questo al posto di AI systems}  %label{req:MLforSuggestion}
+
     \item \label{req:inferringSuggestions}Suggestions are based on the habits of the Customers, inferred by the System. In a first period will be suggested Stores which are available and geographically close to the Customer (within 1 km). 
-    
-    
-    \item \lorenzo{Segnalazioni?} \lorenzo{Abbiamo deciso che i clienti non fanno segnalazioni: TO DELETE}
 \end{enumerate}
 
+
+\subsubsection{Use Cases}
+\begin{enumerate}[labelindent=20pt, label={UC.\arabic*}, itemindent=1em,leftmargin=!]
+    % both customer and manager
+    \item Registration \label{uc:registration}
+    \item Login \label{uc:login}
+    \item Update Credentials \label{uc:updateCredentials}
+    \item Lost Password \label{uc:lostPassword}
+    % customer
+    \item Get Ticket \label{uc:getTicket}
+    \item Book Visit \label{uc:getVisit}
+    \item Access Store \label{uc:accessStore}
+    \begin{enumerate}[label={-}]
+        \item Using Ticket
+        \item Using Visit
+    \end{enumerate}
+    \item Delete Ticket/Visit \label{uc:deleteBooked}
+    % manager
+    \item Create Store \label{uc:createStore}
+    \item Activate Scanner \label{uc:useScanner}
+    \item Activate Paper-ticket machine \label{uc:usePaper}
+    \item Update Store info \label{uc:updateStoreInfo}
+\end{enumerate}
+\label{uc:traceabilityMatrix}
+\begin{center}
+{\textbf{Traceability Matrix}}
+\end{center}
+
+\begin{tabularx}{\linewidth}{| p{20mm} | p{20mm} | p{30mm} | p{50mm} |}
+
+    % UC GOAL REQ DOMAIN
+     \hline
+	USE CASES & GOALS & REQUIREMENTS & DOMAIN ASSUMPTIONS \\
+	 \hline
+	\ref{uc:registration} & --- & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:confirmRegistration}, \ref{req:provideQR}  & ---\\
+	
+	 \hline
+	\ref{uc:login} & --- & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:login} & --- \\
+	
+	\hline
+	\ref{uc:updateCredentials} & --- & \ref{req:changeCredentials} & --- \\
+
+	\hline
+	\ref{uc:lostPassword} & --- & \ref{req:changePassWithMail} & --- \\
+	
+	\hline
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+	\ref{uc:getTicket} & \ref{goal:influx}, \ref{goal:effectiveQueue}, \ref{goal:enqueue} & \ref{req:requestTicket}, \ref{req:systemTicket}, \ref{req:numberTicketPerCust} & --- \\
+	\hline
+	
+	\ref{uc:getVisit} & \ref{goal:influx}, \ref{goal:effectiveQueue}, \ref{goal:visit} & \ref{req:requestVisit}, \ref{req:visitPerDay}, \ref{req:statisticForDuration}, \ref{req:visitPerDay} & --- \\
+	\hline
+	
+	\ref{uc:accessStore} & \ref{goal:influx}, \ref{goal:effectiveQueue}, \ref{goal:enqueue}, \ref{goal:visit} & \ref{req:sysProvideMap}, \ref{req:thirdPartyGPS}, \ref{inferringSuggestions} & \ref{dom:machineScanning}, \ref{dom:machinePaperTicket}, \ref{dom:consumerAccessStore}, \ref{dom:consumerAccessStore} \\
+	\hline
+	
+	\ref{uc:deleteBooked} & --- & \ref{req:deleteTickOrVis}, \ref{req:expiredTickOrVis} & --- \\
+    \hline
+    
+    \ref{uc:createStore} & --- & \ref{req:man:createStore}, \ref{req:man:verifyOwnerCred} & --- \\
+    \hline
+    
+    \ref{uc:useScanner} & \ref{goal:influx}, \ref{goal:enqueue} & \ref{req:scannerApp} & \ref{dom:machineScanning}\\
+    \hline
+    
+    \ref{uc:usePaper} & \ref{goal:influx}, \ref{goal:enqueue} & \ref{req:paperTicketApp} & \ref{dom:machinePaperTicket}\\
+    \hline
+    
+    \ref{updateStoreInfo} & \ref{goal:influx} & \ref{req:man:whenToUpdate}, \ref{req:man:updateStoreInfo} & --- \\
+    \hline
+    
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:registration}: Registration}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A User wants to create an account for the main application.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{User}}, \lorenzo{METTIAMO SYSTEM O DEFINIAMO UN LOGIN MANAGER?}\giovanni{In due RASD ho visto sia questo modo oppure nulla} \textbf{\textit{Login Manager}} and \textbf{\textit{Mailing Service}}\\
+	
+	\hline
+	\textbf{Preconditions} & The User downloads and opens the application.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The User clicks on the Sign Up button.
+			\item The User fills the editable fields with the requested information: email, password and if they want to register as Customer or Manager.
+			\item The \lorenzo{Login Manager} checks if all the credentials are valid.
+			\item If the credentials are valid, the \lorenzo{Login Manager} sends a confirmation email to the User to activate the account.
+			\item The User receives the mail with a specific URL to activate the account. By clicking on the given URL, they activate the account.
+			\item If the user is a Customer, they get a personal unique QR-code.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & Activation of a new account. The User can access the services of the product.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the User does not enter valid credentials (invalid email or a password which is not a SecurePassword [\ref{def:securepass}]), the registration fails and the user is prompted to restart the registration process.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{minipage}{\linewidth}
+            \centering
+           \includegraphics[height=0.1\textheight, scale=0.2, keepaspectratio]{img/registration_use_case_diagram.png}
+            \captionof{figure}{Registration}
+\end{minipage}
+
+\begin{center}
+{\textbf{\ref{uc:login}: Login}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A User wants to log-in into the main application.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{User}}, \lorenzo{METTIAMO SYSTEM O DEFINIAMO UN LOGIN MANAGER?}\giovanni{In due RASD ho visto sia questo modo oppure nulla} \textbf{\textit{Login Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The User opens the application on their device and is registered.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The User fills the editable fields with the requested information: email and password
+			\item The User clicks on the Sign In button.
+			\item The \lorenzo{Login Manager} checks if the credentials are valid. 
+			\item If the credentials are valid, the User successfully logs-in the application.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The User logs-in the application with their personal account.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the user does not enter valid credentials, a failure message pops up on the screen prompting them to re-enter the credentials.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:updateCredentials}: Update Credentials}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A User wants to update their credentials.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{User}}\\
+	
+	\hline
+	\textbf{Preconditions} & The User opens the application on their device and is logged in.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The User clicks on the update credential button, from the home page\lorenzo{CHECK INTERFACES}.
+			\item The User fills the editable fields with the requested information: email and password, and confirms the operation through a button.
+			\item The \lorenzo{Login Manager} checks if the new credentials are valid. 
+			\item If the new credentials are valid, the User has successfully updated their credentials
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The User successfully updates their credentials.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the user does not enter valid credentials, a failure message pops up on the screen, and the credentials are not updated.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:lostPassword}: Lost Password}}
+% TODO
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A User wants to log-in into the main application but they have forgotten the password.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{User}}, \lorenzo{\textit{Login Manager}}, \textit{\textbf{Mailing System}} \\
+	
+	\hline
+	\textbf{Preconditions} & The User opens the application on their device and is registered.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The User clicks on the Recover Password button, in the log-in page \lorenzo{CHECK INTERFACES}.
+			\item The User enter their mail in the editable box, and they click the recover password button.
+			\item The \lorenzo{\textit{Login Manager}} checks if the mail is associated to a registered User.
+			\item If the mail is associated to a registered user, the \lorenzo{\textit{Login Manager}} sends a mail to the user with appropriate instructions.
+			\item The User follows the instructions on the email and is able to access their account.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The User can log-in the application.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the User does not enter a mail associated to a registered user, the procedure fails and a failure message pops up on the screen, prompting the User to insert a mail associated to one account.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:getTicket}: Get Ticket}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer requests a ticket for lining up for entering a specific Store.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{User}}, \textit{\textbf{Store}}, \textit{\textbf{Queuing mechanism}}  \lorenzo{CHECK THESE}\\
+	
+	\hline
+	\textbf{Preconditions} & The User opens the application on their device and is logged in.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+		    \item The Customer clicks on the reservation tab in the home page. \lorenzo{CHECK INTERFACES}
+			\item The Customer searches for the Store they want to go to, typing its name in the apposite text box.
+			\item The Customer clicks on the Store they want to go to, from the list which has spawned in the mean time.
+			\item The Customer checks the Ticket check-box.
+			\item The Customer specifies the duration of their Visit using the apposite GUI elements. The Customer can either input a duration or select one which is inferred by the System.
+			\item The Customer specifies with which means of transport they will go to the Store.
+			\item Using third party API, and the current location of the Customer, the System compute how much time the Customer needs to go to the Store, the available positions in the queue
+			\item The System places the Customer in the queue accordingly.
+			\item The System alerts the Customer on how much time they would have to get to the Store and asks for confirmation.
+			\item If the Customer clicks on the "reserve" button, and has no other valid ticket, the ticket request is successful and the ticket is reserved.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer gets the ticket.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer exits the application before hitting the reserve button, the request is silently discarded.
+			\item If there are no position available in the Queue, the system logs to the User a failure message and the request is discarded.
+			\item If the Customer is too far away from the store to arrive and finish their shopping in time for the closure of the Store, the system logs to the User a failure message the request is discarded.
+			\item If a Customer has a valid ticket, the System does not allow the Customer to get another one, logs a failure message and the request is discarded.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:getVisit}: Book Visit}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer books a Visit for a specific Store.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{User}}, \textit{\textbf{Store}}, \textit{\textbf{Queuing mechanism}}  \lorenzo{CHECK THESE}\\
+	
+	\hline
+	\textbf{Preconditions} & The Customer opens the application on their device and is logged in.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Customer searches for the Store they want to go to, typing its name in the apposite text box.
+			\item The Customer clicks on the Store they want to go to, from the list which has spawned in the mean time.
+			\item The Customer checks the Visit check-box.
+			\item The Customer specifies the duration of their Visit using the apposite GUI elements. The Customer can either input a duration or select one which is inferred by the System.
+			\item The Customer specifies which day they are planning to do the Visit.
+			\item The System provides time slots available, in the day requested by the user to visit the specific Store, and the Customer can choose one of those.
+			\item \lorenzo{SUGGESTION OF OTHER SIMILAR STORE TIME SLOTS AVAILABLE?}
+			\item The Customer can select the categories of items they would like to buy.
+			\item The Customer can book the Visit, clicking on the apposite button, if in the specified day they do not have already booked 3 Visits.
+			\item The System inserts the Customer into the Queue of the Store, in the specified day, and at the specified time.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The User books the Visit.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer has booked three Visits in specified day, the system logs a failure message and discards the Visit.
+			\item If there are not any available time-slots the System logs a failure message \lorenzo{OR SUGGESTION TO OTHER STORES/DAYS?}
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{minipage}{\linewidth}
+        \centering
+           \includegraphics[height=0.4\textheight, scale=0.1, keepaspectratio]{img/book_ticket_use_diagram.png}
+            \captionof{figure}{Get Ticket and Book Visit}
+        \end{minipage}
+
+\begin{center}
+{\textbf{\ref{uc:accessStore}: Access Store - Using Ticket}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer shops into a store, accessing it with a ticket.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Store}}, \textit{\textbf{Queuing mechanism}}  \lorenzo{CHECK THESE}\\
+	
+	\hline
+	\textbf{Preconditions} & The Customer has a reserved ticket.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The System tells the Customer when to depart from their place to go to the Store on time with the specified means of transport.
+			\item Once arrived at the Store the Customer checks the entrance time on the ticket (it could be updated). The customer enters the Store when specified by the ticket.
+			\item The Customer scans their personal QR-code (which can be found in the profile tab in the app) with the Machine for Scanning provided by the Store.
+			\item The Customer enters the Store and tries to comply with the duration specified on the ticket.
+			\item The system collects the duration of the shopping, storing it in the Database \lorenzo{CHECK THIS}.
+			\item After paying the Customer is prompted by the Store's operator to scan again the QR-code.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer has done their shopping in the desired Store.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer cannot make it in time, the ticket reserved is invalidated by the System.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:accessStore}: Access Store - Using Visit}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer shops into a store, accessing it with a Visit.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Store}}, \textit{\textbf{Queuing mechanism}}  \lorenzo{CHECK THESE}\\
+	
+	\hline
+	\textbf{Preconditions} & The Customer has a valid Visit booked.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item Once arrived at the Store the Customer checks the entrance time on the Visit they booked (it could be updated). The customer enters the Store when specified by the Visit.
+			\item The Customer scans their personal QR-code (which can be found in the profile tab in the app) with the machine provided by the Store.
+			\item The Customer enters the Store and tries to comply with the duration specified on the ticket.
+			\item If the Customer is late, the system automatically updates the queue.
+			\item The Customer is guided by the app through the store thanks to a map which show them the path to arrive to the categories specified during the booking of the Visit.
+			\item The system collects the duration of the Visit, storing it in the Database \lorenzo{CHECK THIS}.
+			\item After paying the Customer is prompted by the Store's operator to scan again the QR-code.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer has done their Visit in the desired Store.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer cannot make it in time, the ticket reserved is invalidated by the System.
+		\end{enumerate}}\\
+
+	\hline
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:deleteBooked}: Delete Booked}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer deletes a booked Visit or a Ticket.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queuing mechanism}}  \lorenzo{CHECK THESE}\\
+	
+	\hline
+	\textbf{Preconditions} & The Customer has booked a Visit or reserved a Ticket.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Customer goes onto the reservation tab.
+			\item The Customer presses onto the reservation they want to delete.
+			\item The Customer presses on the delete button.
+			\item The System deletes the reservation.
+			\item The System updates the queue status accordingly.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer has deleted their Visit/Ticket reservation.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item During the Visit/shopping time with the Ticket, the Costumer cannot delete the corresponding Ticket/Visit.
+		\end{enumerate}}\\
+
+	\hline
+\end{tabularx}
+
+
+\begin{center}
+{\textbf{\ref{uc:createStore}: Create Store}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Manager creates a new Store.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Store}}, \textit{\textbf{Mailing Service}}  \lorenzo{CHECK THESE}\\
+	
+	\hline
+	\textbf{Preconditions} & The Manager is logged-in into the main application. \\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Manger clicks on the create Store button in the store tab.
+			\item The Manager inputs the requested information in the editable boxes.
+			\item The Manager inputs special credentials, \lorenzo{PEC email associated to the Store}, to certify the authenticity of the Store.
+			\item The Customer follows the instructions on the email to activate the Store.
+			\item The System sends an email to the given PEC to finalize the Store creation.
+			\item The Store is created, and the Manager becomes the Owner of the Store.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Store is created, and the Manager becomes the Owner of the Store.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the information given is invalid, the System deny the Store creation and logs to the screen an error message.
+		\end{enumerate}}\\
+
+	\hline
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:useScanner}: Activate Scanner}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Manager activates a scanner associated with one of their Stores.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Queuing Mechanism}}, \textbf{\textit{Store}}\\
+	
+	\hline
+	\textbf{Preconditions} & The Manager opens the application on their device and is associated to a Store.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Manager clicks on the interested Store
+			\item The manager clicks on the generate scanner button
+			\item The System generates a unique code, the scanner code associated with the queue of the Store.
+			\item The Manager can send this code to their clerks/machines.
+			\item The clerks with the code can access a specific application and input it in the specific editable text box.
+			\item The clerks can now use this app to scan the QR-codes of the Customers.
+			\item Each scan can influence the queue status.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Store is able to scan the tickets of the Customers.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the code input in the app is wrong, the System outputs a failure message on the screen.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:usePaper}: Activate Paper Ticket}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Manager activates a paper-ticket service associated with one of their Stores.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Queuing Mechanism}}, \textbf{\textit{Store}}\\
+	
+	\hline
+	\textbf{Preconditions} & The Manager opens the application on their device and is associated to a Store.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Manager clicks on the interested Store
+			\item The manager clicks on the generate paper ticket button
+			\item The System generates a unique code, the paper-ticket code associated with the queue of the Store.
+			\item The Manager can use this code in the apposite machine, to set up a paper ticket service
+			\item The Consumers can now get tickets from this machine.
+			\item Each tickets influences the queue status.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Store is able to produce paper tickets for the Consumers.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the code input in the app is wrong, the System outputs a failure message on the screen.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:updateStoreInfo}: Update Store Info}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Manager wants to update Store information.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Queuing Mechanism}}\\
+	
+	\hline
+	\textbf{Preconditions} & The Manager opens the application on their device and is associated to a Store.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Manager clicks on the interested Store
+			\item The manager clicks on the update information\lorenzo{CHECK INTERFACES}.
+			\item The Manager fills the editable fields with the updated information and confirms the operation through a button. (Simple Manager and Owner, have different editable fields).
+			\item If the Manager has edited information which are linked to the Queueing mechanism (max number of people, opening hours, amount of days in advance in which a Visit can be booked), the System logs a message: these changes can be uploaded within 24 hours, taking a chance on canceling some Visits previously booked, or can be uploaded in the current amount of days in advance in which a Visit can be booked, without losing any Visit.
+			\item The System sends notifications to Customers if their Visits have been cancelled.
+			\item The System upload the information in the due time.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Manager successfully updates the Store information.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Manager inputs some invalid information, the operation fails and is cancelled and the System logs a failure message on the screen.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
 
 \section{Formal Analysis Using Alloy}
 \label{analysisAndAlloy}
