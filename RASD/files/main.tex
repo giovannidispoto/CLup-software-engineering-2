@@ -342,7 +342,29 @@ We assume that Paper Tickets will be few as in a situation of health emergency a
 \end{enumerate}
 \section{Specific Requirements}
 \label{specificRequirements}
+\subsection{External Interface Requirements}
+CL-up is a mobile based application, that can be also consulted using a web browser. Additional details regarding the hardware, software and communication interface requirements are described and shown below. There will also be some prototypes of User Interface for users who use mobile.
 
+\subsubsection{User Interface}
+
+\subsubsection{Hardware Interface}
+The application is available for any type of mobile, having Internet access, a relatively recent browser, a GPS function, and enough storage space to accommodate the application itself.
+
+\subsubsection{Software Interface}
+\begin{enumerate}
+\item[$\bullet$] Operating System: iOS, Android.
+\item[$\bullet$] Web browser.
+\item[$\bullet$] Web Server application.
+\item[$\bullet$] DBMS.
+\item[$\bullet$] Ticketing System: use third part services for GPS function. 
+\item[$\bullet$] Mailing Service: APIs to send emails to the User
+\item[$\bullet$] Queueing System: ??
+\end{enumerate}
+
+\subsubsection{Communication Interface}
+The System runs over HTTPS protocol for the communication with application and notification system. The System also communicate with DBMS \giovanni{In qualche modo lo farà pure}.
+
+\subsection{Functional Requirements}
 \begin{enumerate}[align=left]
     \item[\textbf{LOGIN \& REGISTER SERVICE}]
     \item \label{req:logOrReg} The User must be able to register or to log in if already registered.
@@ -460,19 +482,21 @@ We assume that Paper Tickets will be few as in a situation of health emergency a
     
     \item \label{req:queueUnique}Each Store has one and only one queue.
     \begin{enumerate}[label={-}]
-        \item \label{req:codeUnique:queueVector} The queue is a vector as long as the number of minutes the Store is open divided by 5, ie a Temporal Quantum.
-        \item \label{req:codeUnique:vectorOfVectors} Every element of the vector of the queue contains a vector long as the capacity of the Store. 
-        \item \label{req:codeUnique:queueReservations} Every time a Consumer makes a Reservation, as many spaces as the Duration of Shopping divided by 5 are occupied, if and only if the System can find sequential empty spaces (ie an empty space in different subsequent vectors of the queue vector) for each of them within the queue. The spaces occupied in each vector will be the first available in that vector.
+        \item \label{req:codeUnique:queueVector} The queue for each day is as long as the number of minutes the Store is open divided by 5, ie a Temporal Quantum.
+        \item \label{req:codeUnique:vectorOfVectors} Every Temporal Quantum of the queue contains as many elements as the capacity of the Store.
+        \item \label{req:codeUnique:queueReservations} Every time a Consumer makes a Reservation, it is occupied an element in every Temporal Quantum he needs, that is the Duration of Shopping divided by 5, if and only if the System can find sequential empty spaces (ie an empty space in different subsequent Temporal Quantums of the queue) within the queue. The spaces occupied in each Temporal Quantum will be the first available in that Temporal Quantum.
         \item \label{req:codeUnique:visitsAndQueue} Consumers who have booked a Visit will be inserted in the same queue of the ones who have got a (paper or virtual) Ticket, but they will have higher priority.
         \item \label{req:codeUnique:ticketsAndQueue} Consumers with a Paper Ticket have a higher priority than the ones with Virtual Tickets.
-        %\item \label{req:codeUnique:ticketInfo}Every person on a Ticket can view the time in which they should enter the Store and the indicated duration of their shopping. __ !!!!! per me questo non va dentro alla coda!!!! forse anche questo dopo:
         \item Only the Customers will have the entering time updated in real time. %The time of the Visits must be updated as a last resort.
-        \item \label{req:codeUnique:invalidateLate} If the Consumer will not show up in time, that is if the store Scanner does not receive the scan of the QR Code relating to the Consumer before the ending of the first quantum of their Reservation, their Reservation will be considered invalid and it will be cancelled.
+        \item \label{req:codeUnique:invalidateLate} If the Consumer will not show up in time, that is if the store Scanner does not receive the scan of the QR Code relating to the Consumer before the ending of the first Temporal Quantum of their Reservation, their Reservation will be considered invalid and it will be cancelled.
         \item \label{req:codeUnique:exeedDuration} A Consumer which does not go out of the shop within the duration declared will activate the Queue Scaling Process and the duration of his/her visit will be extended (for clarifications on the Queue Scaling Process, go to chapter ...)
-        \item \label{req:codeUnique:scalingExceed} During the Queue Scaling Process, any scaling that causes a Reservation to exceed the closing date will lead to the cancellation of the Reservation.
+        \item \label{req:codeUnique:queueScaling} The scaling of Consumers in the queue has to be done in such a way that Consumers can be scaled only forward and not backwards (for clarifications on the Queue Scaling Process, go to chapter ...)
+        \item \label{req:codeUnique:scalingExceed} During the Queue Scaling Process, any scaling that causes a Reservation to exceed the closing hours will lead to the cancellation of the Reservation.
+        \item \label{req:codeUnique:scalingOverlap} During the Queue Scaling Process, any scaling that causes a Virtual Ticket or Visit to overlap with another Virtual Ticket or Visit of the same Costumer (also for different Stores), there will be a cancellation of one of the Reservations. \yasmin{dovrei specificare con quale priorità} 
         \item \label{req:codeUnique:queueNotifications} Every time a Reservation is cancelled, the Customer must be notified.
         \item \label{req:codeUnique:queueLast30} The last 30 minutes in which a Store is open cannot be booked by any type of Reservation, so that they can be exploited within the Queue Scaling Process, in order to eventually have to eliminate a smaller number of Reservations.
         \item \label{req:codeUnique:queueReset} When the Store closes (each day) the queue resets it states, keeping only the booked Visits for the next days.
+        \item \label{req:codeUnique:reset} The queue should be made in such a way that after the closing hours of a Store, it delete every old Reservations, that is every Reservation made for that day. In this way just future booked Visits are preserved.
         
         %\item \lorenzo{DA METTERE NELLE DEFINIZIONI O SPECIFICHE}Queue Scaling: the system checks if the number of people in the Store is less than or equal of the capacity of the store in each period of time (this will be chosen during the implementation process). If not, the system will change the entrance time of some customers to validate the aforementioned constraint. The order of the people with online tickets and booked visits in the queue will be preserved . The time of entrance can be only delayed. The time of entrance of people with paper ticket is frozen (cannot be changed).
     \end{enumerate}
