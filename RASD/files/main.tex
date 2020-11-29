@@ -1,15 +1,16 @@
-\documentclass[a4paper, 10pt, oneside]{article}
-
+\documentclass[a4paper, 12pt, oneside]{article}
 \usepackage[square, numbers, comma, sort&compress]{natbib}  % Use the "Natbib" style for the references in the Bibliography
 \usepackage{verbatim} 
 \usepackage[english]{babel}
-\usepackage[utf8x]{inputenc}
+\usepackage[utf8]{inputenc}
 \usepackage{graphicx}
 \usepackage{multirow}
 \usepackage{amsmath}
 \usepackage{amssymb}
 %\usepackage{cite}
 \usepackage{booktabs}
+\usepackage{listings}
+\usepackage{alloy-style}
 \usepackage{epstopdf}
 \usepackage{helvet} 
 \renewcommand{\familydefault}{\sfdefault}
@@ -30,13 +31,12 @@
 \usepackage{tabularx}
 \usepackage{ltablex}
 \usepackage{caption}
-
-
-\usepackage{comment}
-
 \usepackage{titling}
+\usepackage{spreadtab}
 \renewcommand\maketitlehooka{\null\mbox{}\vfill}
 \renewcommand\maketitlehookd{\vfill\null}
+
+\usepackage{comment}
 
 \usepackage{enumerate}
 \usepackage{enumitem}
@@ -48,12 +48,12 @@
 
 \title{RASD}
 \author{Yasmin Awad, Lorenzo Carpaneto, Giovanni Dispoto}
-\date{October 2020}
+\date{November 2020}
 
 \begin{document}
 
 \begin{titlepage}
-\vspace*{\fill}
+%\vspace*{\fill}
 \begin{figure}[h!]
 	\centering
 	\includegraphics[scale=0.5]{img/logopoli.png}
@@ -62,19 +62,23 @@
 \begin{center}
 	\Large \textbf{REQUIREMENTS ANALYSIS AND SPECIFICATION DOCUMENT}
 \end{center}
-\begin{center}
-	\large Version 0.1
-\end{center}
-\begin{center}
-	\large Version Date
-\end{center}
-\vspace{0.4em}
+%\begin{center}
+%	\large Version 0.1
+%\end{center}
+%\begin{center}
+%	\large Version Date
+%\end{center}
+%\vspace{0.4em}
 \begin{center}
 	\Large \textbf{CLup – Customers Line-up } 
 \end{center}
 \vspace{-0.6em}
 \begin{center}
 	\normalsize Yasmin Awad, Lorenzo Carpaneto, Giovanni Dispoto
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.25]{img/GUI/logo.jpg}
+\end{figure}
 \end{center}
 \vspace*{\fill}
 \end{titlepage}
@@ -90,28 +94,27 @@
 \label{introduction}
 %During the first part of Covid-19 pandemic was figured out the problem of manage people at grocery store. Outside these buildings roads were tons of people enquequed waiting for their turn to buy food, waiting time that could be spent in other activities.\textbf{CLup} allows to manage customers in order to minimize the time spent enqueued and also avoiding crowd inside the building, suggesting to people the right route in order to buy everything that they need, minimizing the flow inside ward departement. With CLup user can get a ticket and know at what time he should be at grocery store. The system is able to estimate time needed to user to get to grocery store and decide if he has to denqueued because doesn't have enough time for reach the position. Users can also book a slot of time to do their shopping. Using this option he need to provide to the system categories of items that he need or better the shopping list. This information is useful due to trace a correct path inside the building and also to load balancing areas. 
 %\yasmin{ho provato a riscriverlo usando delle tue parti ma cambiando qualcosa}
-The aim of the following documentation is to provide an overview of the project \textit{CLup - Customes Line-up}: an application whose goal is to allow customers to shop safely. During the Covid-19 pandemic a new problem arose in people's lives. In a world where social distance is no longer a choice but a necessity, it must be found a way to ensure the safety of people in their daily lives, even in places open to the public, such as grocery stores. Having to comply with health and hygiene regulations, grocery stores were not allowed to enter more than a certain number of people, with the result of the formation of very long queues outside the buildings. \textbf{CLup} allows to manage customers in order to minimize their time spent enqueued and avoiding crowd inside the building. With CLup the customer can line from home getting a ticket for the grocery store or book a specific time-slot for their needs. This documentation will illustrate a description of the system in terms of its functional and non-functional requirements. We are going to show goals, constraints, limits and principal use cases of the software. In practice, this document will provide a baseline for the project planning and estimation. The document is addressed to the developers, that will implement the requirements, and to the stakeholders, that will supervise the development process.
+The aim of the following documentation is to provide an overview of the project \textit{CLup - Customers Line-up}: an application whose goal is to allow customers to shop safely. During the Covid-19 pandemic a new problem arose in people's lives. In a world where social distance is no longer a choice but a necessity, it must be found a way to ensure the safety of people in their daily lives, even in places open to the public, such as grocery stores. Having to comply with health and hygiene regulations, only a small amount of people can enter a specific grocery store at a given time, with the result of the formation of very long queues outside the buildings. \textbf{CLup} allows to manage customers in order to minimize their time spent enqueued and avoiding overcrowding inside grocery stores. With CLup the customer can line up from home, getting a ticket for the grocery stores or booking Visits in specific time-slots for their needs. This documentation will illustrate a description of the system in terms of its functional and non-functional requirements. We are going to discuss goals, constraints, limits and principal use cases of the application. 
+% In practice, this document will provide a baseline for the project planning and estimation. 
+The document is addressed to the developers, that will implement the requirements, and to the stakeholders, that will supervise the development process.
 
 \subsection{Purpose}
 \label{intro:purpose}
-Customer Line-up (CL-up) is an application that aims to provide users with the tools to obtain access to Stores in a safe way, i.e. in order to avoid as much as possible the presence of external people (queues to enter) and to allow a number of internal people (number of people entered in the Store) lower than the allowed limit of each Store. All of this is made in order to comply as much as possible with any social distancing rules required by the competent authorities. To pursue this goal, the application provides a service both to the owners of the Stores (or whoever takes their place), that is the Managers, and to the buyers, that is the Customers. The application allows Users to create a different type of profile based on their identity, intended precisely as a Manager or Customer. Tools are provided to allow Customers to book for entry to the Stores remotely, that is for example from their own home, allowing a greater and more efficient social distancing.\\
+Customer Line-up (CL-up) is an application that aims to provide users with the tools to obtain access to Stores in a safe way, i.e. avoid as much as possible queue formation outside the Stores and limits the number of people inside them at a given time. All of this is made in order to comply as much as possible with every social distancing rules omitted by the competent authorities. To pursue this goal, the application provides services both to the Owners and the Managers of the Stores, and to the Customers. The application allows Users to register either as a Managers or Customers. Tools are provided to allow Customers to book Visits or Tickets to the Stores remotely, that is for example from their own home, allowing a greater and more efficient way for maintaining social distancing.\\
 \\
-There are 2 ways offered by CLup to enter the Stores. The first concerns the collection of a Ticket that will put the Customer in a virtual queue to enter the Store on the same day. The application has also the role of alert the Customer in order to let him/her arrive in time for his/her turn, checking and keeping track of the state of the virtual queue. The second allows the Customer to book a Visit, that is an entrance to the Store on a specific day, for a specific shopping time-range. To book a Visit the Customer must also specify the category of groceries he/her is intended to buy, in order to assign him/her a map of the Store and an optimal route for his/her Visit. Furthermore, the application to be as efficient and simple as possible for users, will not only advise them a time of stay in the Store based on the user's data (that on his old time stays), but will also recommend which Stores are available or closest, always based on the user's habits.\\
+There are 2 ways offered by CLup to enter the Stores. The first one involves the reservation of a Ticket that puts the Customer in a virtual queue to enter the Store as soon as possible. The application has also the role of alerting the Customer in order to let them arrive in time for their turn, checking and keeping track of the state of the virtual queue. The second one allows the Customer to book a Visit, that is an entrance to the Store on a specific day, for a specific shopping time-range. To book a Visit the Customer must also specify the category of groceries they are intended to buy, in order to give them a map of the Store and an optimal route for their Visit. Furthermore, the application will not only suggest to the Customer the duration of their shopping based on their data (collected through previous Visits and Tickets), but also recommend the closest Stores available for booking Visits in a day-time range, always based on the Customer's habits.\\
 \\
-Regarding Managers, the application gives them the possibility to create a specialized profile in which they can request 'the creation of a Store', i.e. a virtual space that will be identified as their own Store, and through which Customers will be able to book Tickets or Visits to enter the shop itself. The Managers have in fact the task of inserting and helping the application in the creation and definition of the Store and it's rules. All this information may vary over time and must be kept up to date in order to guarantee a better service of the application.\\
+Regarding Managers, the application gives them the possibility to create a specialized profile in which they can request 'the creation of a Store', i.e. a virtual space that will be identified as their own Store, and through which Customers will be able to book Tickets or Visits to enter the shop itself. The Managers have in fact the task of inserting and helping the application in the creation and definition of the Store and its rules. All this information may vary over time and must be kept up to date in order to guarantee a better service from the application.\\
 \\
-To guarantee entry only for Customers authorized to enter at that moment, whether they have requested a Ticket or a Visit, a QR code is checked. In practice, each Customer is associated with a QR code that will appear in his profile. At the entrance, this QR code must be scanned to verify that the Customer has actually booked the Visit for that moment or that it is his turn to enter via Ticket. Moreover, to allow the virtual queue to slide adequately, each QR code must be scanned also at the exit.\\
+The application also provides a way of getting a Paper Ticket directly from the Store through apposite Totems, without being subscribed into the application. Each Paper Ticket is associated with an entrance time and a QR-code.\\
 \\
-Finally, to allow entry to those who do not have the adequate technology to use the application, a secondary option must be put in place, i.e. a fallback option. To allow anyone to collect a Ticket, we have opted for adding Totems at the entrance that have the ability to print Tickets.
-\newline
-\newline
-\newline
+People inside the Stores should have booked a Visit or got a Ticket. To check this, the QR-code of the Customer (or the QR-code attached to a Paper Ticket) needs to be checked at the entrance of the Store. In practice, each Customer is associated with a QR code that will appear in their profile. Moreover, to allow the virtual queue to slide adequately, each QR code must be scanned also at the exit.
+
 \subsubsection{Goals}
 
 \begin{enumerate}[label={G.\arabic{*}}]
     \item \label{goal:auth} Allow Guests to authenticate as Manager or Customer
-    \item \label{goal:influx} Regulate the influx of people inside the Stores.
-    \item \label{goal:effectiveQueue} Line up Consumers in an effective way, to avoid overcrowding and long waiting time.
+    \item \label{goal:effectiveQueue} Line up Consumers in an effective way, to avoid overcrowding, long waiting time and regulate the influx of people inside the Stores.
     \item \label{goal:enqueue} Allow Customers to virtually line up for Stores requesting a Ticket from different locations and devices.
     \begin{enumerate}[label={\ref{goal:enqueue}.\arabic{*}}]
         \item \label{goal:enqueue:time} Alert Customers when to depart to arrive in time for their shopping.
@@ -119,7 +122,7 @@ Finally, to allow entry to those who do not have the adequate technology to use 
     \end{enumerate}
     \item \label{goal:visit} Allow Customers to virtually line up for Stores booking Visits to the Store in different days from different locations and devices.
     \begin{enumerate}[label={\ref{goal:visit}.\arabic{*}}]
-        \item \label{goal:visit:path} Guide Customers inside the Store with a map, to shorten the time of their Visit and minimize contact with other other people.
+        \item \label{goal:visit:path} Guide Customers inside the Store with a map, to shorten the time of their Visit and minimize contact with other people.
         \item \label{goal:visit:notifications} Notify the Customer in day-time range, if possible Visits which might interest them are available.
     \end{enumerate}
 \end{enumerate}
@@ -127,7 +130,6 @@ Finally, to allow entry to those who do not have the adequate technology to use 
 \pagebreak
 
 \subsection{Scope}
-\lorenzo{Maybe the shared are too specific. I just do not really understand the difference that should be from scopes "shared" and requirements}
 
 \begin{flushleft}
 Following the definition originally proposed by M. Jackson and P. Zave in 1995,
@@ -142,42 +144,48 @@ World and Machine comunicate with Shared Phenomena, they could be events control
         \item \textbf{People going into Stores}: people going to stores to buy grocery and other products.
         \item \textbf{Queue formation}: the creation of long lines outside the stores.
         \item \textbf{People moving inside Store}: people moving into store in order to find grocery
-        \yasmin{
-        \item \textbf{Need to buy}: circumstance in which someone needs to enter a Store in order to buy some groceries.
         \item \textbf{Social Distancing}: circumstance in which the society imposes certain hygienic, sanitary and social distancing rules.
-        }
     \end{enumerate}
     \item {\large \textbf{Shared}}
-    \begin{enumerate}[label={S.S.\arabic{*}}]
-        \item A Customer can register and sign up to the Service
+    
+    
+    \begin{enumerate}[label={S.S.\arabic{*}}, align=left]
+        \item[\textbf{Controlled by the world, observed by the machine}]
+         \item \label{shared:registration} A Customer can register and sign up to the Service.
+        \item \label{shared:getTicket} A Consumer can take a Ticket for a Store.
+        \item \label{shared:scanQR}Scan the QR code of the Consumer before entering into the Store.
+        \item \label{shared:bookVisit} A Customer can book a Visit to the Store specifying categories of grocery.
+        \item \label{shared:uploadMap} A Manager can upload a Store map.
+       
+        \item[\textbf{Controlled by the machine, observed by the world}]
+        \item \label{shared:liningUp} A logged Customer can get a ticket to virtual line up.
         %\item \textbf{Registration \& Login}: a user can sign-up or login if already registered to the application.
        % \item \textbf{Choosing user type}: a user can register to the app as a manager or a customer (\lorenzo{QR scanner?}). \lorenzo{Maybe delete this points} \giovanni{quote for deleting this} \yasmin{quoto}
        % \item \textbf{QR code}: each user has a unique QR code, generated from the app as soon as they register. \lorenzo{Maybe delete this points} \giovanni{quote Lorenzo} \yasmin{forse chiamarlo QR code association ?? o generation}
         % Ticket part
-        \item A logged Customer can get a ticket to virtual line
+        
        % \item \textbf{Get ticket}: a Customer can take a ticket to form a virtual line for a specific store. \yasmin{change in ".. can get a ticket to line up for a specific Store" ??}
-        \item A Customer can take a ticket at the store 
+        
         %\item \textbf{Get paper ticket}: a Customer get a paper ticker at the store 
-        \item Scan the QR code of the customer before entering into the Store
+        
        % \item \textbf{Scan ticket}: scan the QR code of each customers before entering into the Stores. \lorenzo{Maybe delete this points} \giovanni{For me is right}
         
         
         % book part
-        \item A Customer can book a visit to the store specifying categories of items
+        
         %\item \textbf{Book a Visit}: allow Customers to book a visit to the store.
         %\item \textbf{Specify grocery categories}: specify categories of items that Customer want to buy
-        \item Send notification to a Customer to remind time for the visit
+        \item \label{shared:sendNotification} Send notification to a Customer to remind time for the Ticket reservation.
         %\item \textbf{Alert customer}: remind the customer that he booked a Visit, in time to let him be in time for it. \lorenzo{Maybe delete this points} \giovanni{For me is right}
-        \item Show map to the user with a built path for the visit
+        \item \label{shared:showMap} Show map to the Customer with a built path for the Visit.
      %   \item \textbf{Show Map}: Guide customers through the store with a map during a Visit. \lorenzo{Maybe delete this points} \giovanni{for me is right}
         
         % manager part
-        \item A Manager can upload a Store map
-       % \item \textbf{Upload Map}: allow Managers to upload maps of their stores.
-        \item The System built a path suggested for a Customer visit
-       % \item \textbf{Build Path}: build a suggested path for the Customer, in order to minimize useless movements inside the store 
         
-        \item Compute information and statistics about a Customer in order to suggest him 
+       % \item \textbf{Upload Map}: allow Managers to upload maps of their stores.
+        \item \label{shared:buildPath} The System built a path suggested for a Customer Visit.
+       % \item \textbf{Build Path}: build a suggested path for the Customer, in order to minimize useless movements inside the store 
+        \item \label{shared:9} Compute information and statistics about a Customer in order to suggest him duration for the Reservation and Stores of interest.
         
         %\item \textbf{Build statistics}: compute the average time spent by the user into the store, and suggest it to them during the ticketing process. 
         
@@ -187,108 +195,164 @@ World and Machine comunicate with Shared Phenomena, they could be events control
         
         \item
     \end{enumerate}
-        \item {\large \textbf{Machine}}
-        \begin{enumerate}[label={S.M.\arabic{*}}]
-            \item \textbf{Role differentiation}:  to grant different services to different type of user.
-            \item \textbf{Time calculation}: compute the time at which each customer should be in the store when taking the ticket.
-            \item \textbf{DBMS Queries}: Queries to the DBMS to retrieve data.
-        
-        
-		\end{enumerate}
 \end{itemize}
 
+% -------------------------------------------------------------------------------------------------------------------------------
+% comment - machine phenomena in DD, not in RASD
+\begin{comment}
+        \item {\large \textbf{Machine}}
+        \begin{enumerate}[label={S.M.\arabic{*}}]
+            \item \textbf{Role differentiation}:  to grant different services to different Type of Users.
+            \item \textbf{Time calculation}: compute the time at which each customer should be in the store when taking the ticket.
+            \item \textbf{DBMS Queries}: Queries to the DBMS to retrieve data.
+        \end{enumerate}
+\end{comment}
+% ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 
-{\large \textbf{1.3 Definitions, Acronyms, Abbreviations}}
-\newline \newline
-\textbf{1.3.1 Definitions}
 
+\subsection{Definitions, Acronyms, Abbreviations}
+
+\subsubsection{Definitions}
 \begin{enumerate}[label={D.\arabic{*}}]
-\item \label{def:store} Store: synonym of Grocery Store.
-\item \label{def:manager} Manager: manager of a \textit{Store}. % TODO explain what role has in the app?
-\item \label{def:customer} Customer: client of a \textit{Store}. % TODO explain what role has in the app?
-\item \label{def:visit} Visit: ... % TODO
-\item \label{def:securepass} Secure Password: \lorenzo{passwordformat} \giovanni{magari cercare nome policy da utilizzare.}
-\item \label{def:categoriesOfGroceries} Categories of Grocery:
-\item \label{def:TypeOfUser}Type of Users: the type of users can be either Manager or Customer.
-\item \label{def:department}Department: macro area of the store. It can contain multiple categories of Grocery.
-\item \label{def:owner}Owner: a manager who owns a specific store.
+\item \label{def:loginManager}\textit{Login Manager}: during the login phase and registration phase, check the validity and correctness of the given credentials.
+\item \label{def:ticketManager}\textit{Ticket Manager}: 
+is a component that takes care of Ticket requests for a Store.
+\item \label{def:visitManager}\textit{Visit Manager}: is a component that takes care of Visit requests for a Store.
+\item \label{def:mapManager}\textit{Map Manager}: is a component that takes care of the generation of an optimal path for a specific Visit and a specific Store.
+\item \label{def:dataManager}\textit{Data Analytics Manager}: is a component that takes care of analysis of the habits of Customers and make suggestions. It is a Recommender System.
+\item \label{def:queueManager}\textit{Queue Manager}: is a component that takes care of the managing of the Queue.
+\item \label{def:mailing}\textit{Mailing System}: the service which handles the email dispatching.
+\item \label{def:store}\textit{Store}: synonym of Grocery Store. A Store has one associated queue and Consumers can reserve Tickets or book Visits to shop there.
+\item \label{def:securepass}\textit{Secure Password}: Password that follows the Password Policy
+\item \label{def:passpolicy} \textit{Password Policy}: according to NIST, the password must:
+\begin{itemize}
+   \item the use of both upper-case and lower-case letters (case sensitivity)
+    \item inclusion of one or more numerical digits
+    \item inclusion of special characters, such as \@, \#, \$
+    \item prohibition of words found in a password blocklist
+    \item prohibition of words found in the user's personal information
+    item prohibition of use of company name or an abbreviation
+    \item prohibition of passwords that match the format of calendar dates, license plate numbers, telephone numbers, or other common numbers
+\end{itemize}
+\item \label{def:TypeOfUser}\textit{Type of Users}: the type of users can be either Manager or Costumer.
+\item \label{def:department}\textit{Department}: macro area of the store. It can contain multiple categories of grocery.
+\item \label{def:owner}\textit{Owner}: a Manager who owns a specific Store.
+\item \label{def:capacity}\textit{Capacity of the Store}: maximum number of people admitted inside the Store simultaneously.
+\item \label{def:virtualTicket}\textit{Virtual Ticket}: a Ticket reserved by a Costumer through the CLup application.
+\item \label{def:paperTicket}\textit{Paper Ticket}: a Ticket reserved by a Consumer through the Totem
+\item \label{def:ticket}\textit{Ticket}: the set of Virtual Tickets and Paper Tickets. Identifies both indistinctly.
+\item \label{def:visit}\textit{Visit}: a booked Visit reserved by a Customer through the CLup application. 
+\item \label{def:expires}\textit{Ticket/Visit expiration}: A ticket or a Visit expires if the Customer does not delete them neither uses them, and the time to use them is past (the current time is greater then the entrance time on the ticket or visit).
+\item \label{def:temporalQuantum}\textit{Temporal Quantum}: a time space of 5 minutes.
+\item \label{def:reservation}\textit{Reservation}: any time of booking or requesting an entrance to the Store by a Consumer. It can be a Paper Ticket, a Visit or a Virtual Ticket.
+\item \label{def:duration}\textit{Duration of Shopping}: Duration of the visit booked.
+\item \label{def:queueing}\textit{Queuing Mechanism}: the mechanism which handles the behaviour related to the queue.
+\item \label{def:totem}\textit{Totem}: a machine used to generate Paper Tickets, each one is related to a specific Store.
+\item \label{def:scanner}\textit{Scanner}:a machine used to validate Tickets, each one is related to a specific Store.
+\item \label{def:queuescaling}\textit{Queue Scaling Process}: process thanks to which Reservations are moved within the queue of the Store according to certain rules, so that the Capacity of the Store is respected and so that a Consumer who needs an additional amount of time to finish their shopping gets that time.
+\item \label{def:validated}\textit{Validated}: QR code associated to a Reservation that was correctly scanned at the entrance and at the exit.
+\item \label{def:slowHashFunction}\textit{Slow Hash Function}: Hash function that is more difficult to calculate (for instance Bcrypt) w.r.t fast hash function that are easy to compute for instance SHA-1 (Secure Hash Algorithm - 1) or MD5 (Message Digest 5)
+\item \label{def:timeToReserve}\textit{Time To Reserve}: 10 seconds (time for the Customer to confirm a reservation)
+\item \label{def:specialCredentials} \textit{Special Credentials}: credentials which are used to verify that a manager can create a new Store (certified e-mail).
 \end{enumerate}
 
-\textbf{1.3.2 Acronyms}
+\subsubsection{Acronyms}
 \begin{enumerate}[label={A.\arabic{*}}]
-\item \label{def:API} API: Application Programming Interface
-\end{enumerate}
-\textbf{1.3.3 Abbreviations}
-\begin{enumerate}[label={AB.\arabic{*}}]
-\item \label{def:UML} UML: Uniform Modeling language
+\item \label{def:API}\textit{API}: Application Programming Interface
+\item \label{def:NIST}\textit{NIST}: National Institute of Standards and Technology
+\item \label{def:IEEE}\textit{IEEE}: Institute of Electrical and Electronics Engineers
+\item \label{def:DBMS} DBMS: Database Management System
+\item \label{def:HTTPS}\textit{HTTPS}: Hypertext Transfer Protocol Secure
+\item \label{def:UML}\textit{UML}: Uniform Modeling language
+\item \label{def:UX}\textit{UX} : User Experience
 \end{enumerate}
 
-{\large \textbf{1.4 Reference Documents}}
+\subsubsection{Abbreviations}
+\begin{enumerate}[label={AB.\arabic{*}}]
+\item $[$G$_i]$: i-th goal.
+\item $[$R$_i]$: i-th requirement.
+\item $[$D$_i]$: i-th definition.
+\item $[$DA$_i]$: i-th domain assumption.
+\end{enumerate}
+
+\subsection{Reference Documents}
 \begin{itemize}
     \item Specification document: R\&DD Assignment AY 2020-2021
     \item IEEE 830-1993: IEEE Recommended Practice for Software Requirements Specifications
-    \item Alloy documentation /link/to/doc
-    \item UML documentation /link/to/doc
+    \item Alloy documentation 
+    \item UML documentation 
 \end{itemize}
-{\large \textbf{1.5 Revision History}}
+
+\subsection{Revision History}
 \begin{center}
  \begin{tabular}{||c c c||}
  \hline
  Date & Version & Comments \\ [0.5ex] 
  \hline\hline
- date & 1.0 & first release \\ 
+ November 2020 & 1.0 & first release \\ 
  \hline
  \hline
 \end{tabular}
 \end{center}
-{\large \textbf{1.6 Document structure}} \newline
-\newline
+
+\subsection{Document structure}
 According to IEEE standard, the RASD is structured into 5 sections
 \begin{itemize}
-    \item \textbf{Introduction} contains informal presentation of the project, introducing the main goals of the S2B. Also contains the Scope with main shared phenomena.
-    \item \textbf{Overall Description} contains a description of the System, including constrains and assumptions
-    \item \textbf{Specific Requirements} \giovanni{brief description of the section}
-    \item \textbf{Formal Analysis using Alloy} contains a formal modelling of the project, in order to proof consistency of the core functionality 
-    \item \textbf{Effort Spent} show the effort spent in developing the RASD
+    \item \textbf{Introduction} contains informal presentation of the project, introducing the main goals of the S2B. It also contains all the world phenomena and shared phenomena which the System have to interact. This section contains also all the acronyms, definitions and abbreviations used in the document.
+    \item \textbf{Overall Description} contains detailed description of the product perspective and product functions. This section also contains all the assumption, dependencies and contraints in order to get application functional.
+    \item \textbf{Specific Requirements} contains some mockup UI of the application, software and hardware requirements and communication interface used for communication.
+    \item \textbf{Formal Analysis using Alloy} contains a formal modelling of the project, in order to proof consistency of the core functionality .
+    \item \textbf{Effort Spent} show the effort spent in developing the RASD.
 \end{itemize}
 
+\newpage
 \section{Overall Description}
 \label{overallDescription}
 
 \subsection{Product perspective}
-In this section we are analyzing all the shared phenomena listed before
+In this section we are analyzing all the shared phenomena listed before.
 \begin{enumerate}
-\item \textbf{Customer register to Service}: If a Customer wants to register to the service he have to provide email and password.
-When the process is completed, the System generate an unique QR code associated to him, used when he goes to stores.
+\item \textbf{Customer register to Application}: If a User wants to register to the service he have to provide email and password.
+When the process is completed, the System generate an unique QR code associated to him, used when he goes to Stores.
 
 \item \textbf{Manager register to Service}: If a Manager wants to register has to provide his/her email and password. 
 
-\item \textbf{Customer get a ticket}: When the customer wants to go to a Store, he needs to login in into the application, search for a Store near him and enqueuing. In this instant the System provide a time 
+\item \textbf{Customer get a Virtual Ticket}: When the Customer wants to go to a Store, he needs to login into the application, search for a Store near him and enqueuing. To do that he needs to specify the duration of the shopping and the mean of trasport he intend to use to get to the Store from the place he is. In this instant the System provide a time.
 
-\item \textbf{Scan QR Code}: Before entering and exit employees scan Customers QR code in order to validate the ticket and collect information used for profiling.
+\item \textbf{Consumer get a Paper Ticket}:  When the Consumer wants to go to a Store, at the entrace he/she can get a ticket. On the ticket there is a time in which the Consumer will enter inside.
 
-\item \textbf{Customer books a visit}: When a customer books a visit he have to specify where he wants to go and choosing a time-slot available and insert the categories of items that he have to buy. 
+\item \textbf{Scan QR Code}: Before entering and exit employees scan Customers or Consumer QR code in order to start validating the ticket and collect information. The validating process will be closed once the Customer or Consumer scan again the QR code at the exit.
+If ticket is associated to a Customer then the information are used for profiling and also for updating queue. In instead is only a Consumer, then the information will be used only for updating queue.
 
-\item \textbf{Alert Customer}: The System alert the Customer in order to remind the him that he booked a Visit or for the ticket, in time to let him be in time for it.
-For doing this he have to specify what type of means of transport he use.
+\item \textbf{Customer books a Visit}: When a Customer books a Visit he has to specify where he wants to go, the day of the Visit, the duration of the Visit and choosing a time-slot available and insert the categories of items that he have to buy. 
 
-\item \textbf{Showing Map during the Shopping}: In order to minimize the time spent inside the Store
-and for avoid too much interaction with other user, the application suggest a path to the customer using information of categories of item he wants to buy.
+\item \textbf{Alert Customer}: The System alert the Customer that he/she have to go to the store to let him be in time for it.
 
-\item \textbf{Computing statistics of the Customer}: In order to improve the user experience, the application compute statistics of Stores visited, time spent and in general their habits. These information are used for suggest stores, time-slots and the shopping time. %\giovanni{Se invece il cliente non inserisce il tempo di visita per il ticket, c'è bisogno di prevderlo} \yasmin{se non lo inserisce non può ordinarlo, no?} \giovanni{Era relativo al problema che ci eravamo posti su far inserire il tempo di permanenza nel momento in cui si prende un ticket}
+\item \textbf{Showing Map during the Shopping}: In order to minimize the time spent inside the Store and for avoid too much interaction with other Consumers, the application suggest a path to the Customer with a Visit using information of categories of item he wants to buy.
+
+\item \textbf{Computing statistics of the Customer}: In order to improve the UX, the application compute statistics of Stores visited, time spent and in general Customers habits. These information are used for suggest Stores and the shopping time. This information is used in order to notify Customers of interested Stores available. %\giovanni{Se invece il cliente non inserisce il tempo di visita per il ticket, c'è bisogno di prevderlo} \yasmin{se non lo inserisce non può ordinarlo, no?} \giovanni{Era relativo al problema che ci eravamo posti su far inserire il tempo di permanenza nel momento in cui si prende un ticket}
 \end{enumerate}
-
+\subsubsection{Class Diagram}
+The class diagram in Figure \ref{class_diagram} shows a possible structure of the CustomersLine-up architecture. It should be noted that although the Consumer is not represented, he will be the one to request the generation of Paper Tickets from the Totem in the real world.
+\begin{figure}[h!]
+\centering
+	\centering
+  	\includegraphics[height=0.55\textheight, scale=0.2, keepaspectratio]{img/class_diagram.jpg}
+	\caption{CustomersLine-up class diagram.}
+ 	\label{class_diagram}
+\end{figure}
 \subsection{Product functions}
 Detailed description of the product functions
 
 \begin{enumerate}
-    \item \textbf{Get a Ticket}
-    \begin{flushleft}
-        A Customer correctly logged in, can see all the near store. After selecting one, he/she can get a ticket. In order to get a ticket he/she have to specify the duration of the shopping and the means of transport that he/she want to use to get to store. For long term Customer the time of the shopping is inferred and suggested using historical information.
-        After providing this information, the System checks that there are no ovelapped reservation.
-        Before confirm, the Customer can see how much time he/she have to wait before entering in. During this phase, the System check that the user can satisfy time constrain. If not, reject the request.
-        After enquequing, the System continue to keep track of the user, in order to alert him/her to depart from home.
-    \end{flushleft} 
+    \item \textbf{Get a Ticket} 
+    \\
+    A Customer correctly logged in, can see all the near Stores or the ones inferred by the Data Analytics Manager using his/her habits. After selecting one, he/she can get a ticket. In order to get a ticket he/she have to specify the duration of the shopping and the means of transport that he/she wants to use to get to store. For long term Customers the time of the shopping is inferred and suggested using historical information.
+        After providing this information, the System checks that there are no overlapped reservation. Moreover the System checks that there is enough space in the queue of the Store to satisfy his request.
+        Before confirm, the Customer can see how much time he/she have to wait before entering in. During this phase, the System check that the user can satisfy time constraint, that is if the time distance from the place he/she is, is small enough for letting the Costumer arrive in time to the Store with respect to the mean of transport. Moreover, the System checks that the Customer doesn't have other Virtual Tickets. If not, reject the request.
+        After enqueuing, the System notify the Customer when he/she has to star from home.
+        During the permanence inside the Store he/she can see the map of the store and the position of various departments.
+     \\
        	\begin{minipage}{\linewidth}
             \centering
            \includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/Get_Ticket_diagram.png}
@@ -296,10 +360,10 @@ Detailed description of the product functions
         \end{minipage}
     
     \item \textbf{Book a Visit}
-    \begin{flushleft}
-       A Customer correctly logged in, can see all the near store. After selecting one, he/she can book a visit. After selecting a store he/she have to specify the duration of the visit, select a time slot available and specify the categories of grocery that he/she want to buy in order to allow the System to calculate the best path in order to maximize social distancing. The time spent inside the grocery store is inferred and suggested using historical information.
+    \\
+       A Customer correctly logged in, can see all the near Stores. After selecting one, he/she can book a Visit. After selecting a Store he/she have to specify the day of interest for the Visit, the duration of the Visit, select a time slot available and specify the categories of grocery that he/she want to buy in order to allow the System to calculate the best path to follow inside the Store in order to maximize social distancing. The duration of the Visit store is inferred and suggested using historical information.
        During the visit, the Customer can open the app and see the path suggested from the System.
-    \end{flushleft}
+    \\
     \begin{minipage}{\linewidth}
             \centering
           \includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/Booking_diagram.png}
@@ -307,169 +371,178 @@ Detailed description of the product functions
         \end{minipage}
         
     \item \textbf{Add a Store}
-    \begin{flushleft}
+    \\
         A Manager correctly logged in can add a new  Store.
-        In order to create a Store a Manager should specify the name of the store, the address, the maximum number of people that can enter inside the store according to health directives, maximum number of people for each department of the store and opening hours. During this phase the Manager could specify other Managers of the store. After creation, he/she have to specify also credentials used by the System to verify that the store exists. At the end of this phase, a Manager upload a map of the stores, reporting information of the store such as walls, departments and category of grocery for each department.
-    \end{flushleft}
+        In order to create a Store a Manager should specify the name of the Store, the address, the maximum number of people that can enter inside the store according to health directives (i.e. the Capacity), maximum number of people for each department of the store and opening hours. During this phase the Manager could specify other Managers of the store. After creation, he/she have to specify also credentials used by the System to verify that the store exists. At the end of this phase, a Manager upload a map of the stores, reporting information of the store such as walls, departments and category of grocery for each department. Once a Manager created a Store, he/she become the Owner of the Store.
+    \\
     \item \textbf{Manage a Store}
-    \begin{flushleft}
-        A Manager correctly logged in can edit information of all his stores. He/she can edit the maximum number of people according to new health directives, modify the maximum number of people inside each department, map of the stores. He/she can also modify the managers, transfer ownership or delete a store from the System.
-    \end{flushleft}
-    \item \textbf{Perform a visit with ticket on App}
-    \begin{flushleft}
-        When is the turn of a Customer enqueque, before entering, he/she have to show his/her qr code to scanner machine in order to register the visit. \giovanni{Cosa accade durante la spesa se il tempo sfora quello richiesto?}.
-        Once the Customer finish his shopping, during the payment, he/she scan one more time the qr code, in order to register the exit
-    \end{flushleft}
-    \item \textbf{Perform a visit with paper ticket}
-     \begin{flushleft}
-        When the Customer arrives to the grocery stores, get a ticket from the ticket machine. On the ticket is printed the entering time. Before entering the Customer have to show the qr code to scanner machine. Once the Customer finish his shopping, during the payment, he/she scan one more time the qr code, in order to register the exit
-    \end{flushleft}
+    \\
+        A Manager correctly logged in can edit information of all his Stores. He/she can edit the maximum number of people according to new health directives, modify the maximum number of people inside each department, map of the Stores, opening and closing hours of the Store, the percentage of Capacity dedicated only to Tickets, see codes or generate them to activate the Scanner and the paper ticket machines. The Owner of a Store can also modify the Managers, transfer ownership or delete a store from the System. 
+    \\
+    \item \textbf{Perform a visit with Virtual Ticket}
+    \\
+        When is the turn of a Customer enqueque, before entering, he/she have to show his/her qr code to scanner machine in order to start validating the visit.
+        Once the Customer finish his shopping, during the payment, he/she scan one more time the qr code, in order to Validate the visit.
+        During the Visit the Customer can see the map in order to optimize his/her time spent in searching items.
+    \\
+    \item \textbf{Perform a visit with Paper Ticket}
+     \\
+        When the Consumer arrives to the Stores, get a Paper Ticket from the ticket machine. On the Paper Ticket is printed the entering time and his QR code. Before entering the Customer has to scan the QR Code with the scanner machine. Once the Consumer finish his shopping, during the payment, he/she scan one more time the QR Code, in order to register the exit. 
     \item \textbf{Perform a booked visit}
-    \begin{flushleft}
-        Before entering, the Customer scan his/her qr code. When he/she is inside, he can open the app and see the calculated path to follow in order to buy everything that he/she needs. Once the Customer finish his shopping, during the payment, he/she scan one more time the qr code, in order to register the exit
-    \end{flushleft}
+    \\
+        Before entering, the Customer scan his/her qr code. When he/she is inside, he can open the app and see the calculated path to follow in order to buy everything that he/she needs. Once the Customer finish his shopping, during the payment, he/she scan one more time the qr code, in order to register the exit.
 \end{enumerate}
 
 \subsection{User Characteristics}
-
+CL-up can be used from both Customers and Managers. We take for granted that the Users have access to Internet and that they allow the System to access their location in real time. We also take for granted that Users are able to install and use the mobile application. 
+The characters are:
+\begin{itemize}
+    \item Guest: anyone who downloads and opens the app but still has to sign up or log in. He/She cannot use any of the tools provided by CL-up.
+    \item User: a registered Guest.
+    \item Consumer: anyone who need to enter a Store, that is anyone who has a Ticket or a Visit. % in questo modo includo chi fa i Ticket alla macchinetta
+    \item Customer: someone who has logged-in with his/her credentials which is recognized by the System by his/her email, and is identified by his/her QR code. He/She can access their profile, request a Ticket or a Visit for a Store, and visualize them in the purchased section. 
+    \item Manager: someone who has logged-in with his/her credentials  which is recognized by the System by his/her email. He/She can access their profile, create and manage Stores.
+    \item Owner: a Manager that has created a Store, or who inherited a Store from another Manager. A Manager can be an Owner of one or more Stores. Every Store has only one Owner.
+    
+\end{itemize}
 \subsection{Assumptions, Dependencies and Constraints}
 \subsubsection{Assumptions}
 \begin{enumerate}[label={DA.\arabic{*}}]
-    \item \label{dom:fewPaperTickets} 
-We assume that Paper Tickets will be few as in a situation of health emergency and social distancing people are invited to stay indoors.\lorenzo{FORSE NON TROPPO CHIARO}
-    \item \label{dom:machineScanning}Each Store provides at least a Machine for Scanning.
-    \item \label{dom:machinePaperTicket}Each Store provides at least as Machine for generating Paper Tickets.
-    \item \label{dom:consumerAccessStore}The Consumers who enter a Store use a ticket, a paper ticket or a Visit and the vast majority of them scan their QR both at the entrance and at the exit.
+    \item \label{dom:fewPaperTickets}We assume that Paper Tickets will be few (if a Store has a lot of Reservations only a small amount of them are Paper Tickets).
+    \item \label{dom:machineScanning}Each Store provides at least a Scanner.
+    \item \label{dom:machinePaperTicket}Each Store provides at least a Totem.
+    \item \label{dom:consumerAccessStore}Consumers who enter a Store use a ticket, a paper ticket or a Visit and the vast majority of them scan their QR both at the entrance and at the exit.
+    \item \label{dom:consumerExceedDuration}Consumers that exceed time specified during reservation are few.
+    
 \end{enumerate}
+\subsubsection{Dependencies}
+\begin{enumerate}
+    \item A DBMS is needed in order to store Users' credentials and Customers data.
+    \item An external Mailing System is used to send mails.
+    \item The system relies on a Recommender System to analyze data and infer suggestions for each Customer.
+    \item Customers Line-up is not responsible for the non-compliance with the hygienic, sanitary and social distancing rules.
+    
+\end{enumerate}
+\subsubsection{Constraints}
+\begin{enumerate}
+    \item Smartphones are equipped with an OS compatible with the application.
+    \item Properly working Internet Connection.
+    \item User gives permission to the app to use GPS.
+    \item The permission to acquire and store personal data must be given by the User.
+\end{enumerate}
+\newpage
 \section{Specific Requirements}
 \label{specificRequirements}
 \subsection{External Interface Requirements}
 CL-up is a mobile based application, that can be also consulted using a web browser. Additional details regarding the hardware, software and communication interface requirements are described and shown below. There will also be some prototypes of User Interface for users who use mobile.
 
-\subsubsection{User Interface}
+\subsubsection{User Interfaces}
 %riga1
 \begin{figure}[hbt]
 \centering
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/login.jpg} 
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/login.jpg} 
  \end{subfigure}
  \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/registration.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/registration.jpg}
  \end{subfigure}
 	\caption{Guest login interface and signup interface.}
  	\label{entering}
 \end{figure}
 %riga2
-\begin{figure}[h!]
+\begin{figure}[hbt]
 \centering
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/stores_customer.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/stores_customer.jpg}
  \end{subfigure}
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/main_customer.jpg} 
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/main_customer.jpg} 
  \end{subfigure}
  \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/profile_customer.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/profile_customer.jpg}
  \end{subfigure}
 	\caption{Customers interfaces for list of Stores (for doing a Reservation), list of Reservations and profile.}
  	\label{customer screenshots}
 \end{figure}
 %riga3
-\begin{figure}[h!]
+\begin{figure}[hbt]
 \centering
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/book_visit_pt1.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/book_visit_pt1.jpg}
  \end{subfigure}
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/book_visit_pt2.jpg} 
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/book_visit_pt2.jpg} 
  \end{subfigure}
  \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/book_visit_pt3.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/book_visit_pt3.jpg}
  \end{subfigure}
 	\caption{Customer interfaces for booking a Visit, once they have chosen the Store.}
  	\label{book a visit}
 \end{figure}
 %riga4
-\begin{figure}[h!]
+\begin{figure}[hbt]
 \centering
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/visit_booked.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/visit_booked.jpg}
  \end{subfigure}
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/get_ticket_pt1.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/get_ticket_pt1.jpg}
  \end{subfigure}
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/get_ticket_pt2.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/get_ticket_pt2.jpg}
  \end{subfigure}
 	\caption{Customer interfaces for booking a Virtual Ticket, once they have chosen the Store.}
  	\label{customer tickets}
 \end{figure}
-%riga 5
+%riga5
 \begin{figure}[h!]
 \centering
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/stores_customer.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/main_manager.jpg}
  \end{subfigure}
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/main_customer.jpg} 
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/manager_store_1.jpg}
  \end{subfigure}
  \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/profile_customer.jpg}
- \end{subfigure}
-	\caption{Customers interfaces for list of Stores (for doing a Reservation), list of Reservations and profile.}
- 	\label{customer screenshots}
-\end{figure}
-%riga3
-\begin{figure}[h!]
-\centering
-\begin{subfigure}
-	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/main_manager.jpg}
- \end{subfigure}
-\begin{subfigure}
-	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/manager_store_1.jpg}
- \end{subfigure}
- \begin{subfigure}
-	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/GUI/manager_store_2.jpg}
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/manager_store_2.jpg}
  \end{subfigure}
 	\caption{Manager interfaces to view the membership and owned Stores.}
- 	\label{book a visit}
+ 	\label{manager interfaces}
 \end{figure}
 
-\subsubsection{Hardware Interface}
+\newpage
+\subsubsection{Hardware Interfaces}
 The application is available for any type of mobile, having Internet access, a relatively recent browser, a GPS function, and enough storage space to accommodate the application itself.
 
-\subsubsection{Software Interface}
+\subsubsection{Software Interfaces}
 \begin{enumerate}
 \item[$\bullet$] Operating System: iOS, Android.
 \item[$\bullet$] Web browser.
 \item[$\bullet$] Web Server application.
 \item[$\bullet$] DBMS.
-\item[$\bullet$] Ticketing System: use third part services for GPS function. 
-\item[$\bullet$] Mailing Service: APIs to send emails to the User
-\item[$\bullet$] Queueing System: ??
+\item[$\bullet$] Visit System: use third part services for GPS function. 
+\item[$\bullet$] Mailing Service: APIs to send emails to the User.
 \end{enumerate}
 
-\subsubsection{Communication Interface}
-The System runs over HTTPS protocol for the communication with application and notification system. The System also communicate with DBMS \giovanni{In qualche modo lo farà pure}.
+\subsubsection{Communication Interfaces}
+The System runs over HTTPS protocol for the communication with application and notification system. The System also communicate with DBMS.
 
 \subsection{Functional Requirements}
+
 \begin{enumerate}[align=left, label={R.\arabic{*}}]
     \item[\textbf{LOGIN \& REGISTER SERVICE}]
     \item \label{req:logOrReg} The User must be able to register or to log in if already registered.
@@ -480,23 +553,20 @@ The System runs over HTTPS protocol for the communication with application and n
         \item \label{req:credentialsCheck:uniqueness} Check that the email that the user is providing has not been used for previous registrations.
         \item \label{req:credentialsCheck:password}Check that the password is a Secure Password.
     \end{enumerate}
-    \item \label{req:confirmRegistration}If the credentials are valid, the System sends a confirmation email, to let the user activate their account.
+    \item \label{req:confirmRegistration}If the credentials are valid, the System sends a confirmation email, to let the User activate their account.
     \begin{enumerate}[label={-}]
         \item \label{req:confirmRegistration:timeout}If the User does not confirm their credentials within 24 hours, the account is removed and the credentials deleted.
     \end{enumerate}
     \item \label{req:login} Allow to log in using personal credentials:
     \begin{enumerate}[label={-}]
         \item \label{req:login:checkCred}Check if credentials are valid.
-        \item \label{req:login:validCred} In case the email and password inserted are correct, allow the user to access all the functionalities available for the Type of User they are.
-        \item \item \label{req:login:invalidCred} If the email and/or password inserted are wrong, the system must deny the access.
-        \item If the username and/or password inserted are wrong, the system must notify the user. \lorenzo{Secondo me questo é da cancellare}
+        \item \label{req:login:validCred} In case the email and password inserted are correct, allow the User to access all the functionalities available for the Type of User they are.
+        \item \label{req:login:invalidCred} If the email and/or password inserted are wrong, the System must deny the access.
+        \item If the username and/or password inserted are wrong, the System must notify the User. 
     \end{enumerate}
     \item \label{req:changeCredentials} Allow to change credentials, if the new credentials are in the right format.
     \item \label{req:changePassWithMail}Allow to change password if it has been forgotten, through the personal email.
-    \item \label{req:provideQR} Provide to each Customer a unique QR code \lorenzo{which will be used as identifier in the enqueuing process}.
-    \begin{enumerate}[label={-}]
-        \item \label{req:provideQR:uniqueID} The QR code will be the identifier of the user within the System.
-    \end{enumerate}
+    \item \label{req:provideQR} Provide to each Customer a unique QR code which will be used as identifier within the System.
     \item \label{req:deleteAccount} Users must have the possibility to delete their accounts.
     
     \item[\textbf{TICKETING SERVICE}]
@@ -512,9 +582,9 @@ The System runs over HTTPS protocol for the communication with application and n
         \item \label{req:systemTicket:addInQueue}Insert the Customer Ticket request in the queue in order to let the Customer arrive in time for his/her shopping.
         \item \label{req:systemTicket:waitingTime} Provide to the Customer the estimated waiting time before their turn.
         \item \label{req:systemTicket:notifForDepart} Notify Customers when they should depart from home in order to arrive in time for their turn.
-        \item \label{req:systemTicket:reserveTimeout}The Customer, after receiving the request for confirming the ticket reservation, has some seconds to do it, otherwise the ticket is cancelled
+        \item \label{req:systemTicket:reserveTimeout}The Customer, after receiving the request for confirming the Ticket reservation, has Time to Reserve to do it, otherwise the Ticket is cancelled.
     \end{enumerate}
-    \item \label{req:numberTicketPerCust} Each Customer can request only one ticket. When they delete a request or they finish shopping in a Store and check out with the ticket or when the ticket expires, the Customer will be able to request another ticket.
+    \item \label{req:numberTicketPerCust} Each Customer can request only one Ticket. When they delete a request or they finish shopping in a Store and check outwith the Ticket or when the ticket expires, the Customer will be able to request another Ticket.
     \label{req:codeUnique:ticketInfo}Every person on a Ticket can view the time in which they should enter the Store and the indicated duration of their shopping.
     
     \item[\textbf{BOOKING SERVICE}]
@@ -526,36 +596,35 @@ The System runs over HTTPS protocol for the communication with application and n
         \item \label{req:requestVisit:timeslot}The time slot for the Visit.
         \item \label{req:requestVisit:categoriesToBuy}The Categories of Grocery he/her is going to buy.
     \end{enumerate}
-    \item \label{req:statisticForDuration}For long time Customers, while booking a Visit, the System should infer, analyzing previous Visits of that Customer, the expected duration of the Visit. The Customer is free to use the suggestion or specify the time themselves the duration. \giovanni{Io sottolinerei che il tempo è consigliato, ma l'utente può cambiarlo} \lorenzo{FATTO}
+    \item \label{req:statisticForDuration}For long time Customers, while booking a Visit, the System should infer, analyzing previous Visits of that Customer, the expected duration of the Visit. The Customer is free to use the suggestion or specify themselves the duration.
     \item \label{req:sysProvideMap}The System should provide to the Customer a map of the Store.
     \begin{enumerate}[label={-}]
-        \item \label{req:sysProvideMap:suggestPath}For Customers who have booked a Visit, the system should suggest to the Customer an optimal shopping path in order to buy everything they need, to minimize possible contacts between people inside the store and to shorten the time of the visit.
+        \item \label{req:sysProvideMap:suggestPath}For Customers who have booked a Visit, the System should suggest to the Customer an optimal shopping path in order to buy everything they need, to minimize possible contacts between people inside the Store and to shorten the time of the visit.
         \item \label{req:sysProvideMap:update} Each time the Customer views the map, the System checks if the current map is coherent with the Store information and updates it if not.
     \end{enumerate}
     \item \label{req:seeRequests}Allow Customers to consult their pending requests.
     \item \label{req:deleteTickOrVis}The Customer must be allowed to delete a Visit or a Ticket from his/her pending requests.
-    \item \label{req:thirdPartyGPS}Use third party services to enable the localization of Customers and Stores. 
-    \item \lorenzo{Notify Customers when they should depart from home in order to arrive in time for their Visit.} \yasmin{TO DELETE} \giovanni{LASCIALO} \lorenzo{TO DELETE} %\label{req:notifyCustomerToDepart}
-    \item \label{req:notifyCustomerOpenSlots}Notify customers of available slots in a day-time range inferring information from their previous Visits.
+    \item \label{req:thirdPartyGPS}Use third parties services to enable the localization of Customers and Stores. 
+    %\item \lorenzo{Notify Customers when they should depart from home in order to arrive in time for their Visit.} \yasmin{TO DELETE} \giovanni{LASCIALO} \lorenzo{TO DELETE} %\label{req:notifyCustomerToDepart}
+    \item \label{req:notifyCustomerOpenSlots}Notify Customers of available slots in a day-time range inferring information from their previous Visits.
     \item \label{req:visitPerDay} Each Customer can book up to three Visits in a single day.
-    
-    \item \label{req:expiredTickOrVis} If a Visit/ticket is expired, or it has served its purpose, or it has been deleted, it will be removed and will not be visible to the Customer anymore 
+    \item \label{req:expiredTickOrVis} If a Reservation is expired, or it has served its purpose, or it has been deleted, it will be removed and will not be visible to the Customer anymore.
     
     \item[\textbf{STORE MANAGEMENT SERVICE}]
     \item \label{req:man:createStore}Allow Managers to create Stores, becoming the Owner of the Store.
     \begin{enumerate}[label={-}]
-        \item \label{req:man:createStore:nameAndLoc}Allow to specify name of the Store and his address
-         \item \label{req:man:createStore:maxPeople}Allow Managers to specify maximum number of people who can enter the Store.
+        \item \label{req:man:createStore:nameAndLoc}Allow to specify name of the Store and his address.
+         \item \label{req:man:createStore:maxPeople}Allow Managers to specify the Capacity of the Store.
         \item \label{req:man:createStore:maxPeoplePerDep}Allow Managers to specify maximum number of people for each Department of the Store.
         \item \label{req:man:createStore:openingHours}Allow Managers to specify Store opening hours.
         \item \label{req:man:createStore:daysToBook}Allow managers to specify how many days in advance a Visit can be booked
         \item \label{req:man:createStore:percentageTicket} Allow Managers to specify the percentage of Capacity of the Store reserved exclusively for Ticket's reservations.
     \end{enumerate}
     \item \label{req:man:deleteStore}Allow Owner to delete their Stores.
-    \item \label{req:man:verifyOwnerCred}Verify the Store creation, acquiring specific credentials that can be used to verify the validity of the Store and of the Manager. \lorenzo{(During the creation of a Store ask for an associated PEC)}
-    \item \label{req:man:updateStoreInfo}Allow the Owner and Managers to edit the store:
+    \item \label{req:man:verifyOwnerCred}Verify the Store creation, acquiring specific credentials (for instance a Certified Email) that can be used to verify the validity of the Store and of the Manager.
+    \item \label{req:man:updateStoreInfo}Allow the Owner and Managers to edit the Store:
     \begin{enumerate}[label={-}]
-         \item \label{req:man:updateStoreInfo:maxPeople}Allow Managers to edit maximum number of people who can enter the Store.
+         \item \label{req:man:updateStoreInfo:maxPeople}Allow Managers to edit the Capacity of the Store.
         \item \label{req:man:updateStoreInfo:maxPeoplePerDep}Allow Managers to edit maximum number of people for each Department of the Store.
         \item \label{req:man:updateStoreInfo:openingHours}Allow Managers to edit Store opening hours.
          \item \label{req:man:updateStoreInfo:addMan}Allow Owner to add other Managers to their Store(s).
@@ -564,28 +633,27 @@ The System runs over HTTPS protocol for the communication with application and n
         \item \label{req:man:updateStoreInfo:daysToBook}Allow managers to edit how many days in advance a Visit can be booked.
     \end{enumerate}
     
-        \item \label{req:man:whenToUpdate}All the information about the Store can be updated by their Managers at anytime
+        \item \label{req:man:whenToUpdate}All the information about the Store can be updated by their Managers at anytime.
     \begin{enumerate}[label={-}]
-        \item \label{req:man:whenToUpdate:whenEffective}If the updates change opening hours or the maximum number of people in the store or how many days in advance a Visit can be booked, the Manager will have two options: make the updates effective within 24 hours, losing booked Visits which are not valid anymore, or make the updates effective within the current amount of how many days in advance a Visit can be booked without taking a chance on losing booked Visits.
+        \item \label{req:man:whenToUpdate:whenEffective}If the updates change opening hours or the Capacity of the Store or how many days in advance a Visit can be booked, the Manager will have two options: make the updates effective within 24 hours, losing booked Visits which are not valid anymore, or make the updates effective within the current amount of how many days in advance a Visit can be booked without taking a chance on losing booked Visits.
         \item \label{req:man:whenToUpdate:lostVisits} If some Visits are cancelled, the System notify the Customers involved.
     \end{enumerate}
     
     \item \label{req:man:uploadMap}Allow Managers to upload a map of their Stores:
     \begin{enumerate}[label={-}]
         \item \label{req:man:uploadMap:GUI}Provide a GUI to specify the structure of the Store to the System (walls, Departments, category of grocery for each Department)
-        \item \label{req:man:uploadMap:specCategories}Allow the Managers to specify Categories of groceries for each Department.
-        \item \label{req:man:uploadMap:specInCategories}Allow Managers to specify groceries and brands for each Department. \lorenzo{!!! let's talk about the difference between department and categories of grocery.}
+        \item \label{req:man:uploadMap:specCategories}Allow Managers to specify Categories of groceries for each Department.
     \end{enumerate}
     
-    \item \label{req:scannerApp}Provide a specific \textbf{Scanner App} to scan the QR codes of the Consumers and to interact with the queuing mechanism.
+    \item \label{req:scannerApp}Provide a specific \textbf{Scanner App} to scan the QR codes of the Consumers and to interact with the Queuing Mechanism.
     \begin{enumerate}[label={-}]
         \item \label{req:scannerApp:response} Once a Scanner scan a QR code it can visualize one of this messages: if the Consumer of that QR code can enter the Store, or if he is still in the queue (it's not his turn yet), or if his reservation has been deleted (because of Queue Scaling Process or because he never reserved anything).
-        \item \label{req:scannerApp:createCode} The Managers of a Store can create a unique identifier linked to the store to input it to Scanner APP to enable its functions.
+        \item \label{req:scannerApp:createCode} The Managers of a Store can create a unique identifier linked to the Store to input it to Scanner APP to enable its functions.
     \end{enumerate}
     
-    \item \label{req:paperTicketApp}Provide a specific \textbf{Paper Tickets App} to generate paper tickets in the store and to interact with the queuing mechanism.
+    \item \label{req:paperTicketApp}Provide a specific \textbf{Paper Tickets App} to generate paper tickets in the Store and to interact with the Queuing Mechanism.
     \begin{enumerate}[label={-}]
-        \item \label{req:paperTicketApp:func}The Paper Ticket app will allow every person to get a Paper Ticket directly from the Store.
+        \item \label{req:paperTicketApp:func}The Paper Ticket app will allow every person to get a Paper Ticket directly from the Store using a Totem.
         \item \label{req:paperTicketApp:funcPaperTick}In the Paper Tickets there will be specified the same information provided with the online Ticket and it will work the same way. The associated QR code will be automatically generated by the Paper Ticket app, and it will be different from the QR codes of each Customer (i.e. User registered in the main app).
         \item \label{req:paperTicketApp:createCode}The Managers of a Store can create a unique identifier linked to the store to input it to the Paper Ticket app to enable its functions.
     \end{enumerate}
@@ -593,9 +661,9 @@ The System runs over HTTPS protocol for the communication with application and n
     
     \item \label{req:queueUnique}Each Store has one and only one queue.
     \begin{enumerate}[label={-}]
-        %\item \label{req:codeUnique:queueVector} The queue for each day is as long as the number of minutes the Store is open divided by 5, ie a Temporal Quantum.
-        %\item \label{req:codeUnique:vectorOfVectors} Every Temporal Quantum of the queue contains as many elements as the capacity of the Store.
-        %\item \label{req:codeUnique:queueReservations} Every time a Consumer makes a Reservation, it is occupied an element in every Temporal Quantum he needs, that is the Duration of Shopping divided by 5, if and only if the System can find sequential empty spaces (ie an empty space in different subsequent Temporal Quantums of the queue) within the queue. The spaces occupied in each Temporal Quantum will be the first available in that Temporal Quantum.
+        \item \label{req:codeUnique:queueVector} The queue for each day is as long as the number of minutes the Store is open divided by 5, ie a Temporal Quantum.
+        \item \label{req:codeUnique:vectorOfVectors} Every Temporal Quantum of the queue contains as many elements as the Capacity of the Store.
+        %\item \label{req:codeUnique:queueReservations} Every time a Consumer makes a Reservation, it is occupied an element in every Temporal Quantum he needs, that is the Duration of Shopping divided by 5, if and only if the System can find sequential empty spaces (ie an empty space in different subsequent Temporal Quantums of the queue) within the queue.
         \item \label{req:codeUnique:queueReservations}Every time a Consumer makes a Reservation, some spaces on the queue are searched and reserved, in order to let him have enough time for the duration of his shopping.
         \item \label{req:codeUnique:visitsAndQueue} Consumers who have booked a Visit will be inserted in the same queue of the ones who have got a (paper or virtual) Ticket, but they will have higher priority.
         \item \label{req:codeUnique:ticketsAndQueue} Consumers with a Paper Ticket have a higher priority than the ones with Virtual Tickets.
@@ -605,7 +673,7 @@ The System runs over HTTPS protocol for the communication with application and n
         \item \label{req:codeUnique:exeedDuration} A Consumer which does not go out of the shop within the duration declared will activate the Queue Scaling Process and the duration of his/her visit will be extended.% (for clarifications on the Queue Scaling Process, go to chapter ...)
         \item \label{req:codeUnique:queueScaling} The scaling of Consumers in the queue has to be done in such a way that Consumers can be scaled only forward and not backwards. %(for clarifications on the Queue Scaling Process, go to chapter ...)
         \item \label{req:codeUnique:scalingExceed} During the Queue Scaling Process, any scaling that causes a Reservation to exceed the closing hours will lead to the cancellation of the Reservation.
-        \item \label{req:codeUnique:scalingOverlap} During the Queue Scaling Process, any scaling that causes a Virtual Ticket or Visit to overlap with another Virtual Ticket or Visit of the same Costumer (also for different Stores), there will be a cancellation of one of the Reservations. \yasmin{dovrei specificare con quale priorità} 
+        \item \label{req:codeUnique:scalingOverlap} During the Queue Scaling Process, any scaling that causes a Virtual Ticket or Visit to overlap with another Virtual Ticket or Visit of the same Costumer (also for different Stores), there will be a cancellation of one of the new Reservation.
         \item \label{req:codeUnique:queueNotifications} Every time a Reservation of a Customer is cancelled, the Customer must be notified.
         \item \label{req:codeUnique:queueLast30} The last 30 minutes in which a Store is open cannot be booked by any type of Reservation, so that they can be exploited within the Queue Scaling Process, in order to eventually have to eliminate a smaller number of Reservations.
         %\item \label{req:codeUnique:queueReset} When the Store closes (each day) the queue resets it states, keeping only the booked Visits for the next days.
@@ -618,7 +686,7 @@ The System runs over HTTPS protocol for the communication with application and n
 
     \item \label{req:inferringSuggestions}Suggestions are based on the habits of the Customers, inferred by the Data Analytics Manager. In a first period will be suggested Stores which are available and geographically close to the Customer (within 1 km). 
 \end{enumerate}
-
+\newpage
 \label{uc:gToReDMatrix}
 \begin{center}
 {\textbf{Goal to requirements and domain assumptions Matrix}}
@@ -632,11 +700,8 @@ The System runs over HTTPS protocol for the communication with application and n
 	\hline 
 	\ref{goal:auth} & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:confirmRegistration}, \ref{req:login}, \ref{req:changeCredentials}, \ref{req:changePassWithMail}, \ref{req:deleteAccount}, \ref{req:expiredTickOrVis}, \ref{req:man:verifyOwnerCred} & --- \\
 	
-	\hline
-	\ref{goal:influx} & \ref{req:provideQR} & \ref{dom:machineScanning}, \ref{dom:machinePaperTicket}, \ref{dom:consumerAccessStore}, \ref{req:man:createStore}, \ref{req:man:deleteStore}, \ref{req:man:updateStoreInfo}, \ref{req:scannerApp}, \ref{req:paperTicketApp}, \ref{req:queueUnique} \\
-	
-	 \hline 
-	\ref{goal:effectiveQueue} & \ref{req:provideQR}, \ref{req:thirdPartyGPS}, \ref{req:man:updateStoreInfo}, \ref{req:man:whenToUpdate}, \ref{req:man:uploadMap}, \ref{req:queueUnique} & \ref{dom:fewPaperTickets}, \ref{dom:machineScanning}, \ref{dom:machinePaperTicket}, \ref{dom:consumerAccessStore} \\
+	\hline 
+	\ref{goal:effectiveQueue} & \ref{req:provideQR}, \ref{req:man:createStore}, \ref{req:man:deleteStore},  \ref{req:thirdPartyGPS}, \ref{req:man:updateStoreInfo}, \ref{req:man:whenToUpdate}, \ref{req:man:uploadMap}, \ref{req:scannerApp}, \ref{req:queueUnique}, \ref{req:paperTicketApp} & \ref{dom:fewPaperTickets}, \ref{dom:machineScanning}, \ref{dom:machinePaperTicket}, \ref{dom:consumerAccessStore}, \ref{dom:consumerExceedDuration} \\
 	
 	\hline
 	\ref{goal:enqueue} & \ref{req:requestTicket}, \ref{req:systemTicket}, \ref{req:numberTicketPerCust}, \ref{req:codeUnique:ticketInfo}, \ref{req:deleteTickOrVis}, \ref{req:thirdPartyGPS} & ---  \\
@@ -672,18 +737,19 @@ The System runs over HTTPS protocol for the communication with application and n
     \item Activate Paper-ticket machine \label{uc:usePaper}
     \item Update Store info \label{uc:updateStoreInfo}
 \end{enumerate}
+\newpage
 \label{uc:traceabilityMatrix}
 \begin{center}
 {\textbf{Traceability Matrix}}
 \end{center}
 
-\begin{tabularx}{\linewidth}{| p{20mm} | p{20mm} | p{30mm} | p{50mm} |}
+\begin{tabularx}{\linewidth}{| p{20mm} | p{20mm} | p{35mm} | p{50mm} |}
 
     % UC GOAL REQ DOMAIN
      \hline
 	USE CASES & GOALS & REQUIREMENTS & DOMAIN ASSUMPTIONS \\
 	 \hline
-	\ref{uc:registration} & \giovanni{\ref{goal:auth}} & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:confirmRegistration}, \ref{req:provideQR}  & ---\\
+	\ref{uc:registration} & \ref{goal:auth} & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:confirmRegistration}, \ref{req:provideQR}  & ---\\
 	
 	 \hline
 	\ref{uc:login} & \ref{goal:auth} & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:login} & --- \\
@@ -697,13 +763,13 @@ The System runs over HTTPS protocol for the communication with application and n
 	\hline
 	% \hline
 	% \textbf{Achieved Goals} & {}\\
-	\ref{uc:getTicket} & \ref{goal:influx}, \ref{goal:effectiveQueue}, \ref{goal:enqueue} & \ref{req:requestTicket}, \ref{req:systemTicket}, \ref{req:numberTicketPerCust} & --- \\
+	\ref{uc:getTicket} & \ref{goal:effectiveQueue}, \ref{goal:enqueue} & \ref{req:requestTicket}, \ref{req:systemTicket}, \ref{req:numberTicketPerCust} & --- \\
 	\hline
 	
-	\ref{uc:getVisit} & \ref{goal:influx}, \ref{goal:effectiveQueue}, \ref{goal:visit} & \ref{req:requestVisit}, \ref{req:visitPerDay}, \ref{req:statisticForDuration}, \ref{req:visitPerDay} & --- \\
+	\ref{uc:getVisit} & \ref{goal:effectiveQueue}, \ref{goal:visit} & \ref{req:requestVisit}, \ref{req:visitPerDay}, \ref{req:statisticForDuration}, \ref{req:visitPerDay} & --- \\
 	\hline
 	
-	\ref{uc:accessStore} & \ref{goal:influx}, \ref{goal:effectiveQueue}, \ref{goal:enqueue}, \ref{goal:visit} & \ref{req:sysProvideMap}, \ref{req:thirdPartyGPS}, \ref{req:inferringSuggestions} & \ref{dom:machineScanning}, \ref{dom:machinePaperTicket}, \ref{dom:consumerAccessStore}, \ref{dom:consumerAccessStore} \\
+	\ref{uc:accessStore} & \ref{goal:effectiveQueue}, \ref{goal:enqueue}, \ref{goal:visit} & \ref{req:sysProvideMap}, \ref{req:thirdPartyGPS}, \ref{req:inferringSuggestions} & \ref{dom:machineScanning}, \ref{dom:machinePaperTicket}, \ref{dom:consumerAccessStore}, \ref{dom:consumerAccessStore}, \ref{dom:consumerExceedDuration} \\
 	\hline
 	
 	\ref{uc:deleteBooked} & --- & \ref{req:deleteTickOrVis}, \ref{req:expiredTickOrVis} & --- \\
@@ -712,13 +778,13 @@ The System runs over HTTPS protocol for the communication with application and n
     \ref{uc:createStore} & --- & \ref{req:man:createStore}, \ref{req:man:verifyOwnerCred} & --- \\
     \hline
     
-    \ref{uc:useScanner} & \ref{goal:influx}, \ref{goal:enqueue} & \ref{req:scannerApp} & \ref{dom:machineScanning}\\
+    \ref{uc:useScanner} & \ref{goal:effectiveQueue}, \ref{goal:enqueue} & \ref{req:scannerApp} & \ref{dom:machineScanning}\\
     \hline
     
-    \ref{uc:usePaper} & \ref{goal:influx}, \ref{goal:enqueue} & \ref{req:paperTicketApp} & \ref{dom:machinePaperTicket}\\
+    \ref{uc:usePaper} & \ref{goal:effectiveQueue}, \ref{goal:enqueue} & \ref{req:paperTicketApp} & \ref{dom:machinePaperTicket}\\
     \hline
     
-    \ref{uc:updateStoreInfo} & \ref{goal:influx} & \ref{req:man:whenToUpdate}, \ref{req:man:updateStoreInfo} & --- \\
+    \ref{uc:updateStoreInfo} & \ref{goal:effectiveQueue} & \ref{req:man:whenToUpdate}, \ref{req:man:updateStoreInfo} & --- \\
     \hline
     
 \end{tabularx}
@@ -758,8 +824,8 @@ The System runs over HTTPS protocol for the communication with application and n
 	
 	\hline
 	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
-			\item If the User does not enter valid credentials (invalid email or a password which is not a SecurePassword [\ref{def:securepass}]), the registration fails and the user is prompted to restart the registration process.
-			\item If the User does not confirm their credentials within 24 hours, the account is removed and the credentials deleted. \lorenzo{TO CHECK}
+			\item If the User does not enter valid credentials (invalid email or a password which is not a Secure Password [\ref{def:securepass}]), the registration fails and the user is prompted to restart the registration process.
+			\item If the User does not confirm their credentials within 24 hours, the account is removed and the credentials deleted.
 		\end{enumerate}}\\
 
 	\hline
@@ -769,7 +835,7 @@ The System runs over HTTPS protocol for the communication with application and n
 \begin{minipage}{\linewidth}
             \centering
            \includegraphics[height=0.5\textheight, scale=1, keepaspectratio]{img/seq_diag/Register.jpg}
-            \captionof{figure}{Registration Sequence diagram, if the User confirms the credentials when they have to.}
+            \captionof{figure}{Registration Sequence diagram, if the User confirms the credentials when they have to. Also according to temporal constrain for credential acceptance} 
 \end{minipage}
 
 \begin{minipage}{\linewidth}
@@ -777,7 +843,7 @@ The System runs over HTTPS protocol for the communication with application and n
            \includegraphics[height=0.1\textheight, scale=0.2, keepaspectratio]{img/registration_use_case_diagram.png}
             \captionof{figure}{Registration}
 \end{minipage}
-
+\newpage
 \begin{center}
 {\textbf{\ref{uc:login}: Login}}
 \end{center}
@@ -820,7 +886,7 @@ The System runs over HTTPS protocol for the communication with application and n
 
 \begin{minipage}{\linewidth}
             \centering
-           \includegraphics[height=0.5\textheight, scale=1, keepaspectratio]{img/seq_diag/Login.jpg}
+           \includegraphics[height=0.47\textheight, scale=1, keepaspectratio]{img/seq_diag/Login.jpg}
             \captionof{figure}{Login Sequence diagram}
 \end{minipage}
 
@@ -846,7 +912,7 @@ The System runs over HTTPS protocol for the communication with application and n
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
 		\begin{enumerate}
-			\item The Customer clicks on the update credential button, from the home page\lorenzo{CHECK INTERFACES}.
+			\item The Customer clicks on the update credential button, from the home page.
 			\item The Customer fills the editable fields with the requested information: email and password, and confirms the operation through a button.
 			\item The Login Manager checks if the new credentials are valid. 
 			\item If the new credentials are valid, the Customer has successfully updated their credentials
@@ -863,7 +929,7 @@ The System runs over HTTPS protocol for the communication with application and n
 	\hline
 	
 \end{tabularx}
-
+\newpage
 \begin{center}
 {\textbf{\ref{uc:lostPassword}: Lost Password}}
 % TODO
@@ -887,7 +953,7 @@ The System runs over HTTPS protocol for the communication with application and n
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
 		\begin{enumerate}
-			\item The Customer clicks on the Recover Password button, in the log-in page \lorenzo{CHECK INTERFACES}.
+			\item The Customer clicks on the recover password button, in the log-in page.
 			\item The Customer enter their mail in the editable box, and they click the recover password button.
 			\item The Login Manager checks if the mail is associated to a registered Customer.
 			\item If the mail is associated to a registered Customer, the Login Manager sends a mail to the user with appropriate instructions.
@@ -940,7 +1006,7 @@ The System runs over HTTPS protocol for the communication with application and n
 			\item The Ticket Manager sends the information on the Ticket to the Queue Manager of the Store, that looks for the available positions in the queue.
 			\item The Queue Manager places the Customer in the queue accordingly and sends the information to the Ticket Manager.
 			\item The System alerts the Customer on how much time they would have to wait for their turn and asks for confirmation.
-			\item If the Customer clicks on the "reserve" button, and has no other valid ticket, the ticket request is successful and the ticket is reserved.
+			\item If the Customer clicks on the "reserve" button respecting the Time To Reserve constraint [\ref{def:timeToReserve}], and has no other valid ticket, the ticket request is successful and the ticket is reserved.
 	\end{enumerate}}\\
 	
 	\hline
@@ -952,7 +1018,7 @@ The System runs over HTTPS protocol for the communication with application and n
 			\item If there are no position available in the Queue, the system logs to the Customer a failure message and the request is discarded.
 			\item If the Customer is too far away from the store to arrive and finish their shopping in time for the closure of the Store, the system logs to the User a failure message the request is discarded.
 			\item If a Customer already has a Virtual Ticket in his reservations, the System does not allow the Customer to get another one, logs a failure message and the request is discarded.
-			\item If the Customer takes too long to click the "reserve" button, the Ticket is cancelled.
+			\item If the Customer takes too long (more than Time To Reserve [\ref{def:timeToReserve}]) to click the "reserve" button, the Ticket is cancelled.
 		\end{enumerate}}\\
 
 	\hline
@@ -961,7 +1027,7 @@ The System runs over HTTPS protocol for the communication with application and n
 
 \begin{minipage}{\linewidth}
             \centering
-           \includegraphics[height=0.5\textheight, scale=1, keepaspectratio]{img/seq_diag/GetTicket.jpg}
+           \includegraphics[height=0.45\textheight, scale=1, keepaspectratio]{img/seq_diag/GetTicket.jpg}
             \captionof{figure}{Get Ticket Sequence diagram, after having compiled the ticket form, and with the Customer clicking the reserve button respecting its time constraint.}
 \end{minipage}
 
@@ -979,7 +1045,7 @@ The System runs over HTTPS protocol for the communication with application and n
 	% \textbf{Achieved Goals} & {}\\
 
 	\hline
-	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queuing mechanism}}, \textbf{\textit{Store Manager}}\lorenzo{CHECK THESE}\\
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queuing mechanism}}, \textbf{\textit{Store Manager}}\\
 	
 	\hline
 	\textbf{Preconditions} & The Customer opens the application on their device and is logged in.\\
@@ -1023,7 +1089,7 @@ The System runs over HTTPS protocol for the communication with application and n
 
 \begin{minipage}{\linewidth}
         \centering
-           \includegraphics[height=0.4\textheight, scale=0.1, keepaspectratio]{img/book_ticket_use_diagram.png}
+           \includegraphics[height=0.33\textheight, scale=0.1, keepaspectratio]{img/book_ticket_use_diagram.png}
             \captionof{figure}{Get Ticket and Book Visit}
         \end{minipage}
 
@@ -1041,7 +1107,7 @@ The System runs over HTTPS protocol for the communication with application and n
 	% \textbf{Achieved Goals} & {}\\
 
 	\hline
-	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queue Manager}}  \lorenzo{CHECK THESE}\\
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queue Manager}},\textit{\textbf{Scanner}} \\
 	
 	\hline
 	\textbf{Preconditions} & The Customer has a reserved ticket.\\
@@ -1051,9 +1117,9 @@ The System runs over HTTPS protocol for the communication with application and n
 		\begin{enumerate}
 			\item The System tells the Customer when to depart from their place to go to the Store on time with the specified means of transport.
 			\item Once arrived at the Store the Customer checks the entrance time on the Ticket (it could be updated). The Customer enters the Store when specified by the ticket.
-			\item The Customer scans their personal QR-code (which can be found in the profile tab in the app) with the Machine for Scanning provided by the Store.
+			\item The Customer scans their personal QR-code (which can be found in the profile tab in the app) with the Scanner provided by the Store.
 			\item The Customer enters the Store and tries to comply with the duration specified on the ticket.
-			\item The system collects the duration of the shopping, storing it in the Database \lorenzo{CHECK THIS}.
+			\item The system collects the duration of the shopping, storing it in the Database for analytics purposes.
 			\item If the Customer takes more time to shop than the duration specified, the Queue Manager applies a scaling process to avoid overcrowding.
 			\item After paying the Customer is prompted by the Store's operator to scan again the QR-code.
 	\end{enumerate}}\\
@@ -1084,7 +1150,7 @@ The System runs over HTTPS protocol for the communication with application and n
 	% \textbf{Achieved Goals} & {}\\
 
 	\hline
-	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queue Manager}}  \\
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queue Manager}}, \textit{\textbf{Scanner}}  \\
 	
 	\hline
 	\textbf{Preconditions} & The Customer has a valid Visit booked.\\
@@ -1093,11 +1159,11 @@ The System runs over HTTPS protocol for the communication with application and n
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
 		\begin{enumerate}
 			\item Once arrived at the Store the Customer checks the entrance time on the Visit they booked (it could be updated). The customer enters the Store when specified by the Visit.
-			\item The Customer scans their personal QR-code (which can be found in the profile tab in the app) with the machine provided by the Store.
+			\item The Customer scans their personal QR-code (which can be found in the profile tab in the app) with the Scanner provided by the Store.
 			\item The Customer enters the Store and tries to comply with the duration specified on the ticket.
 			\item If the Customer is late, the Queue Manager automatically updates the queue to avoid overcrowding.
 			\item The Customer is guided by the app through the store thanks to a map which show them the path to arrive to the categories specified during the booking of the Visit.
-			\item The system collects the duration of the Visit, storing it in the Database \lorenzo{CHECK THIS}.
+			\item The system collects the duration of the Visit, storing it in Database for analytics purposes.
 			\item After paying the Customer is prompted by the Store's operator to scan again the QR-code.
 	\end{enumerate}}\\
 	
@@ -1126,7 +1192,7 @@ The System runs over HTTPS protocol for the communication with application and n
 	% \textbf{Achieved Goals} & {}\\
 
 	\hline
-	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queue Manager}}  \lorenzo{CHECK THESE}\\
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textbf{\textit{Visit Manager}}, \textit{\textbf{Queue Manager}} \\
 	
 	\hline
 	\textbf{Preconditions} & The Customer has booked a Visit or reserved a Ticket.\\
@@ -1168,7 +1234,7 @@ The System runs over HTTPS protocol for the communication with application and n
 	% \textbf{Achieved Goals} & {}\\
 
 	\hline
-	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Mailing Service}}  \lorenzo{CHECK THESE}\\
+	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Mailing Service}} \\
 	
 	\hline
 	\textbf{Preconditions} & The Manager is logged-in into the main application. \\
@@ -1176,11 +1242,11 @@ The System runs over HTTPS protocol for the communication with application and n
 	\hline
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
 		\begin{enumerate}
-			\item The Manager clicks on the create Store button in the store tab.
+			\item The Manager clicks on the create Store button in the Store tab.
 			\item The Manager inputs the requested information in the editable boxes.
-			\item The Manager inputs special credentials, (PEC email associated to the Store), to certify the authenticity of the Store. \lorenzo{CHECK THIS}
+			\item The Manager inputs Special Credentials \ref{def:specialCredentials}, to certify the authenticity of the Store.
+			\item The System checks the credentials and sends the Manager a confirmation mail.
 			\item The Customer follows the instructions on the email to activate the Store.
-			\item The System sends an email to the given PEC to finalize the Store creation.
 			\item The Store is created, and the Manager becomes the Owner of the Store.
 	\end{enumerate}}\\
 	
@@ -1303,7 +1369,7 @@ The System runs over HTTPS protocol for the communication with application and n
 	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
 		\begin{enumerate}
 			\item The Manager clicks on the interested Store
-			\item The Manager clicks on the update information\lorenzo{CHECK INTERFACES}.
+			\item The Manager clicks on the modify information button.
 			\item The Manager fills the editable fields with the updated information and confirms the operation through a button. (Simple Manager and Owner, have different editable fields).
 			\item If the Manager has edited information which are linked to the Queue Manager (max number of people, opening hours, amount of days in advance in which a Visit can be booked), the System logs a message: these changes can be uploaded within 24 hours, taking a chance on canceling some Visits previously booked, or can be uploaded in the current amount of days in advance in which a Visit can be booked, without losing any Visit.
 			\item The Queue Manager handles the changing of the information linked to the queue in the due time.
@@ -1322,7 +1388,41 @@ The System runs over HTTPS protocol for the communication with application and n
 	
 \end{tabularx}
 
+\subsection{Performance Requirements}
+The main focus of the application is relative to queue mechanism.
+When an user wants to equeue, once filled all the information for ticket requests, the System should respond in 5 seconds. The Customer must interact with application accepting or discarding the ticket in Time to Reserve  (\ref{def:timeToReserve}). If the time expires, the ticket is automatically deleted.
+Regarding the booking of a visit, the System should respond in 30 seconds. This constrain is relaxed in order to prioritize the managing of tickets that needs high responsivity and because there is no need of Customer interaction.
+
+\subsection{Design Constraint}
+\subsubsection{Standards Compliance}
+The System doesn't need to be compliant to any standard since it doesn't interact with standardized systems or any sensitive information.
+\subsubsection{Hardware Limitations}
+In order to run the application, at least is required
+\begin{enumerate}
+    \item 3G connection at 1 Mbps
+    \item 50 MB of memory space
+    \item 2 GB of RAM
+    \item GPS sensor
+\end{enumerate}
+
+\subsection{Software System Attributes}
+\subsubsection{Reliability}
+The System should guarantees a 99\% of reliability: its components must have
+a failure rate that guarantees this goal. 
+\subsubsection{Availability}
+All the minor patches are released during the night, in order to minimize down time.
+The System will be available 24/7 and must guarantee 99.9\% of availability, with at most 1.44 minutes of downtime per day.  
+\subsubsection{Security}
+User credential are stored inside the DBMS using a randomly generated salt and possibly a slow hash function. All the communication between client and server are done over HTTPS protocol.  
+\subsubsection{Maintainability}
+All the code should be written using good software engineering practice such as exhaustive documentation of the code, unit test and use of design patterns.
+\subsubsection{Portability}
+The application should be developed using cross-platform technologies that allows to develop Native application for better UX.
+Also the server side of the application should be developed using cross-platform technologies.
+
+\newpage
 \section{Formal Analysis Using Alloy}
+\label{analysisAndAlloy}
 This section is dedicated to the description of the model through the use of the Alloy modeling language, which allows us to describe the world in which our application lives.
 
 \subsection{World Generated: main characteristics}
@@ -1348,7 +1448,7 @@ will receive suggestions from the Data Analytics Manager, which is in charge of 
 \end{figure}
 
 \subsubsection{Customers and their Reservations}
-As we can see in the Figure \ref{alloy_customer} Customers are identified by a unique QRCode. Each Customer can have some Reservations planned, which can be a Visi or a VirtualTicket. Every Visit is characterized by the Day of the Visit, the TimeSlot for that Visit, a List of Groceries that the Customer wants to buy and a Duration.  Each VirtualTicket is chacterized by a time of entrance and a duration. Moreover each Reservation refers to one Store. A single Customer cannot reserve more than 3 Visits in the same Day for the same Store.
+As we can see in the Figure \ref{alloy_customer} Customers are identified by a unique QRCode. Each Customer can have some Reservations planned, which can be a Visit or a \textit{VirtualTicket}. Every Visit is characterized by the Day of the Visit, the \textit{TimeSlot} for that Visit, a List of Groceries that the Customer wants to buy and a Duration.  Each \textit{VirtualTicket} is chacterized by a time of entrance and a duration. Moreover each Reservation refers to one Store. A single Customer cannot reserve more than 3 Visits in the same Day for the same Store.
 \begin{figure}[h!]
 \centering
 	\centering
@@ -1358,13 +1458,13 @@ As we can see in the Figure \ref{alloy_customer} Customers are identified by a u
 \end{figure}
 
 \subsubsection{Stores and their components}
-Each Store has one and only one Owner, but it can have other Managers who collaborate in the management of the Store. Moreover each Store has its own BookingManager, TicketManager and MapManager. This components are made in order to manage all the requests of Tickets and Visits for that Store. It also has a ScannerCode and a Totem. The Totem has the task of generating PaperTickets for that particular Store, which will be characterized by a unique QRcode. The Reservations made for a Store are stored in the personal unique Queue of the Store, which is managed by the Queue Manager. A Queue has a certain number of Temporal Quantums, and each Temporal Quantum has a number of spaces equal to the capacity of the Store.
+Each Store has one and only one Owner, but it can have other Managers who collaborate in the management of the Store. Moreover each Store has its own \textit{BookingManager}, \textit{TicketManager} and \textit{MapManager}. This components are made in order to manage all the requests of Tickets and Visits for that Store. It also has a \textit{ScannerCode} and a \textit{Totem}. The Totem has the task of generating \textit{PaperTickets} for that particular Store, which will be characterized by a unique QRcode. The Reservations made for a Store are stored in the personal unique Queue of the Store, which is managed by the Queue Manager. A Queue has a certain number of Temporal Quantums, and each Temporal Quantum has a number of spaces equal to the capacity of the Store.
 \begin{figure}[h!]
 \centering
 	\centering
   	\includegraphics[height=0.23\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_store.png}
-	\caption{Alloy-generated world that shows Customers and Reservations characteristics.}
- 	\label{alloy_customer}
+	\caption{Alloy-generated world that shows Stores and their components.}
+ 	\label{alloy_stores}
 \end{figure}
 
 \subsubsection{The Whole World Generated}
@@ -1390,8 +1490,6 @@ pred show{
 	#VirtualTicket = 1
 	#PaperTicket = 1
 	#Customer = 1
-	#DataAnalyticsManager = 1
-	#LoginManager = 1
 }
 
 run show for 20
@@ -1456,21 +1554,21 @@ assert oneOwner{
 \end{lstlisting}
 
 The results of the running of all the assertions above can be found in the Figure \ref{check_alloy}. As you can see, no counterexample has been found.
-
-\begin{figure}[hbt]
+\newpage
+\begin{figure}[h!]
 \centering
 \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/alloy/img_check_1.PNG}
+  	\includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alloy/img_check_1.PNG}
  \end{subfigure}
  \begin{subfigure}
 	\centering
-  	\includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/alloy/img_check_2.PNG}
+  	\includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alloy/img_check_2.PNG}
  \end{subfigure}
 	\caption{Results for running all the assertions made. No counterexample has been found.}
  	\label{check_alloy}
 \end{figure}
-
+\newpage
 \subsection{Whole Alloy Model}
 \begin{lstlisting}[language=alloy]
 -- SIGNATURES AND FACTS --
@@ -1534,11 +1632,6 @@ sig TimeSlot{ }{
 sig Time{
 	hour: one Int,
 	minutes: one Int
-}{
-	hour >= 0
-	hour < 24
-	minutes >= 0
-	minutes < 60
 }
 
 sig Char{ }{
@@ -1620,10 +1713,6 @@ sig Queue {
 	all s:Store | s.queueManaging.manage = s.queue
 }
 
-/*sig Consumer {
-	reservations: some Reservation
-}*/
-
 abstract sig User { 
 	email: one Email
 }{
@@ -1633,10 +1722,9 @@ abstract sig User {
 
 sig Customer extends User{
 	reservations: some Reservation,
-	recognition: one QRcode,
-	/*password: one String*/
+	recognition: one QRcode
 }{
-	// each customer has at most 3 visits each day
+	// Each customer has at most 3 visits each day
 	all d:Day | #(reservations & day.d) <= 3
 	//each customer receives suggestions from the DataAnalyticsManager
 	all d:DataAnalyticsManager | this in d.suggest
@@ -1768,8 +1856,6 @@ pred show{
 	#VirtualTicket = 1
 	#PaperTicket = 1
 	#Customer = 1
-	#DataAnalyticsManager = 1
-	#LoginManager = 1
 }
 
 
@@ -1777,17 +1863,89 @@ pred show{
 
 run show for 20
 \end{lstlisting}
-
+\newpage
 \section{Effort Spent}
 \label{effort}
-sample effort spent
+\textbf{Lorenzo}:
+\vspace{0.7em}
+\begin{center}
+\begin{spreadtab}{{tabular}{|c|p{10cm}|l|}}
+\hline
+ & @ \textbf{Description}                  & @ Hours \\\hline
+1 & @ First layout project creation.      & 0.2 \\ \hline
+\STcopy{v}{a2+1} & @ Revision recap first call.     & 0.5 \\ \hline
+& @ Revision and insertion of the scopes .     & 2.5 \\ \hline
+& @ Multiple calls                              & 8 \\ \hline
+& @ requirements and update requirements labels   & 3 \\ \hline
+& @ Use cases                                   & 7.8 \\ \hline
+& @ Refactor different parts of the document & 1 \\ \hline
+& @ Small revisions                         & 0.5 \\ \hline 
+& @ Alloy                                   & 4 \\ \hline
+& @ Sequence diagrams                       & 1.5 \\ \hline
+& @ Goal to req and dom Matrix              & 0.75 \\ \hline
+& @ Update UC                               & 2 \\ \hline
+& @ Small updates                           & 1 \\ \hline
+& @ Final Call first revision             & 3 \\ \hline
+                &  @ \textbf{TOTAL}                  & sum(c2:c15) \\ \hline
+\end{spreadtab}
+\end{center}
+\vspace{0.7em}
 
-\section{REFERENCES}
-\label{references}
-\renewcommand{\refname}{}
-\vspace{-2.6em}
-\nocite{*}
-\bibliography{biblio} 
-\bibliographystyle{unsrtnat}
+\textbf{Yasmin}:
+\vspace{0.7em}
+\begin{center}
+\begin{spreadtab}{{tabular}{|c|p{10cm}|l|}}
+\hline
+& @ \textbf{Description}                  & @ Hours \\\hline
+1 & @ Write down recap first call    & 1.5 \\ \hline
+\STcopy{v}{a2+1} & @ First draft some GUI          & 1 \\ \hline
+& @ Introduction and Purpose & 1.5 \\ \hline
+& @ Goals draft     & 1.5 \\ \hline
+& @ Requirements draft     & 2.5 \\ \hline
+& @ Revision  & 1.5 \\ \hline
+& @ GUI  & 4.5 \\ \hline
+& @ Multiple calls  & 8 \\ \hline
+& @ Queue Requirements     & 1.2 \\ \hline
+& @ User Characteristics     & 0.5 \\ \hline
+& @ Interfaces chapters & 0.6 \\ \hline
+& @ Class Diagram  & 1 \\ \hline
+& @ Alloy modeling and chapter & 13 \\ \hline
+& @ Final Call first revision             & 3.5 \\ \hline
+& @ Images and chapters polishing             & 0.6 \\ \hline
+&     @ \textbf{TOTAL}                                & sum(c2:c16) \\ \hline
+\end{spreadtab}
+\end{center}
+\vspace{0.7em}
+\newpage
+\textbf{Giovanni}:
+\vspace{0.7em}
+\begin{center}
+\begin{spreadtab}{{tabular}{|c|p{10cm}|l|}}
+\hline
+& @ \textbf{Description}                  & @ Hours \\\hline
+1 & @ Multiple calls.     & 8 \\ \hline
+\STcopy{v}{a2+1} & @ Final Call first revision             & 3.5 \\ \hline
+& @ First draft of goals and requirements            & 3 \\ \hline
+& @ Writing Introduction            & 1 \\ \hline
+& @ Setting up of whole document structure and writing small subsection (Reference documents, document structure, definitions etc..)            & 3.5 \\ \hline
+& @ Writing Production functions and perspective             & 4 \\ \hline
+& @ Product function and perspective diagrams             & 0.3 \\ \hline
+& @ Use cases diagrams             & 0.3 \\ \hline
+& @ Performance requirements and design constraints            & 1.5 \\ \hline
+& @ Alloy              & 1.5  \\ \hline
+& @ Other work revision and small refactor              & 3  \\ \hline
+&  @ \textbf{TOTAL}    & sum(c2:c12) \\ \hline
+\end{spreadtab}
+\end{center}
+\vspace{0.7em}
+\begin{comment}
+    \section{REFERENCES}
+    \label{references}
+    \renewcommand{\refname}{}
+    \vspace{-2.6em}
+    \nocite{*}
+    \bibliography{biblio} 
+    \bibliographystyle{unsrtnat}
+\end{comment}
 
 \end{document}
