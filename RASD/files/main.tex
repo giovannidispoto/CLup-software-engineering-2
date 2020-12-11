@@ -55,11 +55,12 @@
 \begin{titlepage}
 %\vspace*{\fill}
 \begin{figure}[h!]
-    \centering
-    \includegraphics[scale=0.5]{img/logopoli.png}
+	\centering
+	\includegraphics[scale=0.5]{img/logopoli.png}
 \end{figure}
 \vspace{0.7em}
 \begin{center}
+<<<<<<< HEAD
     \Large \textbf{REQUIREMENTS ANALYSIS AND SPECIFICATION DOCUMENT}
 \end{center}
 %\begin{center}
@@ -78,6 +79,26 @@
     \begin{figure}[h!]
     \centering
     \includegraphics[scale=0.25]{img/GUI/logo.jpg}
+=======
+	\Large \textbf{REQUIREMENTS ANALYSIS AND SPECIFICATION DOCUMENT}
+\end{center}
+%\begin{center}
+%	\large Version 0.1
+%\end{center}
+%\begin{center}
+%	\large Version Date
+%\end{center}
+%\vspace{0.4em}
+\begin{center}
+	\Large \textbf{CLup – Customers Line-up } 
+\end{center}
+\vspace{-0.6em}
+\begin{center}
+	\normalsize Yasmin Awad, Lorenzo Carpaneto, Giovanni Dispoto
+	\begin{figure}[h!]
+	\centering
+	\includegraphics[scale=0.25]{img/GUI/logo.jpg}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \end{figure}
 \end{center}
 \vspace*{\fill}
@@ -261,8 +282,12 @@ is a component that takes care of Ticket requests for a Store.
 \item \label{def:API}\textit{API}: Application Programming Interface
 \item \label{def:NIST}\textit{NIST}: National Institute of Standards and Technology
 \item \label{def:IEEE}\textit{IEEE}: Institute of Electrical and Electronics Engineers
+<<<<<<< HEAD
 \item \label{def:DBMS}\textit{DBMS}: Database Management System
 \item \label{def:GPS} \textit{GPS}: Global Positioning System
+=======
+\item \label{def:DBMS} DBMS: Database Management System
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \item \label{def:HTTPS}\textit{HTTPS}: Hypertext Transfer Protocol Secure
 \item \label{def:UML}\textit{UML}: Uniform Modeling language
 \item \label{def:UX}\textit{UX} : User Experience
@@ -337,10 +362,17 @@ If ticket is associated to a Customer then the information are used for profilin
 The class diagram in Figure \ref{class_diagram} shows a possible structure of the CustomersLine-up architecture. It should be noted that although the Consumer is not represented, he will be the one to request the generation of Paper Tickets from the Totem in the real world.
 \begin{figure}[h!]
 \centering
+<<<<<<< HEAD
     \centering
     \includegraphics[height=0.55\textheight, scale=0.2, keepaspectratio]{img/class_diagram.jpg}
     \caption{CustomersLine-up class diagram.}
     \label{class_diagram}
+=======
+	\centering
+  	\includegraphics[height=0.55\textheight, scale=0.2, keepaspectratio]{img/class_diagram.jpg}
+	\caption{CustomersLine-up class diagram.}
+ 	\label{class_diagram}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \end{figure}
 \subsection{Product functions}
 Detailed description of the product functions
@@ -354,7 +386,11 @@ Detailed description of the product functions
         After enqueuing, the System notify the Customer when he/she has to star from home.
         During the permanence inside the Store he/she can see the map of the store and the position of various departments.
      \\
+<<<<<<< HEAD
         \begin{minipage}{\linewidth}
+=======
+       	\begin{minipage}{\linewidth}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
             \centering
            \includegraphics[height=0.3\textheight, scale=0.2, keepaspectratio]{img/Get_Ticket_diagram.png}
             \captionof{figure}{Getting ticket phase}
@@ -436,6 +472,7 @@ The characters are:
 \label{specificRequirements}
 \subsection{External Interface Requirements}
 CL-up is a mobile based application, that can be also consulted using a web browser. Additional details regarding the hardware, software and communication interface requirements are described and shown below. There will also be some prototypes of User Interface for users who use mobile.
+<<<<<<< HEAD
 
 \subsubsection{User Interfaces}
 %riga1
@@ -542,6 +579,114 @@ The application is available for any type of mobile, having Internet access, a r
 \subsubsection{Communication Interfaces}
 The System runs over HTTPS protocol for the communication with application and notification system. The System also communicate with DBMS.
 
+=======
+
+\subsubsection{User Interfaces}
+%riga1
+\begin{figure}[hbt]
+\centering
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/login.jpg} 
+ \end{subfigure}
+ \begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/registration.jpg}
+ \end{subfigure}
+	\caption{Guest login interface and signup interface.}
+ 	\label{entering}
+\end{figure}
+%riga2
+\begin{figure}[hbt]
+\centering
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/stores_customer.jpg}
+ \end{subfigure}
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/main_customer.jpg} 
+ \end{subfigure}
+ \begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/profile_customer.jpg}
+ \end{subfigure}
+	\caption{Customers interfaces for list of Stores (for doing a Reservation), list of Reservations and profile.}
+ 	\label{customer screenshots}
+\end{figure}
+%riga3
+\begin{figure}[hbt]
+\centering
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/book_visit_pt1.jpg}
+ \end{subfigure}
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/book_visit_pt2.jpg} 
+ \end{subfigure}
+ \begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/book_visit_pt3.jpg}
+ \end{subfigure}
+	\caption{Customer interfaces for booking a Visit, once they have chosen the Store.}
+ 	\label{book a visit}
+\end{figure}
+%riga4
+\begin{figure}[hbt]
+\centering
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/visit_booked.jpg}
+ \end{subfigure}
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/get_ticket_pt1.jpg}
+ \end{subfigure}
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/get_ticket_pt2.jpg}
+ \end{subfigure}
+	\caption{Customer interfaces for booking a Virtual Ticket, once they have chosen the Store.}
+ 	\label{customer tickets}
+\end{figure}
+%riga5
+\begin{figure}[h!]
+\centering
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/main_manager.jpg}
+ \end{subfigure}
+\begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/manager_store_1.jpg}
+ \end{subfigure}
+ \begin{subfigure}
+	\centering
+  	\includegraphics[height=0.26\textheight, scale=0.2, keepaspectratio]{img/GUI/manager_store_2.jpg}
+ \end{subfigure}
+	\caption{Manager interfaces to view the membership and owned Stores.}
+ 	\label{manager interfaces}
+\end{figure}
+
+\newpage
+\subsubsection{Hardware Interfaces}
+The application is available for any type of mobile, having Internet access, a relatively recent browser, a GPS function, and enough storage space to accommodate the application itself.
+
+\subsubsection{Software Interfaces}
+\begin{enumerate}
+\item[$\bullet$] Operating System: iOS, Android.
+\item[$\bullet$] Web browser.
+\item[$\bullet$] Web Server application.
+\item[$\bullet$] DBMS.
+\item[$\bullet$] Visit System: use third part services for GPS function. 
+\item[$\bullet$] Mailing Service: APIs to send emails to the User.
+\end{enumerate}
+
+\subsubsection{Communication Interfaces}
+The System runs over HTTPS protocol for the communication with application and notification system. The System also communicate with DBMS.
+
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \subsection{Functional Requirements}
 
 \begin{enumerate}[align=left, label={R.\arabic{*}}]
@@ -697,6 +842,7 @@ The System runs over HTTPS protocol for the communication with application and n
 
     % UC GOAL REQ DOMAIN
      \hline
+<<<<<<< HEAD
     GOALS & REQUIREMENTS & DOMAIN ASSUMPTIONS \\
     \hline 
     \ref{goal:auth} & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:confirmRegistration}, \ref{req:login}, \ref{req:changeCredentials}, \ref{req:changePassWithMail}, \ref{req:deleteAccount}, \ref{req:expiredTickOrVis}, \ref{req:man:verifyOwnerCred} & --- \\
@@ -737,6 +883,715 @@ The System runs over HTTPS protocol for the communication with application and n
     \item Activate Scanner \label{uc:useScanner}
     \item Activate Paper-ticket machine \label{uc:usePaper}
     \item Update Store info \label{uc:updateStoreInfo}
+=======
+	GOALS & REQUIREMENTS & DOMAIN ASSUMPTIONS \\
+	\hline 
+	\ref{goal:auth} & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:confirmRegistration}, \ref{req:login}, \ref{req:changeCredentials}, \ref{req:changePassWithMail}, \ref{req:deleteAccount}, \ref{req:expiredTickOrVis}, \ref{req:man:verifyOwnerCred} & --- \\
+	
+	\hline 
+	\ref{goal:effectiveQueue} & \ref{req:provideQR}, \ref{req:man:createStore}, \ref{req:man:deleteStore},  \ref{req:thirdPartyGPS}, \ref{req:man:updateStoreInfo}, \ref{req:man:whenToUpdate}, \ref{req:man:uploadMap}, \ref{req:scannerApp}, \ref{req:queueUnique}, \ref{req:paperTicketApp} & \ref{dom:fewPaperTickets}, \ref{dom:machineScanning}, \ref{dom:machinePaperTicket}, \ref{dom:consumerAccessStore}, \ref{dom:consumerExceedDuration} \\
+	
+	\hline
+	\ref{goal:enqueue} & \ref{req:requestTicket}, \ref{req:systemTicket}, \ref{req:numberTicketPerCust}, \ref{req:codeUnique:ticketInfo}, \ref{req:deleteTickOrVis}, \ref{req:thirdPartyGPS} & ---  \\
+
+	\hline
+	
+	\ref{goal:visit} & \ref{req:requestVisit}, \ref{req:statisticForDuration}, \ref{req:sysProvideMap}, \ref{req:seeRequests}, \ref{req:deleteTickOrVis}, \ref{req:thirdPartyGPS}, \ref{req:notifyCustomerOpenSlots}, \ref{req:visitPerDay}, \ref{req:inferringSuggestions}  & ---  \\
+
+	\hline
+	
+\end{tabularx}
+
+
+\subsubsection{Use Cases}
+\begin{enumerate}[labelindent=20pt, label={UC.\arabic*}, itemindent=1em,leftmargin=!]
+    % both customer and manager
+    \item Registration \label{uc:registration}
+    \item Login \label{uc:login}
+    \item Update Credentials \label{uc:updateCredentials}
+    \item Lost Password \label{uc:lostPassword}
+    % customer
+    \item Get Ticket \label{uc:getTicket}
+    \item Book Visit \label{uc:getVisit}
+    \item Access Store \label{uc:accessStore}
+    \begin{enumerate}[label={-}]
+        \item Using Ticket
+        \item Using Visit
+    \end{enumerate}
+    \item Delete Ticket/Visit \label{uc:deleteBooked}
+    % manager
+    \item Create Store \label{uc:createStore}
+    \item Activate Scanner \label{uc:useScanner}
+    \item Activate Paper-ticket machine \label{uc:usePaper}
+    \item Update Store info \label{uc:updateStoreInfo}
+\end{enumerate}
+\newpage
+\label{uc:traceabilityMatrix}
+\begin{center}
+{\textbf{Traceability Matrix}}
+\end{center}
+
+\begin{tabularx}{\linewidth}{| p{20mm} | p{20mm} | p{35mm} | p{50mm} |}
+
+    % UC GOAL REQ DOMAIN
+     \hline
+	USE CASES & GOALS & REQUIREMENTS & DOMAIN ASSUMPTIONS \\
+	 \hline
+	\ref{uc:registration} & \ref{goal:auth} & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:confirmRegistration}, \ref{req:provideQR}  & ---\\
+	
+	 \hline
+	\ref{uc:login} & \ref{goal:auth} & \ref{req:logOrReg}, \ref{req:credentialsCheck}, \ref{req:login} & --- \\
+	
+	\hline
+	\ref{uc:updateCredentials} & \ref{goal:auth} & \ref{req:changeCredentials} & --- \\
+
+	\hline
+	\ref{uc:lostPassword} & \ref{goal:auth} & \ref{req:changePassWithMail} & --- \\
+	
+	\hline
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+	\ref{uc:getTicket} & \ref{goal:effectiveQueue}, \ref{goal:enqueue} & \ref{req:requestTicket}, \ref{req:systemTicket}, \ref{req:numberTicketPerCust} & --- \\
+	\hline
+	
+	\ref{uc:getVisit} & \ref{goal:effectiveQueue}, \ref{goal:visit} & \ref{req:requestVisit}, \ref{req:visitPerDay}, \ref{req:statisticForDuration}, \ref{req:visitPerDay} & --- \\
+	\hline
+	
+	\ref{uc:accessStore} & \ref{goal:effectiveQueue}, \ref{goal:enqueue}, \ref{goal:visit} & \ref{req:sysProvideMap}, \ref{req:thirdPartyGPS}, \ref{req:inferringSuggestions} & \ref{dom:machineScanning}, \ref{dom:machinePaperTicket}, \ref{dom:consumerAccessStore}, \ref{dom:consumerAccessStore}, \ref{dom:consumerExceedDuration} \\
+	\hline
+	
+	\ref{uc:deleteBooked} & --- & \ref{req:deleteTickOrVis}, \ref{req:expiredTickOrVis} & --- \\
+    \hline
+    
+    \ref{uc:createStore} & --- & \ref{req:man:createStore}, \ref{req:man:verifyOwnerCred} & --- \\
+    \hline
+    
+    \ref{uc:useScanner} & \ref{goal:effectiveQueue}, \ref{goal:enqueue} & \ref{req:scannerApp} & \ref{dom:machineScanning}\\
+    \hline
+    
+    \ref{uc:usePaper} & \ref{goal:effectiveQueue}, \ref{goal:enqueue} & \ref{req:paperTicketApp} & \ref{dom:machinePaperTicket}\\
+    \hline
+    
+    \ref{uc:updateStoreInfo} & \ref{goal:effectiveQueue} & \ref{req:man:whenToUpdate}, \ref{req:man:updateStoreInfo} & --- \\
+    \hline
+    
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:registration}: Registration}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Guest wants to create an account for the main application.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{User}}, \textbf{\textit{Login Manager}} and \textbf{\textit{Mailing Service}}\\
+	
+	\hline
+	\textbf{Preconditions} & The User downloads and opens the application.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The User clicks on the Sign Up button.
+			\item The User fills the editable fields with the requested information: email, password and if they want to register as Customer or Manager.
+			\item The Login Manager checks if all the credentials are valid.
+			\item If the credentials are valid, the Login Manager sends a confirmation email to the User to activate the account.
+			\item The User receives the mail with a specific URL to activate the account. By clicking on the given URL, they activate the account.
+			\item The User is now a Customer, they get a personal unique QR-code.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & Activation of a new account. The User can access the services of the product.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the User does not enter valid credentials (invalid email or a password which is not a Secure Password [\ref{def:securepass}]), the registration fails and the user is prompted to restart the registration process.
+			\item If the User does not confirm their credentials within 24 hours, the account is removed and the credentials deleted.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{minipage}{\linewidth}
+            \centering
+           \includegraphics[height=0.5\textheight, scale=1, keepaspectratio]{img/seq_diag/Register.jpg}
+            \captionof{figure}{Registration Sequence diagram, if the User confirms the credentials when they have to. Also according to temporal constrain for credential acceptance} 
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+            \centering
+           \includegraphics[height=0.1\textheight, scale=0.2, keepaspectratio]{img/registration_use_case_diagram.png}
+            \captionof{figure}{Registration}
+\end{minipage}
+\newpage
+\begin{center}
+{\textbf{\ref{uc:login}: Login}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer wants to log-in into the main application.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textbf{\textit{Login Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The Customer opens the application on their device and is registered.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Customer fills the editable fields with the requested information: email and password
+			\item The Customer clicks on the Sign In button.
+			\item The Login Manager checks if the credentials are valid. 
+			\item If the credentials are valid, the Customer successfully logs-in the application.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer logs-in the application with their personal account.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer does not enter valid credentials, a failure message pops up on the screen prompting them to re-enter the credentials.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{minipage}{\linewidth}
+            \centering
+           \includegraphics[height=0.47\textheight, scale=1, keepaspectratio]{img/seq_diag/Login.jpg}
+            \captionof{figure}{Login Sequence diagram}
+\end{minipage}
+
+\begin{center}
+{\textbf{\ref{uc:updateCredentials}: Update Credentials}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer wants to update their credentials.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}} and \textit{\textbf{Login Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The Customer opens the application on their device and is logged in.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Customer clicks on the update credential button, from the home page.
+			\item The Customer fills the editable fields with the requested information: email and password, and confirms the operation through a button.
+			\item The Login Manager checks if the new credentials are valid. 
+			\item If the new credentials are valid, the Customer has successfully updated their credentials
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer successfully updates their credentials.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer does not enter valid credentials, a failure message pops up on the screen, and the credentials are not updated.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+\newpage
+\begin{center}
+{\textbf{\ref{uc:lostPassword}: Lost Password}}
+% TODO
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer wants to log-in into the main application but they have forgotten the password.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Login Manager}}, \textit{\textbf{Mailing System}} \\
+	
+	\hline
+	\textbf{Preconditions} & The Customer opens the application on their device and is registered.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Customer clicks on the recover password button, in the log-in page.
+			\item The Customer enter their mail in the editable box, and they click the recover password button.
+			\item The Login Manager checks if the mail is associated to a registered Customer.
+			\item If the mail is associated to a registered Customer, the Login Manager sends a mail to the user with appropriate instructions.
+			\item The Customer follows the instructions on the email and is able to access their account.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer can log-in the application.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer does not enter a mail associated to a registered user, the procedure fails and a failure message pops up on the screen, prompting the User to insert a mail associated to one account.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:getTicket}: Get Ticket}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer requests a Virtual Ticket for lining up for entering a specific Store.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Ticket Manager}}, \textit{\textbf{Queue Manager}} \lorenzo{Check These}\\
+	
+	\hline
+	\textbf{Preconditions} & The Customer opens the application on their device and is logged in.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+		    \item The Customer clicks on the reservation tab in the home page.
+			\item The Customer searches for the Store they want to go to, typing its name in the apposite text box or looking at the suggestions in the apposite list.
+			\item The Customer clicks on the Store they want to go to, from the list which has spawned in the mean time.
+			\item The Customer checks the Ticket check-box.
+			\item The Customer specifies the duration of their Visit using the apposite GUI elements. The Customer can either input a duration or select one which is inferred by the DataAnalytics Manager.
+			\item The Customer specifies with which means of transport they will go to the Store.
+			\item Using third party API, and the current location of the Customer, the System compute how much time the Customer needs to go to the Store
+			\item The Customer clicks on the get Ticket Button and the Ticket is sent to the Ticket Manager of the Store.
+			\item The Ticket Manager checks if the information on the ticket is sound.
+			\item The Ticket Manager sends the information on the Ticket to the Queue Manager of the Store, that looks for the available positions in the queue.
+			\item The Queue Manager places the Customer in the queue accordingly and sends the information to the Ticket Manager.
+			\item The System alerts the Customer on how much time they would have to wait for their turn and asks for confirmation.
+			\item If the Customer clicks on the "reserve" button respecting the Time To Reserve constraint [\ref{def:timeToReserve}], and has no other valid ticket, the ticket request is successful and the ticket is reserved.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer gets the ticket.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer exits the application before hitting the reserve button, the request is silently discarded (The Ticket Manager sends a message to the Queue Manager which deletes the Ticket from the queue).
+			\item If there are no position available in the Queue, the system logs to the Customer a failure message and the request is discarded.
+			\item If the Customer is too far away from the store to arrive and finish their shopping in time for the closure of the Store, the system logs to the User a failure message the request is discarded.
+			\item If a Customer already has a Virtual Ticket in his reservations, the System does not allow the Customer to get another one, logs a failure message and the request is discarded.
+			\item If the Customer takes too long (more than Time To Reserve [\ref{def:timeToReserve}]) to click the "reserve" button, the Ticket is cancelled.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{minipage}{\linewidth}
+            \centering
+           \includegraphics[height=0.45\textheight, scale=1, keepaspectratio]{img/seq_diag/GetTicket.jpg}
+            \captionof{figure}{Get Ticket Sequence diagram, after having compiled the ticket form, and with the Customer clicking the reserve button respecting its time constraint.}
+\end{minipage}
+
+\begin{center}
+{\textbf{\ref{uc:getVisit}: Book Visit}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer books a Visit for a specific Store.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queuing mechanism}}, \textbf{\textit{Store Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The Customer opens the application on their device and is logged in.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Customer searches for the Store they want to go to, typing its name in the apposite text box or looks at the suggestions in the list.
+			\item The Customer clicks on the Store they want to go to, from the list which has spawned in the mean time.
+			\item The Customer checks the Visit check-box.
+			\item The Customer specifies the duration of their Visit using the apposite GUI elements. The Customer can either input a duration or select one which is inferred by the Data Analytics Manager.
+			\item The Customer specifies which day they are planning to do the Visit.
+			\item Clicking the apposite button, the Customer sends the Visit to the Visit Manager of the Store.
+			\item The Visit Manager checks if the information is valid and sends to the Queue Manager of the specified Store the Visit information.
+			\item The Queue Manager sends the available time slots in the specified day to the Customer.
+			\item The System displays time slots available, in the day requested by the Customer to visit the specific Store. The Customer can choose one of those.
+			\item The Customer can select the categories of items they would like to buy.
+			\item The Customer can book the Visit, clicking on the apposite button, if in the specified day they do not have already booked 3 Visits.
+			\item The Customer sends the Visit information directly to the appropriate Queue Manager and this inserts the Customer into the Queue of the Store, in the specified day, and at the specified time.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer books the Visit.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer has booked three Visits in specified day, the system logs a failure message and discards the Visit.
+			\item If there are not any available time-slots (of any Store) the System logs a failure message.
+			\item If, when the Customer sends the confirmation of the booking, the time-slot selected is not available anymore, the System logs an error message.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{minipage}{\linewidth}
+            \centering
+           \includegraphics[height=0.5\textheight, scale=1, keepaspectratio]{img/seq_diag/GetVisitD.jpg}
+            \captionof{figure}{Book Visit Sequence diagram, after having compiled the Visit form.}
+\end{minipage}
+
+\begin{minipage}{\linewidth}
+        \centering
+           \includegraphics[height=0.33\textheight, scale=0.1, keepaspectratio]{img/book_ticket_use_diagram.png}
+            \captionof{figure}{Get Ticket and Book Visit}
+        \end{minipage}
+
+\begin{center}
+{\textbf{\ref{uc:accessStore}: Access Store - Using Ticket}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer shops into a store, accessing it with a ticket.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queue Manager}},\textit{\textbf{Scanner}} \\
+	
+	\hline
+	\textbf{Preconditions} & The Customer has a reserved ticket.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The System tells the Customer when to depart from their place to go to the Store on time with the specified means of transport.
+			\item Once arrived at the Store the Customer checks the entrance time on the Ticket (it could be updated). The Customer enters the Store when specified by the ticket.
+			\item The Customer scans their personal QR-code (which can be found in the profile tab in the app) with the Scanner provided by the Store.
+			\item The Customer enters the Store and tries to comply with the duration specified on the ticket.
+			\item The system collects the duration of the shopping, storing it in the Database for analytics purposes.
+			\item If the Customer takes more time to shop than the duration specified, the Queue Manager applies a scaling process to avoid overcrowding.
+			\item After paying the Customer is prompted by the Store's operator to scan again the QR-code.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer has done their shopping in the desired Store.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer cannot make it in time, the ticket reserved is invalidated by the Queue Manager.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:accessStore}: Access Store - Using Visit}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer shops into a store, accessing it with a Visit.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textit{\textbf{Queue Manager}}, \textit{\textbf{Scanner}}  \\
+	
+	\hline
+	\textbf{Preconditions} & The Customer has a valid Visit booked.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item Once arrived at the Store the Customer checks the entrance time on the Visit they booked (it could be updated). The customer enters the Store when specified by the Visit.
+			\item The Customer scans their personal QR-code (which can be found in the profile tab in the app) with the Scanner provided by the Store.
+			\item The Customer enters the Store and tries to comply with the duration specified on the ticket.
+			\item If the Customer is late, the Queue Manager automatically updates the queue to avoid overcrowding.
+			\item The Customer is guided by the app through the store thanks to a map which show them the path to arrive to the categories specified during the booking of the Visit.
+			\item The system collects the duration of the Visit, storing it in Database for analytics purposes.
+			\item After paying the Customer is prompted by the Store's operator to scan again the QR-code.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer has done their Visit in the desired Store.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Customer cannot make it in time, the ticket reserved is invalidated by the Queue Manager.
+		\end{enumerate}}\\
+
+	\hline
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:deleteBooked}: Delete Booked}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Customer deletes a booked Visit or a Ticket.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Customer}}, \textbf{\textit{Visit Manager}}, \textit{\textbf{Queue Manager}} \\
+	
+	\hline
+	\textbf{Preconditions} & The Customer has booked a Visit or reserved a Ticket.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Customer goes onto the reservation tab.
+			\item The Customer presses onto the reservation they want to delete.
+			\item The Customer presses on the delete button.
+			\item The Queue Manager receives a notification with the information of the reservation.
+			\item The Queue Manager deletes the reservation.
+			\item The Queue Manager updates the queue status accordingly.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Customer has deleted their Visit/Ticket reservation.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item During the Visit/shopping time with the Ticket, the Costumer cannot delete the corresponding Ticket/Visit.
+		\end{enumerate}}\\
+
+	\hline
+\end{tabularx}
+
+
+\begin{center}
+{\textbf{\ref{uc:createStore}: Create Store}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Manager creates a new Store.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Mailing Service}} \\
+	
+	\hline
+	\textbf{Preconditions} & The Manager is logged-in into the main application. \\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Manager clicks on the create Store button in the Store tab.
+			\item The Manager inputs the requested information in the editable boxes.
+			\item The Manager inputs Special Credentials \ref{def:specialCredentials}, to certify the authenticity of the Store.
+			\item The System checks the credentials and sends the Manager a confirmation mail.
+			\item The Customer follows the instructions on the email to activate the Store.
+			\item The Store is created, and the Manager becomes the Owner of the Store.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Store is created, and the Manager becomes the Owner of the Store.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the information given is invalid, the System denies the Store creation and logs to the screen an error message.
+		\end{enumerate}}\\
+
+	\hline
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:useScanner}: Activate Scanner}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Manager activates a scanner associated with one of their Stores.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Queuing Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The Manager opens the application on their device and is associated to a Store.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Manager clicks on the interested Store
+			\item The Manager clicks on the generate scanner button
+			\item The System generates a unique code, the scanner code associated with the Queue Manager of the Store.
+			\item The Manager can send this code to their clerks/machines.
+			\item The clerks with the code can access a specific application and input it in the specific editable text box.
+			\item The clerks can now use this app to scan the QR-codes of the Customers.
+			\item Each scan can influence the queue status.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Store is able to scan the tickets of the Customers.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the code input in the app is wrong, the System outputs a failure message on the screen.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:usePaper}: Activate Paper Ticket}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Manager activates a paper-ticket service associated with one of their Stores.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Queue Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The Manager opens the application on their device and is associated to a Store.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Manager clicks on the interested Store
+			\item The Manager clicks on the generate paper ticket button
+			\item The System generates a unique code, the paper-ticket code associated with the queue of the Store.
+			\item The Manager can use this code in the apposite machine, to set up a paper ticket service
+			\item The Consumers can now get tickets from this machine.
+			\item Each tickets influences the queue status.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Store is able to produce paper tickets for the Consumers.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the code input in the app is wrong, the System outputs a failure message on the screen.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\begin{center}
+{\textbf{\ref{uc:updateStoreInfo}: Update Store Info}}
+\end{center}
+\begin{tabularx}{\linewidth}{| l | X |}
+	%\hline
+	%\textbf{ID} & \ref{uc:registration}\\
+	
+	\hline
+	\textbf{Description} & A Manager wants to update Store information.\\
+	
+	% \hline
+	% \textbf{Achieved Goals} & {}\\
+
+	\hline
+	\textbf{Actors} & \textbf{\textit{Manager}}, \textit{\textbf{Queue Manager}}\\
+	
+	\hline
+	\textbf{Preconditions} & The Manager opens the application on their device and is associated to a Store.\\
+	
+	\hline
+	\textbf{Flow of Events} & \parbox{0.7\textwidth}{	
+		\begin{enumerate}
+			\item The Manager clicks on the interested Store
+			\item The Manager clicks on the modify information button.
+			\item The Manager fills the editable fields with the updated information and confirms the operation through a button. (Simple Manager and Owner, have different editable fields).
+			\item If the Manager has edited information which are linked to the Queue Manager (max number of people, opening hours, amount of days in advance in which a Visit can be booked), the System logs a message: these changes can be uploaded within 24 hours, taking a chance on canceling some Visits previously booked, or can be uploaded in the current amount of days in advance in which a Visit can be booked, without losing any Visit.
+			\item The Queue Manager handles the changing of the information linked to the queue in the due time.
+			\item The System sends notifications to Customers if their Visits have been cancelled.
+	\end{enumerate}}\\
+	
+	\hline
+	\textbf{Post-Conditions} & The Manager successfully updates the Store information.\\
+	
+	\hline
+	\textbf{Exceptions} & \parbox{0.7\textwidth}{ \begin{enumerate}
+			\item If the Manager inputs some invalid information, the operation fails and is cancelled and the System logs a failure message on the screen.
+		\end{enumerate}}\\
+
+	\hline
+	
+\end{tabularx}
+
+\subsection{Performance Requirements}
+The main focus of the application is relative to queue mechanism.
+When an user wants to equeue, once filled all the information for ticket requests, the System should respond in 5 seconds. The Customer must interact with application accepting or discarding the ticket in Time to Reserve  (\ref{def:timeToReserve}). If the time expires, the ticket is automatically deleted.
+Regarding the booking of a visit, the System should respond in 30 seconds. This constrain is relaxed in order to prioritize the managing of tickets that needs high responsivity and because there is no need of Customer interaction.
+
+\subsection{Design Constraint}
+\subsubsection{Standards Compliance}
+The System doesn't need to be compliant to any standard since it doesn't interact with standardized systems or any sensitive information.
+\subsubsection{Hardware Limitations}
+In order to run the application, at least is required
+\begin{enumerate}
+    \item 3G connection at 1 Mbps
+    \item 50 MB of memory space
+    \item 2 GB of RAM
+    \item GPS sensor
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \end{enumerate}
 \newpage
 \label{uc:traceabilityMatrix}
@@ -881,6 +1736,7 @@ The System runs over HTTPS protocol for the communication with application and n
             \item If the Customer does not enter valid credentials, a failure message pops up on the screen prompting them to re-enter the credentials.
         \end{enumerate}}\\
 
+<<<<<<< HEAD
     \hline
     
 \end{tabularx}
@@ -1421,6 +2277,23 @@ All the code should be written using good software engineering practice such as 
 The application should be developed using cross-platform technologies that allows to develop Native application for better UX.
 Also the server side of the application should be developed using cross-platform technologies.
 
+=======
+\subsection{Software System Attributes}
+\subsubsection{Reliability}
+The System should guarantees a 99\% of reliability: its components must have
+a failure rate that guarantees this goal. 
+\subsubsection{Availability}
+All the minor patches are released during the night, in order to minimize down time.
+The System will be available 24/7 and must guarantee 99.9\% of availability, with at most 1.44 minutes of downtime per day.  
+\subsubsection{Security}
+User credential are stored inside the DBMS using a randomly generated salt and possibly a slow hash function. All the communication between client and server are done over HTTPS protocol.  
+\subsubsection{Maintainability}
+All the code should be written using good software engineering practice such as exhaustive documentation of the code, unit test and use of design patterns.
+\subsubsection{Portability}
+The application should be developed using cross-platform technologies that allows to develop Native application for better UX.
+Also the server side of the application should be developed using cross-platform technologies.
+
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \newpage
 \section{Formal Analysis Using Alloy}
 \label{analysisAndAlloy}
@@ -1430,10 +2303,17 @@ This section is dedicated to the description of the model through the use of the
 In the Figure \ref{alloy_world} it is possible to observe the main aspects of the System and its relations. In order to show also the details of the world, the various components will be examined separately in the next sections.
 \begin{figure}[h!]
 \centering
+<<<<<<< HEAD
     \centering
     \includegraphics[height=0.32\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_world.png}
     \caption{Alloy-generated world that shows the most important interactions.}
     \label{alloy_world}
+=======
+	\centering
+  	\includegraphics[height=0.32\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_world.png}
+	\caption{Alloy-generated world that shows the most important interactions.}
+ 	\label{alloy_world}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \end{figure}
 
 \subsubsection{Login Manager and Data Analytics Manager}
@@ -1442,45 +2322,74 @@ each Guest must enter their login credentials to interface with the app features
 will receive suggestions from the Data Analytics Manager, which is in charge of analyze data about Customers. All this details are shown in the Figure \ref{alloy_login}.
 \begin{figure}[h!]
 \centering
+<<<<<<< HEAD
     \centering
     \includegraphics[height=0.32\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_login_manager.png}
     \caption{Alloy-generated world that shows the Login Manager and the Data Analytics Manager functionalities.}
     \label{alloy_login}
+=======
+	\centering
+  	\includegraphics[height=0.32\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_login_manager.png}
+	\caption{Alloy-generated world that shows the Login Manager and the Data Analytics Manager functionalities.}
+ 	\label{alloy_login}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \end{figure}
 
 \subsubsection{Customers and their Reservations}
 As we can see in the Figure \ref{alloy_customer} Customers are identified by a unique QRCode. Each Customer can have some Reservations planned, which can be a Visit or a \textit{VirtualTicket}. Every Visit is characterized by the Day of the Visit, the \textit{TimeSlot} for that Visit, a List of Groceries that the Customer wants to buy and a Duration.  Each \textit{VirtualTicket} is chacterized by a time of entrance and a duration. Moreover each Reservation refers to one Store. A single Customer cannot reserve more than 3 Visits in the same Day for the same Store.
 \begin{figure}[h!]
 \centering
+<<<<<<< HEAD
     \centering
     \includegraphics[height=0.27\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_customer_reservations.png}
     \caption{Alloy-generated world that shows Customers and Reservations characteristics.}
     \label{alloy_customer}
+=======
+	\centering
+  	\includegraphics[height=0.27\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_customer_reservations.png}
+	\caption{Alloy-generated world that shows Customers and Reservations characteristics.}
+ 	\label{alloy_customer}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \end{figure}
 
 \subsubsection{Stores and their components}
 Each Store has one and only one Owner, but it can have other Managers who collaborate in the management of the Store. Moreover each Store has its own \textit{BookingManager}, \textit{TicketManager} and \textit{MapManager}. This components are made in order to manage all the requests of Tickets and Visits for that Store. It also has a \textit{ScannerCode} and a \textit{Totem}. The Totem has the task of generating \textit{PaperTickets} for that particular Store, which will be characterized by a unique QRcode. The Reservations made for a Store are stored in the personal unique Queue of the Store, which is managed by the Queue Manager. A Queue has a certain number of Temporal Quantums, and each Temporal Quantum has a number of spaces equal to the capacity of the Store.
 \begin{figure}[h!]
 \centering
+<<<<<<< HEAD
     \centering
     \includegraphics[height=0.23\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_store.png}
     \caption{Alloy-generated world that shows Stores and their components.}
     \label{alloy_stores}
+=======
+	\centering
+  	\includegraphics[height=0.23\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_store.png}
+	\caption{Alloy-generated world that shows Stores and their components.}
+ 	\label{alloy_stores}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \end{figure}
 
 \subsubsection{The Whole World Generated}
 \begin{figure}[h!]
 \centering
+<<<<<<< HEAD
     \centering
     \includegraphics[height=0.35\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_entire_world.png}
     \caption{Alloy-generated entire world.}
     \label{alloy_entire_world}
+=======
+	\centering
+  	\includegraphics[height=0.35\textheight, scale=0.3, keepaspectratio]{img/alloy/alloy_entire_world.png}
+	\caption{Alloy-generated entire world.}
+ 	\label{alloy_entire_world}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \end{figure}
 
 In Figure \ref{alloy_entire_world} there is the representation of the whole world generated by Alloy, by running the following predicate: 
 
 \begin{lstlisting}[language=alloy]
 pred show{
+<<<<<<< HEAD
     #Guest = 1
     #Queue = 1
     #TemporalQuantum = 5
@@ -1491,6 +2400,18 @@ pred show{
     #VirtualTicket = 1
     #PaperTicket = 1
     #Customer = 1
+=======
+	#Guest = 1
+	#Queue = 1
+	#TemporalQuantum = 5
+	#Totem = 1
+	#ScannerCode = 1
+	#Manager = 3
+	#Visit = 2
+	#VirtualTicket = 1
+	#PaperTicket = 1
+	#Customer = 1
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 run show for 20
@@ -1500,6 +2421,7 @@ run show for 20
 \begin{lstlisting}[language=alloy]
 -- All VirtualTickets and Visits belong to a Customer, all PaperTickets are generated by a Totem --
 assert noAloneReservations{
+<<<<<<< HEAD
     all vt:VirtualTicket | one c:Customer {
         vt in c.reservations
     }
@@ -1509,48 +2431,94 @@ assert noAloneReservations{
     all pt:PaperTicket | one t:Totem{
         pt in t.generated
     }
+=======
+	all vt:VirtualTicket | one c:Customer {
+		vt in c.reservations
+	}
+	all v:Visit | one c:Customer{
+		v in c.reservations
+	}
+	all pt:PaperTicket | one t:Totem{
+		pt in t.generated
+	}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- There are no more than 3 Visits per day for only one Customer --
 assert maxThreeVisitPerDayForACustomer{
+<<<<<<< HEAD
     all d:Day | all c:Customer | #(c.reservations & day.d) <= 3
+=======
+	all d:Day | all c:Customer | #(c.reservations & day.d) <= 3
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Each Email is of one and only one User and is unique for each User --
 assert uniqueEmail{
+<<<<<<< HEAD
     all disj u1,u2:User | u1.email != u2.email
     all u:User | #u.email = 1
+=======
+	all disj u1,u2:User | u1.email != u2.email
+	all u:User | #u.email = 1
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
  
 -- Unique QR code --
 assert uniqueQRcode{
+<<<<<<< HEAD
     //There are no QRCodes in common between Customers and PaperTickets
     all disj c:Customer | all disj pt:PaperTicket { c.recognition != pt.generatedQRcode }
     //Each PaperTicket has a unique QRcode
     all disj c1,c2:Customer | c1.recognition != c2.recognition
     //Each Customer has a unique QRcode
     all disj p1,p2:PaperTicket | p1.generatedQRcode != p2.generatedQRcode
+=======
+	//There are no QRCodes in common between Customers and PaperTickets
+	all disj c:Customer | all disj pt:PaperTicket { c.recognition != pt.generatedQRcode }
+	//Each PaperTicket has a unique QRcode
+	all disj c1,c2:Customer | c1.recognition != c2.recognition
+	//Each Customer has a unique QRcode
+	all disj p1,p2:PaperTicket | p1.generatedQRcode != p2.generatedQRcode
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Capacity and number of spaces in each TemporalQuantum of a Store --
 assert capacityAndSpaces{
+<<<<<<< HEAD
     all s:Store | s.capacity = s.queue.quantums.spaces
+=======
+	all s:Store | s.capacity = s.queue.quantums.spaces
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Unique Components for each Store --
 assert componentsStore{
+<<<<<<< HEAD
     all s:Store | #(s.ticketManaging) = 1 && #(s.visitManaging) = 1 && #(s.queueManaging) = 1 && #(s.mapManaging) = 1
+=======
+	all s:Store | #(s.ticketManaging) = 1 && #(s.visitManaging) = 1 && #(s.queueManaging) = 1 && #(s.mapManaging) = 1
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Each Queue is of one and only one Store and is unique for each Store --
 assert uniqueQueue{
+<<<<<<< HEAD
     all disj s1,s2:Store | s1.queue != s2.queue
     all s:Store | #s.queue = 1  
+=======
+	all disj s1,s2:Store | s1.queue != s2.queue
+	all s:Store | #s.queue = 1	
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Each Store has only one Owner --
 assert oneOwner{
+<<<<<<< HEAD
     all s:Store | #s.owner = 1
+=======
+	all s:Store | #s.owner = 1
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 \end{lstlisting}
 
@@ -1559,6 +2527,7 @@ The results of the running of all the assertions above can be found in the Figur
 \begin{figure}[h!]
 \centering
 \begin{subfigure}
+<<<<<<< HEAD
     \centering
     \includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alloy/img_check_1.PNG}
  \end{subfigure}
@@ -1568,6 +2537,17 @@ The results of the running of all the assertions above can be found in the Figur
  \end{subfigure}
     \caption{Results for running all the assertions made. No counterexample has been found.}
     \label{check_alloy}
+=======
+	\centering
+  	\includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alloy/img_check_1.PNG}
+ \end{subfigure}
+ \begin{subfigure}
+	\centering
+  	\includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alloy/img_check_2.PNG}
+ \end{subfigure}
+	\caption{Results for running all the assertions made. No counterexample has been found.}
+ 	\label{check_alloy}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 \end{figure}
 \newpage
 \subsection{Whole Alloy Model}
@@ -1580,6 +2560,7 @@ one sig PublicMeans extends MeansOfTransport { }
 one sig Bicycle extends MeansOfTransport { }
 
 one sig LoginManager{
+<<<<<<< HEAD
     logged: some User, 
     guests: some Guest
 }
@@ -1643,12 +2624,78 @@ sig Char{ }{
 sig Guest { }{
     //Each Guest has to be managed by a LoginManager
     one lm:LoginManager | this in lm.guests
+=======
+	logged: some User, 
+	guests: some Guest
+}
+
+one sig DataAnalyticsManager{
+	suggest: set Customer
+ }{
+	(#DataAnalyticsManager > 0) <=> (#Customer > 0)
+}
+
+sig TicketManager{ }{
+	one s:Store | this in s.ticketManaging
+}
+
+sig BookingManager{ }{
+	one s:Store | this in s.visitManaging
+}
+
+sig QueueManager{
+	manage: one Queue
+ }{
+	one s:Store | this in s.queueManaging
+}
+
+sig MapManager{ }{
+	one s:Store | this in s.mapManaging
+}
+
+sig  Duration{ }{
+	//Each Duration belongs to a Reservation
+	one r:Reservation | this in r.duration
+}
+
+sig ListOfGroceries{ }{
+	//Each ListOfGroceries belongs to a Visit
+	one v:Visit | this in v.groceries
+	//All Visits have different ListOfGroceries
+	all disj v1,v2:Visit | v1.groceries != v2.groceries
+}
+
+sig Day{ }{
+	//Each Day belongs to a Reservation
+	one r:Reservation | this in r.day
+}
+
+sig TimeSlot{ }{
+	//Each TimeSlot belongs to at least one Visit
+	one v:Visit | this in v.timeSlot
+}
+
+sig Time{
+	hour: one Int,
+	minutes: one Int
+}
+
+sig Char{ }{
+	//Each Char belongs to an email
+	one e:Email | this in e.email
+}
+
+sig Guest { }{
+	//Each Guest has to be managed by a LoginManager
+	one lm:LoginManager | this in lm.guests
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 //Email as a sequence of char
 sig Email{
      email: seq Char
 }{
+<<<<<<< HEAD
     //Each Email belongs to a User
     one u:User | this in u.email
 }
@@ -1783,6 +2830,142 @@ sig Totem {
 }{
     //Each Totem is of a Store
     one s:Store | this in s.totem
+=======
+	//Each Email belongs to a User
+	one u:User | this in u.email
+}
+
+sig QRcode{ }{
+	//Each QRcode belongs to a Customer or to a PaperTicket
+	one c:Customer | one pt:PaperTicket{
+		this in c.recognition || this in pt.generatedQRcode
+	}
+	//There are no QRcode in common
+	all disj c:Customer | all disj pt:PaperTicket{ 
+		#(c.recognition & pt.generatedQRcode)=0 
+	}
+	all disj p1,p2:PaperTicket | p1.generatedQRcode != p2.generatedQRcode
+	all disj c1,c2:Customer | c1.recognition != c2.recognition
+}
+
+abstract sig Reservation { 
+	duration: one Duration,
+	of: one Store
+}
+
+abstract sig Ticket extends Reservation{
+	enterTime: one Time
+}
+
+sig PaperTicket extends Ticket {
+	generatedQRcode: one QRcode
+}{
+	// Each Ticket is associate to one and only one Consumer
+	one t:Totem | this in t.generated
+}
+
+sig VirtualTicket extends Ticket {
+	meansOfTransport: one MeansOfTransport
+}{
+	// Each VirtualTicket is associate to one and only one Customer
+	one c:Customer | this in c.reservations
+}
+
+sig Visit extends Reservation {
+	day: one Day,
+	timeSlot: one TimeSlot,
+	groceries: one ListOfGroceries
+}{
+	// Each Visit is associated to one and only one Customer
+	one c:Customer | this in c.reservations
+}
+
+sig ScannerCode {}{
+	//Each ScannerCode is of a Store
+	one s:Store | this in s.scanner
+}
+
+sig Queue {
+	quantums: some TemporalQuantum
+} {
+	// Foreach queue, each quantum has the same spaces
+	all q1, q2: quantums | q1.spaces =q2.spaces
+	// Each queue has to be associated to one and only one Store
+	one s:Store | this = s.queue
+	//queueManager of the Store manage manage only the queue of the that Store
+	all s:Store | s.queueManaging.manage = s.queue
+}
+
+abstract sig User { 
+	email: one Email
+}{
+	//Each User has to be logged by a LoginManager
+	one lm:LoginManager | this in lm.logged
+}
+
+sig Customer extends User{
+	reservations: some Reservation,
+	recognition: one QRcode
+}{
+	// Each customer has at most 3 visits each day
+	all d:Day | #(reservations & day.d) <= 3
+	//each customer receives suggestions from the DataAnalyticsManager
+	all d:DataAnalyticsManager | this in d.suggest
+}
+
+//Check that no one has an email used by another Customer
+fact emailUnique{
+	all u, u1: User |  (u.email = u1.email) iff (u = u1)
+}
+
+
+
+sig Manager extends User {}{
+	one s:Store | this in s.managers || this in s.owner 
+}
+
+sig Owner extends Manager {}{
+	// Each owner associated to a one and only one Store
+	one s:Store | this =s.owner
+}
+
+sig Store {
+	owner: one Owner,
+	managers: set Manager,
+	scanner: one ScannerCode,
+	totem: some Totem,
+	capacity: one Int,
+	queue: one Queue,
+	openingHours: one Time,
+	closingHours: one Time,
+	ticketManaging: one TicketManager,
+	visitManaging: one BookingManager,
+	queueManaging: one QueueManager,
+	mapManaging: one MapManager
+}{
+	// Queue available places equal to the capacity of the associated store (for each store)
+	queue.quantums.spaces = capacity
+	// for each store capacity has to be greater than 0
+	capacity > 0
+	// For each Store, the owner is not also a manager.
+	owner not in managers
+	// Each store must close after opening
+	openingHours.hour < closingHours.hour
+}
+
+sig TemporalQuantum{
+	spaces: one Int	
+}{
+	// Each Temporal quantum is associated to one and only queue
+	one q:Queue.quantums | this = q
+}
+
+sig Totem {
+	generated: set PaperTicket
+}{
+	//Each Totem is of a Store
+	one s:Store | this in s.totem
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 
@@ -1790,6 +2973,7 @@ sig Totem {
 
 -- All VirtualTickets and Visits belong to a Customer, all PaperTickets are generated by a Totem --
 assert noAloneReservations{
+<<<<<<< HEAD
     all vt:VirtualTicket | one c:Customer {
         vt in c.reservations
     }
@@ -1799,54 +2983,101 @@ assert noAloneReservations{
     all pt:PaperTicket | one t:Totem{
         pt in t.generated
     }
+=======
+	all vt:VirtualTicket | one c:Customer {
+		vt in c.reservations
+	}
+	all v:Visit | one c:Customer{
+		v in c.reservations
+	}
+	all pt:PaperTicket | one t:Totem{
+		pt in t.generated
+	}
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- There are no more than 3 Visits per day for only one Customer --
 assert maxThreeVisitPerDayForACustomer{
+<<<<<<< HEAD
     all d:Day | all c:Customer | #(c.reservations & day.d) <= 3
+=======
+	all d:Day | all c:Customer | #(c.reservations & day.d) <= 3
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Each Email is of one and only one User and is unique for each User --
 assert uniqueEmail{
+<<<<<<< HEAD
     all disj u1,u2:User | u1.email != u2.email
     all u:User | #u.email = 1
+=======
+	all disj u1,u2:User | u1.email != u2.email
+	all u:User | #u.email = 1
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
  
 -- Unique QR code --
 assert uniqueQRcode{
+<<<<<<< HEAD
     //There are no QRCodes in common between Customers and PaperTickets
     all disj c:Customer | all disj pt:PaperTicket { c.recognition != pt.generatedQRcode }
     //Each PaperTicket has a unique QRcode
     all disj c1,c2:Customer | c1.recognition != c2.recognition
     //Each Customer has a unique QRcode
     all disj p1,p2:PaperTicket | p1.generatedQRcode != p2.generatedQRcode
+=======
+	//There are no QRCodes in common between Customers and PaperTickets
+	all disj c:Customer | all disj pt:PaperTicket { c.recognition != pt.generatedQRcode }
+	//Each PaperTicket has a unique QRcode
+	all disj c1,c2:Customer | c1.recognition != c2.recognition
+	//Each Customer has a unique QRcode
+	all disj p1,p2:PaperTicket | p1.generatedQRcode != p2.generatedQRcode
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Capacity and number of spaces in each TemporalQuantum of a Store --
 assert capacityAndSpaces{
+<<<<<<< HEAD
     all s:Store | s.capacity = s.queue.quantums.spaces
+=======
+	all s:Store | s.capacity = s.queue.quantums.spaces
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Unique Components for each Store --
 assert componentsStore{
+<<<<<<< HEAD
     all s:Store | #(s.ticketManaging) = 1 && #(s.visitManaging) = 1 && #(s.queueManaging) = 1 && #(s.mapManaging) = 1
+=======
+	all s:Store | #(s.ticketManaging) = 1 && #(s.visitManaging) = 1 && #(s.queueManaging) = 1 && #(s.mapManaging) = 1
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Each Queue is of one and only one Store and is unique for each Store --
 assert uniqueQueue{
+<<<<<<< HEAD
     all disj s1,s2:Store | s1.queue != s2.queue
     all s:Store | #s.queue = 1  
+=======
+	all disj s1,s2:Store | s1.queue != s2.queue
+	all s:Store | #s.queue = 1	
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 -- Each Store has only one Owner --
 assert oneOwner{
+<<<<<<< HEAD
     all s:Store | #s.owner = 1
+=======
+	all s:Store | #s.owner = 1
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 
 -- PREDICATE --
 
 pred show{
+<<<<<<< HEAD
     #Guest = 1
     #Queue = 1
         #TemporalQuantum = 5
@@ -1857,6 +3088,18 @@ pred show{
     #VirtualTicket = 1
     #PaperTicket = 1
     #Customer = 1
+=======
+	#Guest = 1
+	#Queue = 1
+    	#TemporalQuantum = 5
+	#Totem = 1
+	#ScannerCode = 1
+	#Manager = 3
+	#Visit = 2
+	#VirtualTicket = 1
+	#PaperTicket = 1
+	#Customer = 1
+>>>>>>> 8ee4be554ec429e0f57b7c9ba9d79cdf5d4b8290
 }
 
 
