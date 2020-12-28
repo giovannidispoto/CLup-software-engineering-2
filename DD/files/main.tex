@@ -166,6 +166,124 @@ To describe the internal modular structure of the components, we show how they a
     
 \end{itemize}
 
+
+\subsubsection{The Map Generation Process}
+In this section we give an example of how the map generation for the Visits could be generated.\newline
+This map has two main objective: it wants to select a quick route for the Customer for him to go through all the departments that they have selected and it wants to minimize the possibility of overcrowding in the various departments. \newline
+The creation of this map is delegated to the component Store Map Manager. \newline
+This component is notified from the Queue Manager whenever a Visit is uploaded, deleted or modified (there has been a scaling event) \lorenzo{CONTROLLARE: scaling event o lo chiamiamo in un altro modo?} \yasmin{secondo me non serve specificare, basta 'modified' come hai scritto} \lorenzo{MMM, secondo me e' piu' chiaro se specifichiamo}. \yasmin{allora potremmo scrivere: there has been a scaling in the queue, senza dare un nome all'evento..?}\newline
+In this explanation we will call the entrance and exit points of the Store as Departments. These type of departments are special because cannot be selected from the Customer.\newline 
+Moreover, we will assume that the Customer spends the same amount of quantums in each \textit{normal} department, and only one quantum at the entrances and the exits (these two quantums are also considered to shared with the other departments). We assume that the Customer will be quick to switch department, thus no quantums will be assigned to check the movements between departments. \newline
+This component will hold multiple data structure, which we will define as follow:
+\begin{enumerate}
+    \item QD: Marix \textit{\#Quantums in the queue X \#Departments in the Store}. In it there are written the number of people in a specific Departments for each Quantum in the Store (It is updated day by day, and there are only the quantums of each single day). This matrix makes the algorithm much more efficient in terms of run-time, but it is less efficient from the point of view of memory.
+    \item MAP: it is the map of the store, which is a graph with the departments (also with entrances and exits). The links between the various departments indicate the available paths between each department. Each arc has a weight equal to 1.
+    \item VCQ: it is a map (data structure), which maps the VisitID (primary key of each Visit), to its information. (The Map Manager will consider only the Visits in the current day, will delete the Visits of past days and will keep stored the future Visits). In particular there are the departments selected and a boolean IsMapped, to say if for this Visit has already been created a map.
+    \item SP: Matrix (obtained for example with the Floyd–Warshall algorithm) which contains the shortest distances between each pair of node of MAP.
+\end{enumerate}
+This is how the Map Manager behaves after being notified by the Queue Manager:
+\begin{enumerate}
+    \item Insert: if a Visit is inserted, it is saved in VCQ and IsMapped is set to false. If the Visit will be in the current day, the map is generated. The department in VCQ of this Visit will be updated: an entrance and an exit will be added and the all list of departments will be ordered to reflect the computed path. The boolean IsMapped will be set to true. QD is updated accordingly. (with +1s in the correct positions, which are given by the quantums used by the Customer and the departments where they will be)
+    \item Update: if a Visit is updated (due to scaling), if IsMapped is false, then VCQ is simply updated and nothing else happens. If IsMapped is true, than QD is updated (with -1s), from the departments we delete the entrance and the exit and the map is re-computed using the new data (thus QD is updated again with +1).
+    \item Delete: if a Visit is deleted: if IsMapped is false, then the Visit is just deleted from VCQ. Otherwise, the Visit is deleted and QD is updated with -1.
+\end{enumerate}
+
+\vspace{0.4em}
+\textbf{Create Map} \newline
+\vspace{0.4em}
+
+Let's define P[i, f]d as the average of the people in a department d from quantum i to quantum f (to compute it we just need the matrix QD).\newline
+Steps for the algorithm:
+\begin{enumerate}
+    \item We compute the quantum used in the Visit, using the information given by the time-slot. We will call the initial quantum IQ and the final one FQ.
+    \item We add to the departments selected by the user an entrance point and an exit point. For the entrance: we check the value of QD at quantum IQ for all possible entrances and we select the entrance with minimum value. For the exit: we check the the value of QD at quantum FQ for all possible exits and we select the exit with minimum value.
+    \item We create a graph with only the departments selected by the Customer and the added entrance and exit as nodes. The graph is complete and each arc has a weight equal to the shortest path from one node to another in MAP (we can use the pre-computed SP to speed up the process)
+    \item We add an extra node which is connected to the entrance node and the exit node with arcs of weight very small (possibly 0) and we will call this node S. Now, the problem of finding the shortest path from route to entrance to exit can be reduced to a TSP problem.
+    \item Since TSP is an NP-hard problem, we use algorithms for its approximation (for example using MST, and NN greedy algorithm).
+    \item Having computed one or more sub-optimal path for solving the problem of the shortest path, we select one considering that we want to decrease the probability that a large amount of people will be in the same department in the same quantums.
+    \item We can easily compute which quantums will be assigned to each department (depending on their order in the path), since we assign to each selected department the same amount of quantums.
+    \item We compute for each path the MAXP = maximum P[i, f]d (where i is the entrance quantum in the department d and f is the exit quantum of the department d).
+    \item Considering both MAXP and the length of each path we infer (during the implementation we will need to find a suitable formula) which is the best path, we remove the node S from it, and we save the result in VCQ, setting IsMapped to true and updating QD accordigly.
+    \item From this path we can easily compute the real path on MAP using, for example, Dijkstra algorithm to between each pair of ordered nodes.
+\end{enumerate}
+
+\vspace{0.4em}
+\textbf{Example of Map Creation} \newline
+\vspace{0.4em}
+There has just been inserted a Visit which have:
+\begin{enumerate}[label=-]
+    \item Departments: 6 and 8
+    \item Day: Current day (e.g. 15/12/2020)
+    \item TimeSlot: 8:00-8:40
+\end{enumerate}
+The Store selected is represented in Figure [\ref{storeGraph}], and it has 6 departments, plus the entrance department 0 and two exit departments 5 and 7. \newline
+In Figure [\ref{warshall}] there SP, computed from the Store Map Manager. Moreover in Figure [\ref{qd}] has been represented part of QD of the Store Map Manager.
+
+\begin{figure}[H]
+\centering
+	\centering
+  	\includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alg_map_man/store_graph.JPG}
+	\caption{MAP: Map of the Store}
+ 	\label{storeGraph}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\centering
+  	\includegraphics[height=0.2\textheight, scale=0.1, keepaspectratio]{img/alg_map_man/warshall_matr.JPG}
+	\caption{SP: Shortest path between each pair of nodes in MAP}
+ 	\label{warshall}
+\end{figure}
+\begin{figure}[H]
+\centering
+	\centering
+  	\includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alg_map_man/dep_quant_mat.JPG}
+	\caption{QD: Estimated people in a specific department in a specific quantum}
+ 	\label{qd}
+\end{figure}
+
+Step for the algorithm:
+\begin{enumerate}
+    \item Each quantum has been defined to be 5 minutes-long, and that the time 8:00 is mapped to quantum 0.Thus this Visit lasts 8 quantums, from the $0^{th}$ to the $7th$. Since the Visit has only two departments, to each one of them will be assigned 8/2 = 4 quantums.
+    \item We choose the entrance and exit dep. Since there is only one entrance department, 0 is selected. We have two exits. We select the exit which has the least amount of people at quantum 7 (from figure [\ref{qd}]), and it is 5 with 4 people.
+    \item We create a graph with only the departments selected by the Customer and the added entrance and exit as nodes. The graph is complete and each arc has a weight equal to the shortest path from one node to another in MAP (we use the pre-computed SP (figure \ref{warshall}) to speed up the process). (figure [\ref{graphForTSP}])
+    \item We add an extra node which is connected to the entrance node and the exit node with arcs of weight very small (possibly 0) and we will call this node S. Now, the problem of finding the shortest path from route to entrance to exit can be reduced to a TSP problem. (figure [\ref{graphForTSP}])
+    \begin{figure}[H]
+    \centering
+    	\centering
+      	\includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alg_map_man/graph_for_tsp2.JPG}
+    	\caption{Preparing graph for TSP}
+     	\label{graphForTSP}
+    \end{figure}
+    \item In this example we just use the approximation of TSP using MST and we compute the MST using Prim's algorithm (Figure [\ref{mst}]).\newline
+    If we read the nodes of the constructed MST in preorder-walk adding 0 at the end, we get: 0 - S - 5 - 6 - 8 - 0. It's length is = 0 + 2 + 5 + 1 + 0 = 8. We can see that if we traverse the path backwards and we delete the first two nodes, we obtain the path: 0 - 8 - 6 - 5. Which is what we were looking for. (and it still has length 8)
+    \begin{figure}[H]
+    \centering
+    	\centering
+      	\includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alg_map_man/mst2.JPG}
+    	\caption{MST of graph in figure \ref{graphForTSP}}
+     	\label{mst}
+    \end{figure}
+    \item Since in this example we compute a single path, we would not need to check P[i, f]d in each department, but to better understand the algorithm, we now compute MAXP anyway. Since the first real department to be visited is 8, to it will be assigned the quantums from 0 to 3 included, and to department 5 will be assigned the quantums from 4 to 7 included \newline
+    $MAXP = \max{\floor{(0 + 26 + 3 + 8)/4}, \floor{(8 + 10 + 20 + 4)/4}} = \max{9, 10} = 10$.
+    \item Given the best path, we remove node S from it, and we save the result in VCQ, setting IsMapped to true and updating QD accordigly: (we add 1 to: (0, 0), (5, 7), (8, from 0 to 3 included), (6, from 4 to 7 included)).
+    \item From this path we can easily compute the real path on MAP using, for example, Dijkstra algorithm to between each pair of ordered nodes. (figure \ref{afterDij})
+    \begin{figure}[H]
+    \centering
+    	\centering
+      	\includegraphics[height=0.4\textheight, scale=0.2, keepaspectratio]{img/alg_map_man/store_graph_PATH.JPG}
+    	\caption{Created map for the Visit}
+     	\label{afterDij}
+    \end{figure}
+\end{enumerate}
+
+\vspace{0.4em}
+\textbf{Final Considerations on the Map Creation} \newline
+\vspace{0.4em}
+
+The approach used does not give as an optimal solution neither for the shortest path problem nor for the overcrowding one. It tries to give a sub-optimal problems. Since the overcrowding that we mostly want to avoid is the one at the entrances and at the exits (so that a minor number of queues is generated), both entrance and exit are computed looking only at the estimated amount of people that should use them at a given quantum. \newline
+To achieve the optimal solution for the shortest path problem, we should have used a brute-foce algorithm with time complexity O(n!), which would constraint the possible number of departments that the user can select to 9-10. Since the system could be used by large Stores, we thought, that we should give a more efficient solution. It is though possible to apply different algorithms, basing the choice on the number of selected departments in the Visit (thus, it is possible to solve TSP chosing a different algorithm from the one in the example).
+
+
 \newpage
 \section{User Interface Design}
 
