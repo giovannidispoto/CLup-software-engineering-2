@@ -166,6 +166,52 @@ To describe the internal modular structure of the components, we show how they a
     
 \end{itemize}
 
+\subsection{Selected Architectural Styles and Patterns}
+\textbf{Client-Server Architecture}\\
+The Client-Server Architecture is a computing model in which multiple components work in strictly defined roles to communicate. This roles can be divided in two main categories: the Server that hosts, delivers and manages most of the resources and services, and the Client that exploits those services. This architecture is also known as a networking computing model because all the requests and services are delivered over a network. When the Client needs a service, sends a resource or process request to the Server over the network connection, which is then processed and delivered to the Client. A Client can be connected to several Servers, each providing a different set of services, and a Server can manage several Clients simultaneously.\\
+\\
+Although a network operating system is needed, the Client-Server Architecure is characterized by several advantages that make it a good choice. First of all, thanks to the presence of a network that integrates various components, the System can be defined as distributed. Therefore, it's easy to replace, repair, upgrade and relocate a Server while Client remains unaffected. We can therefore say that this architecture is characterized by good scalability and maintanability. The other advantage is the security: indeed Servers control accesses and resources to ensure that only authorized Clients can access or manipulate data.\\
+\\
+\textbf{Three-Tiered Architecture}\\
+The Three-tiered Architecture is a specific type of Client-Server system. It is a type of software architecture which is composed of three “tiers” or “layers” of logical computing:
+\begin{itemize}
+\item \textit{Presentation Tier}: is the front end layer and consists of user interface which displays content and information useful to an end user. This is the top-most tier and the only one accessible from the Client.
+\item \textit{Application Tier}: contains the functional business logic of the application, it controls the application’s core functionality.
+\item \textit{Data Tier}: comprises of the database/data storage system. It includes the data persistence mechanisms and the data access layer. In practice it is the layer that exposes the data. 
+\end{itemize}
+\begin{figure}[h!]
+\centering
+	\centering
+  	\includegraphics[height=0.35\textheight, scale=0.2, keepaspectratio]{img/three_tier_architecture.jpg} 
+	\caption{Three Tier Architecture schema.}
+ 	\label{three_tier_architecture}
+\end{figure}
+The benefits of using a Three-Tier Architecture are many, including speed of development, scalability, performance and availability. Indees, modularizing different tiers of an application, gives the possibility to cìthe development team to develop the product with greater speed, because a specific layer can be upgraded with minimal impact on the other layers. In this way separate teams of the development team can focus on different components. Another other big advantage as we said is the scalability. By separating different layers, you can scale and load balance each independently, improving overall performance with minimal resources.\\
+\\
+\textbf{Thin Client}\\
+A Thin client is a computer that serves to remote into a server, which handles all the computational load. Since Thin Clients hand off the heavy lifting to a Server, they don't need to have large memory or powerful computing capabilities to run the application.\\
+\\
+Being CLup an application for mobile phones, characterized by low computational power and small memories, thanks to the choice of adopting Thin Client, an internet connection is sufficient to use the application itself. and this is because all the computation is moved to the Server side, also allowing a simplification of the font end implementation.\\
+\\
+\textbf{Reverse Proxy Design Pattern}\\
+a reverse proxy is a type of proxy server that retrieves resources on behalf of a client from one or more servers. Typically it sits behind a firewall and directs client requests to the appropriate Server. A reverse proxy provides an additional level of abstraction and control to ensure the smooth flow of network traffic between clients and servers. The avantages on using a Reverse Proxy are, first of all load balancing. Indeed a Reverse Proxy distributes Client's requests across a group of servers in a manner that maximizes speed and capacity utilization while ensuring no one server is overloaded, which can degrade performance. Moreover it ensure security and anonymity, in fact a Reverse Proxy protects identities and acts as an additional defense against security attacks.\\
+\\
+\textbf{REST: REpresentational State Transfer}\\
+REST, or REpresentational State Transfer, is an architectural style for providing standards between computer systems on the web, making it easier for systems to communicate with each other. It is characterized by two main features: statelessness and the separation of concerns between Client and Server. In the REST architectural style, the implementation of the client and the implementation of the server can be done independently, that means that there can be done changes on one side without affecting the other side. As long as each side knows what format of messages to send to the other, they can be kept modular and separate. This improve the flexibility, the scalability and  additionally the separation allows each component the ability to evolve independently. Systems that follow the REST paradigm are stateless, meaning that the Server does not need to know anything about what state the Client is in and vice versa. In this way, both the server and the client can understand any message received, even without seeing previous messages. REST requires that a Client makes a HTTP request to the Server in order to retrieve or modify data on the server.\\
+\\
+\textbf{MVC Design Pattern}\\
+Model–view–controller or MVC is a software design pattern commonly used for developing software systems. It specifies that the program logic of an application consist of three interconnected elements: model, view and controller. The \textit{model} directly manages data and rules of the application, it contains no logic describing how to present the data to a user. The \textit{view} presents the model's data to the user, it knows how to access the model’s data, but it does not know what this data means or what the user can do to manipulate it. And finally the \textit{controller} that stays between the view and the model, it listens to events and executes the appropriate reaction to these events.\\
+\\
+Usually this approach 
+supports the choice of the Thin Client, that places almost the entire model, view and controller logic on the Server. MVC allows full encapsulation of objects. Furthemore, MVC provides decopuling of its components, which means that multiple developers can work simultaneously on the model, controller and views.\\
+\\
+\textbf{Relational DBMS}\\
+A relational database is a digital database based on the relational model of data. This model organizes data into one or more tables of columns and rows, with a unique key identifying each row. A relational database organizes data into tables in a way for which you can retrieve an entirely new table from data in one or more tables with a single query. Another benefit of the relational database approach is that this type of databases support SQL, which is an easy human-readable language that enables CRUD operations for the storage.\giovanni{Questa frase non mi piace} \yasmin{questa che inizia a dx? come mai?}All of this make Relational databases a good choice for applications that involve several transactions at a time. Relational databases allow you to change the schema or how you model data on the fly, and it also eliminate data redundancy. The choice is also reinforced by the fact that data are structured.
+\\
+\paragraph{Firebase?}
+\yasmin{devo aggiungere firebase? io non lo metterei.. forse lo metterei come CONSIGLIO in other design decisions} \lorenzo{Dovrebbe essere abbastanza uno standard dal punto di vista delle push notification.}
+To send Push notification to the user for the suggestions to the Store to Visit and the updates on the reservations we use FCM - firebase cloud messaging.
+
 \subsection{Other Design Decisions}
 \subsubsection{The Queue Scaling Process}
 One of the focal points of CLup is the creation of a good queuing mechanism for Consumers in order to enter the various Stores. But what exactly is meant by 'good'? First of all, good means that it takes into consideration that each Store will have its own personal queue, we generally want the queue and the entrances to be made in such a way as to allow simultaneous entry only to a number of Consumers equal to Capacity of each Store. It is also very important to keep in mind that one of the intentions of the application is to give a reasonable and as correct as possible departure time to all those Customers who have booked a Virtual Ticket remotely and must leave from the place in which they are in time to get to the Store for their turn. Other factors to take into consideration for a good construction of our queue are:
