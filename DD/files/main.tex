@@ -166,6 +166,84 @@ To describe the internal modular structure of the components, we show how they a
     
 \end{itemize}
 
+\subsection{Other Design Decisions}
+\subsubsection{The Queue Scaling Process}
+One of the focal points of CLup is the creation of a good queuing mechanism for Consumers in order to enter the various Stores. But what exactly is meant by 'good'? First of all, good means that it takes into consideration that each Store will have its own personal queue, we generally want the queue and the entrances to be made in such a way as to allow simultaneous entry only to a number of Consumers equal to Capacity of each Store. It is also very important to keep in mind that one of the intentions of the application is to give a reasonable and as correct as possible departure time to all those Customers who have booked a Virtual Ticket remotely and must leave from the place in which they are in time to get to the Store for their turn. Other factors to take into consideration for a good construction of our queue are:
+\begin{itemize}
+\item All those who have a Paper Ticket will not be able to have an update on their time of entry to the Store.
+\item Consumers who have booked a Visit must have priority of entry over those who have booked a Ticket.
+\item Consumers who have booked a Paper Ticket have higher priority over those who have booked a Virtual Ticket.
+\item People may take a different amount of time from the specified one to get out and the queue will have to react accordingly.
+\item Some Consumer may not show up or may be late, and the queue will have to react accordingly.
+\end{itemize}
+
+Taking these factors into consideration, the following queuing mechanism was created. It is recommended that the following mechanism will be used when implementing the application by the development team.\\
+\begin{figure}[hbt]
+\centering
+	\centering
+  	\includegraphics[height=0.2\textheight, scale=0.2, keepaspectratio]{img/queue/queue_general.jpg} 
+	\caption{Example of a queue structure for one Store. The Store taken into consideration has as opening and closing hours 8:00-22:00. Consequently there are 108 Temporal Quantums of 5-minutes. Each quantum can hold up to \textit{n} people, with \textit{n} equal to the store capacity. In the example shown, all the quantum spaces have been occupied by a Consumer. No distinction was made between the various Consumers in this example.}
+ 	\label{entering}
+\end{figure}
+The queue is divided into Temporal Quantums. The beginning of the queue corresponds to the opening time of the Store, the end to its closing time. The time between the opening and closing hours is then divided into 5 minutes each. Each Temporal Quantum consists of a vector as long as the capacity of the Store. Whenever a certain Consumer requests a Ticket or a Visit, the temporal Quantums corresponding to its residence time are filled with a space, reducing the space available for other Consumers. In this way, entry will not be allowed to a number of people exceeding the Capacity available at any single time the Store is open. All the amounts of time of shopping for a single Consumer must be filled in so that they are sequential to each other (we obviously do not want a Consumer to enter and exit the Store several times to complete their shopping). Consequently, when a request for space is made, a search must be made in the queue to check where the first sequential set of spaces, large enough to satisfy the request of the Consumer, is located. Therefore, such a mechanism does not focus on the temporal precedence of the various requests but on the consistency of the satisfaction of the request itself. In fact, it may happen that a Consumer at time $t_1$ requests a space of 3 Temporal Quantum which will be booked in the queue temporally subsequent to the space of 2 Temporal Quantum booked by another Consumer at time $t_2$, and this is evidently because a space of 3 Temporal Quantums was not available before, but one of 2 yes.\\
+\\
+Until now, as long as Consumers come in and out at the appointed time, everything works fine. What does it mean to fill a series of Temporal Quantums? It means that at the start time of a certain Temporal Quantum the Store scanner expects to scan the QR Codes corresponding to the Consumers who have to enter in that Temporal Quantum. At the end time of the Temporal Quantum instead % (or to be precise a \yasmin{LITTLE BEFORE}, that is 30 seconds before to make him do the calculations ???)
+the Scanner expects to scan the QR Codes of all the Consumers who at that moment should have concluded their shopping as indicated. However, it may happen that a Consumer takes longer than it should to complete their shopping, or less. Let's consider the following cases.\\
+\\
+In the case that a Consumer takes less than the pre-established time to exit the Store, basically no movement within the queue takes place. Their unused Temporal Quantums are simply freed up. In order for all Costumers with a Virtual Ticket to be provided with a good departure time, we do not want it to be possible for their filled Temporal Quantums to be anticipated. If so, it could happen that they are brought forward so much that they will no longer be able to leave on time from where they are to arrive on time for their turn. What happens is therefore simply a freeing of places within the unused Temporal Quantum, so that any other Consumers with new Tickets can occupy those spaces. In this way also the position of the Paper Tickets remains unchanged, and this is important as the entry time of the Paper Tickets cannot be updated because it is printed on a piece of Paper. In the event that a Consumer does not enter on time, that is in the event that his QR code is not scanned by the Scanner within the time included in his first Temporal Quantum filled, the consumer is considered late, and all his / her Temporal Quantums are released.\\
+\\
+In the case that a Consumer takes too long to exit the Store, that is when the System realizes that its Qr Code has not been scanned out within the pre-established time, it is necessary to scale the other Consumers in subsequent Temporal Quantums, so that he is given more time to finish the shopping and the limit of people inside the shop is not exceeded, that is the \textbf{Queue Scaling Process}. We will show the solution to the problem through the following example.\\
+\\
+Let's consider a Store with capacity 3 and opening hours 8:00, for which the following requests were made:
+\begin{itemize}
+    \item Consumer 2 has booked a 10 minute Visit between 8:05 and 8:15.
+    \item Before the opening of the Store Consumer 1 requires a Virutal Ticket with a shopping time of 10 minutes (corresponding to two teporal quantums).
+    \item Before the opening of the Store Consumer 3 requires a Virtual Ticket with a shopping time of 20 minutes.
+    \item At 8:05 am Consumer 4 requests a Paper Ticket with a shopping time of 15 minutes.
+    \item At 8:05 am Consumer 4 requests a Paper Ticket with a shopping time of 15 minutes.
+    \item At 8:06 am Consumer 5 requests a Virtual Ticket with a shopping time of 15 minutes.
+    \item At 8:07 am Consumer 6 requests a Virtual Ticket with a shopping time of 15 minutes.
+    \item At 8:15 am Consumer 7 requests a Virtual Ticket with a shopping time of 10 minutes.
+    \item At 8:16 am Consumer 8 requests a Virtual Ticket with a shopping time of 10 minutes.
+    \item At 8:17 am Consumer 9 requests a Virtual Ticket with a shopping time of 10 minutes.
+    \item At 8:20 am Consumer 10 requests a Virtual Ticket with a shopping time of 10 minutes.
+    \item and so on..
+\end{itemize}
+\begin{figure}[hbt]
+\centering
+	\centering
+  	\includegraphics[height=0.15\textheight, scale=0.2, keepaspectratio]{img/queue/queue_ex1.jpg} 
+	\caption{Queue Representation for the example described in this chapter. Each Consumer is characterized by its color and number in each space of the queue reserved for him.}
+ 	\label{queueex1}
+\end{figure}
+Let's consider the day time for which we arrive at the Temporal Quantum 4. At the end of this quantum Consumer 3 (which we will call $ C_3 $) should be out. Instead the Scanner did not receive any scan of the QR code of $ C_3 $. This means that $ C_3 $ hasn't come out yet. What happens then inside the queue?
+\begin{figure}[hbt]
+\centering
+	\centering
+  	\includegraphics[height=0.15\textheight, scale=0.2, keepaspectratio]{img/queue/queue_ex2.jpg} 
+	\caption{Representation of the queue for the example described in this chapter, specifically in the Temporal Quantum 4, highlighting the displacements caused by the Queue Scaling Process. A two-color character represents a Consumer passage that occupies that space. That is, the space that was previously occupied by the Consumer represented by the color on the right will now be occupied by the Consumer represented by the color on the left.}
+ 	\label{queueex2}
+\end{figure}
+$ C_3 $ didn't come out, so it needs more space. The queue will then give him a new Temporal Quantum. To do this it is necessary to check if there is an empty space at Temporal Quantum 5. If so, $ C_3 $ will take up that space. If this is not the case, it is necessary to choose a Consumer to be scaled. The rules for choosing the Consumer to scale, taking into consideration the previous considerations, are:
+\begin{itemize}
+    \item Consumers are analyzed starting from the last reserved.
+    \item A Consumer who has already entered cannot be chosen.
+    \item We are looking for a Consumer with a Virtual Ticket to be scaled.
+    \item If not, we are looking for a Consumer with a Paper Ticket to be scaled up.
+    \item In general, a Cunsumer with a Visit must not be scaled. If there is no Consumer with a Virtual Ticket or Paper Ticket to be scaled, a Visit will be scaled (this hypothesis is very remote).
+\end{itemize}
+    Taking these rules into consideration, let's look for a Consumer at the quantum 5 to scale to make space for $ C_3 $. $ C_6 $ has already entered the Store at quantum 4, so it cannot be scaled. $ C_5 $ hasn't entered yet and has reserved a Virtual Ticket, so it's perfect. $ C_5 $ will 'chase' its reserved spaces in the following Temporal Quantums until it reaches the last one, at Temporal Quantum 7, in which we will have to find a Consumer to scale down to the quantum 8 in order to let $ C_5 $ earn its place again. $ C_10 $ has not entered yet but has requested a Paper Ticket so we discard him for now. $ C_9 $ hasn't entered yet and has requested a Virtual Ticket, so it's perfect. At this point, $ C_9 $ behaves like $ C_5 $ for subsequent quantums. $ C_9 $ finally find an empty space at quantum 10, ending the scaling. If at quantum 5 $ C_3 $ had not yet left the Store, the scaling would repeat itself following the same rules, making $ C_7 $ scale, then $ C_10 $ and so on, until we find an empty space as before.
+\begin{figure}[hbt]
+\centering
+	\centering
+  	\includegraphics[height=0.15\textheight, scale=0.2, keepaspectratio]{img/queue/queue_ex3.jpg} 
+	\caption{Representation of the queue for the example described in this chapter, specifically in the Temporal Quantum 5, highlighting the displacements caused by the Queue Scaling Process going on.}
+ 	\label{queueex3}
+\end{figure}
+
+What happens if during the scaling we reach the end of the queue, i.e. there is no longer enough space to satisfy the Consumer request? In this case the Consumer request will be eliminated as it is no longer possible to satisfy it. The Consumer will then be notified of this (through the CLup application if he is a Customer, or through the Scanner if he has a Paper Ticket). In order to eliminate as few Reservations as possible, a final space of non-bookable spaces is left in the queue, corresponding to the last 30 minutes of opening hours of the Store. In this way the first scales will certainly have space.\\
+\\
+The reason why a Visit is unlikely to be scaled is that the Manager can specify a percentage of Capacity of the Store that will be dedicated exclusively to reserve Tickets in every Temporal Quantum.
 
 \subsubsection{The Map Generation Process}
 In this section we give an example of how the map generation for the Visits could be generated.\newline
