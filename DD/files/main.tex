@@ -443,4 +443,181 @@ To better define the most important Users action within the application, we repo
  	\label{manager_experience}
 \end{figure}
 
+\newpage
+\section{Requirements Traceability}
+Within the following document, the design and architectural choices have been made in order to satisfy the requirements and the various specifications contained in the RASD. In particular, in this chapter we will show the link that the System components (that can be found in the DD) have with the goals and requirements (that can be found in the RASD).
+\subsection{Functional Requirements}
+In the following table is shown which components are necessary to satisfy the requirements. \yasmin{HELP!!! REQUIREMENTS 7,11,16,20,21,30 DOVE LI METTOOOOOOO}
+\newcolumntype{g}{>{\columncolor[HTML]{CDFFCD}}c}
+\newcolumntype{o}{>{\columncolor[HTML]{FFCC99}}c}
+\begin{tabularx}{\linewidth}{| g || l |}
+	\hline
+	%\rule{0pt}{15pt} & \cellcolor[HTML]{ADFFC0} \textit{Allow Guests to authenticate as Manager or Customer}\\
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Auth Controller}} & \cellcolor[HTML]{FFCC99} R.1, R.2, R.3, R.4\lorenzo{, R7: forse potremmo pensare di farlo come un trigger a livello di database, dato che alla fine e' un codice (lo metterei semplicemente in auth controller, come viene creato un id per l'utente viene creato il qr code per l'utente)}\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{User Controller}} & \cellcolor[HTML]{FFCC99} R.1, R.5, R.6, R.8, R.17 \lorenzo{forse toglierei R.1} \yasmin{non serve per la registrazione user controller?}\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Data Analytics Manager}} & \cellcolor[HTML]{FFCC99} R.14, R.19, R.31\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	 \rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Notification Manager}} & \cellcolor[HTML]{FFCC99} R.19 \lorenzo{R.30: non ci sono i sottopunti, ma forse lo aggiungerei. perche' se ci sono degli update in visits o tickets dal punto di vista della coda, l'utente deve essere notificato.}\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Ticket Interface}} & \cellcolor[HTML]{FFCC99} R.9, R12 \lorenzo{R.30: stesso motivo di sopra}\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Ticker Controller}} & \cellcolor[HTML]{FFCC99} R.9, R.10\lorenzo{, R.11, R.14}\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Visit Interface}} & \cellcolor[HTML]{FFCC99} R.13\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Visit Controller}} & \cellcolor[HTML]{FFCC99} R.13, R.15\lorenzo{, R.14, R.20}\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Storage Interface}} & \cellcolor[HTML]{FFCC99} R.1, R.4, R.5, R.6, R.8, R.9, R.10, \\
+	& \cellcolor[HTML]{FFCC99} R.13, R.22, R.23, R.24, R.26, R.27, R.28 \lorenzo{, R.21}\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Store Interface}} & \cellcolor[HTML]{FFCC99} R.22, R.23, R.24, R.26, R.27\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Store Controller}} & \cellcolor[HTML]{FFCC99} R.22, R.24, R.26, R.27\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Queue Manager}} & \cellcolor[HTML]{FFCC99} R.9, R.10, R.13, R.15, R.28, R.29\lorenzo{, R.21}\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Store Map Manager}} & \cellcolor[HTML]{FFCC99} R.13, R.15\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Mailing System Interface}} & \cellcolor[HTML]{FFCC99} R.3, R.6\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Map Service}} & \cellcolor[HTML]{FFCC99} R.9, R.10, R.18\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Totem \yasmin{Interface?}}} & \cellcolor[HTML]{FFCC99} R.29\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Scanner}} & \cellcolor[HTML]{FFCC99} R.28\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{Store Validity Interface}} & \cellcolor[HTML]{FFCC99} R.22, R.24\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	\rule{0pt}{15pt}&\cellcolor[HTML]{FFCC99} \\
+	\large{\textbf{\lorenzo{Stores Controller}}} & \cellcolor[HTML]{FFCC99} \lorenzo{R.16} \yasmin{ma se stores contr permette di scegliere lo store giusto a cui collegarsi..}\\
+    & \cellcolor[HTML]{FFCC99}\\
+	\hline
+	
+    \caption{System's components and requirements mapping on goals.}
+\end{tabularx}
+%\captionof{table}{System's components and requirements mapping on goals.}
+\vspace{5mm}
+In order for the table to be understood, we briefly report in the table below the reference Functional Requirements whose more precise and exhaustive description can be found in the RASD.
+
+\begin{tabularx}{\linewidth}{| o || l |}
+    \hline
+    R.1 & The User must be able to register or to log in if already registered.\\
+    \hline
+	R.2 & Check if the User credentials are valid.\\
+	\hline
+	R.3 & If the credentials are valid, the System sends a confirmation email, to let the\\
+	& User activate their account.\\
+	\hline
+	R.4 & Allow to log in using personal credentials. \\
+	\hline
+	R.5 & Allow to change credentials, if the new credentials are in the right format. \\
+	\hline
+	R.6 & Allow to change password if it has been forgotten, through the personal email. \\
+	\hline
+	R.7 & Provide to each Customer a unique QR code which will be used as identifier\\
+	& within the System.\\
+	\hline
+	R.8 & Users must have the possibility to delete their accounts. \\
+	\hline
+	R.9 & The Customer must be allowed to request a Ticket. \\
+	\hline
+	R.10 & For Customers who are requesting a Ticket, the System should \yasmin{act to provide it}. \\
+	\hline
+	R.11 & Each Customer can request only one Ticket. \\
+	\hline
+	R.12 & Every person on a Ticket can view the time in which they should enter the Store\\
+	& and the indicated duration of their shopping. \\
+	\hline
+	R.13 & The Customer must be allowed to request a Visit.\\
+	\hline
+	R.14 & For long time Customers, while booking a Visit or a Ticket,\\
+	& the System should infer, analyzing previous Reservations of that\\ 
+	& Customer, the expected duration of the Visit or Ticket. \\
+	\hline
+	R.15 & The System should provide to the Customer a map of the Store.\\
+	\hline
+	R.16 & Allow Customers to consult their\\
+	& pending requests.\\
+	\hline
+	R.17 & The Customer must be allowed to delete a Visit or a Ticket from his/her\\
+	& pending requests.\\
+	\hline
+	R.18 & Use third party services to enable the localization of Customers and Stores. \\
+	\hline
+	R.19 & Notify Customers of available slots in a day-time range inferring information\\
+	& from their previous Visits.\\
+	\hline
+	R.20 & Each Customer can book up to three Visits in a single day.\\
+	\hline
+	R.21 & If a Reservation is expired, or it has served its purpose, or it has been deleted,\\
+	& it will be removed and will not be visible to the Customer anymore.\\
+	\hline
+	R.22 & Allow Managers to create Stores, becoming the Owner of the Store.\\
+	\hline
+	R.23 & Allow Owners to delete their Stores.\\
+	\hline
+	R.24 & Verify the Store creation, acquiring specific credentials (for instance a Certified\\
+	& Email) that can be used to verify the validity of the Store and of the Manager.\\
+	\hline
+	R.25 & Allow the Owner and Managers to edit the Store.\\
+	\hline
+	R.26 & All the information about the Store can be updated by their Managers at anytime.\\
+	\hline
+	R.27 & Allow Managers to upload a map of their Stores.\\
+	\hline
+	R.28 & Provide a specific \textbf{Scanner App} to scan the QR codes of the Consumers and to\\
+	& interact with the Queuing Mechanism.\\
+	\hline
+	R.29 & Provide a specific \textbf{Paper Tickets App} to generate paper tickets in the Store and\\
+	& to interact with the Queuing Mechanism.\\
+	\hline
+	R.30 & Each Store has one and only one queue.\\
+	\hline
+	R.31 & Suggestions are based on the habits of the Customers, inferred by the Data\\
+	& Analytics Manager.\\
+	\hline
+    
+\end{tabularx}
+
+\subsection{Non-Functional Requirements}
+The Non-Functional Requirements of the application are defined in the Sections 3.3 and 3.5 of the RASD. Design choices like the Three-Tier Architecture acts to improve and respect the performances needed and in general to improve the software quality attributes.
+
 \end{document}
