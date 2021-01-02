@@ -166,6 +166,53 @@ To describe the internal modular structure of the components, we show how they a
     
 \end{itemize}
 
+\subsection{Runtime View}
+
+\textbf{Registration Runtime}\\
+\\
+When a client wants to register to access the functionalities of the app, they fill a form with the required credentials. These are sent through a post request HTTP to the Auth Controller. This component checks that everything sent by the client is in the apposite format (if it is not, it responds with HTTP error code). Then it communicates with the Storage interface which sends a query to the DB to insert the credentials if they have not been already used. If they are not available, the Auth Controller sends a with 402 HTTP error code. If they are available the Auth Controller asks the Mail Service to send a confirmation e-mail to the Client and the request is Accepted. The client has to then confirm the registration through the mail, and the confirmation is handled by the Auth Controller.
+\begin{figure}[H]
+\centering
+	\centering
+  	\includegraphics[height=0.5\textheight, scale=0.5, keepaspectratio]{img/seq_diag/Register_Runtime.jpg}
+	\caption{Registration runtime sequence diagram}
+ 	\label{regRunTime}
+\end{figure}
+
+\textbf{Login Runtime}\\
+\\
+Once a client is registered, they can log into the app. The login process is handled by the Auth Controller. This receives a put request HTTP from the client and, after checking that the credentials have been sent in the right format, it delegates to the Storage interface the task of creating a query to check if the user is actually logged in and the credentials sent are correct. If they are not, the Auth Controller sends a response with an HTTP error code. Otherwise it checks whether the Client already has a valid token to access the app or not. If not it creates one and sends a request to the storage interface to query the Database for an update with the new information. It then grants the access to the app to the Client.
+\begin{figure}[H]
+\centering
+	\centering
+  	\includegraphics[height=0.5\textheight, scale=0.5, keepaspectratio]{img/seq_diag/Login_Runtime.jpg}
+	\caption{Login runtime sequence diagram}
+ 	\label{logRunTime}
+\end{figure}
+
+\textbf{Get Map Runtime}\\
+\\
+When a client has booked a Visit they should request a map to avoid crowds and speed up their shopping. 
+A Client requests the map through an HTTP request get. After having certified the credentials of the User, the Auth Controller sends the request to the Visit Controller, which sends it to the correct Queue Manager. At last the Store Controller sends the request to the Store Map Manager which, after having retrieved the necessary data from the database handles it. This component checks if the path has already been computed for the specified Visit. If not it computes one (and updates the data in the server through the Storage Interface).  While having the path, the Store Map Manager computes the map and sends an HTTP response to the Client with accepted HTTP code and the requested map.
+\begin{figure}[H]
+\centering
+	\centering
+  	\includegraphics[height=0.5\textheight, scale=0.5, keepaspectratio]{img/seq_diag/GetMap_RuntimeView.jpg}
+	\caption{Get Map runtime sequence diagram}
+ 	\label{getMapRunTime}
+\end{figure}
+
+\textbf{Access Store Runtime}\\
+\\
+When a Client accesses a Store, they scan their QR-code using the scanner provided by the Store. The Scanner communicates with the Queue Manager which checks if the User associated with the QR-code has a valid reservation for that time at that specific Store. If so, it updates the status of the reservation to see if the client is going into the Store or going outside the store. If they are going inside, the queue manager checks periodically if the user is late and it updates the queue status accordingly. If the client is going out, the queue manager updates the status of the reservation accordingly and the status of the queue if needed.
+\begin{figure}[H]
+\centering
+	\centering
+  	\includegraphics[height=0.5\textheight, scale=0.5, keepaspectratio]{img/seq_diag/AccessStore.jpg}
+	\caption{Access Store runtime sequence diagram}
+ 	\label{accessStoreRunTime}
+\end{figure}
+
 \subsection{Selected Architectural Styles and Patterns}
 \textbf{Client-Server Architecture}\\
 The Client-Server Architecture is a computing model in which multiple components work in strictly defined roles to communicate. This roles can be divided in two main categories: the Server that hosts, delivers and manages most of the resources and services, and the Client that exploits those services. This architecture is also known as a networking computing model because all the requests and services are delivered over a network. When the Client needs a service, sends a resource or process request to the Server over the network connection, which is then processed and delivered to the Client. A Client can be connected to several Servers, each providing a different set of services, and a Server can manage several Clients simultaneously.\\
