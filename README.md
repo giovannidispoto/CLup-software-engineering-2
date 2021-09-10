@@ -6,8 +6,8 @@ The application would work as a digital counterpart to the common situation wher
 The <i>goal</i> of this project is to develop an easy-to-use application that, on the one side, allows store managers to regulate the influx of people in the building and, on the other side, saves people from having to line up and stand outside of stores for hours on end.
 
 ## Structure of the Repository
-- Requirement Analysis and Specification Document: (RASD)
-- Design Document: (DD)
+- Requirement Analysis and Specification Document: [RASD](https://github.com/giovannidispoto/AwadCarpanetoDispoto/blob/main/DeliveryFolder/RASD2.pdf)
+- Design Document: [DD](https://github.com/giovannidispoto/AwadCarpanetoDispoto/blob/main/DeliveryFolder/DD1.pdf)
 
 ### Authors
 - [Yasmin Awad](https://github.com/YasminAwad)
